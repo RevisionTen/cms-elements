@@ -1,0 +1,19 @@
+{
+    "name": "revision-ten/cms-elements",
+    "type": "library",
+    "description": "A set of content elements for revision-ten/cms",
+    "keywords": ["library"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cornelius K",
+            "email": "kim247@hotmail.de"
+        }
+    ],
+    "require": {
+        "revision-ten/cms": "^2.0.0"
+    },
+    "autoload": {
+        "psr-4": { "RevisionTen\\CmsElements\\": "/" }
+    }
+}
