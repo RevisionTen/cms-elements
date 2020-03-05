@@ -1,0 +1,9 @@
+cms:
+    page_elements:
+        VehicleOffer:
+            class: RevisionTen\CmsElements\Elements\Vehicle\VehicleOffer
+            template: 'CmsElementsBundle:Vehicle:vehicle_offer.html.twig'
+            icon: 'fa fa-bullhorn'
+            public: true
+            children:
+                - 'all'
