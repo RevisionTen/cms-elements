@@ -1,1 +1,32 @@
 VehicleOffer: "Angebot"
+VehicleEnVKV: "Verbrauchsangaben (EnVKV)"
+
+
+vehicle:
+    envkv:
+        label:
+            envkv: "Verbrauchsangaben %vehicle% (%power% kW, Kraftstoff: %fuelType%)"
+            title: "Fahrzeugtitel"
+            power: "Leistung in kW"
+            fuelType: "Kraftstoff"
+            energyEfficiencyClass: "Energieeffizienzklasse"
+            emissionClass: "Emissionsklasse"
+            emissionSticker: "Umweltplakette"
+            co2Emission: "CO²-Emissionen komb."
+            combined: "Verbrauch komb."
+            outer: "Verbrauch ausserorts"
+            inner: "Verbrauch innerorts"
+            combinedPowerConsumption: "Stromverbrauch in kWh/100 km"
+        choices:
+            fuel:
+                petrol: "Benzin"
+                diesel: "Diesel"
+                lpg: "LPG"
+                cng: "CNG"
+                gas: "Gas"
+                electricity: "Elektro"
+                hybrid: "Hybrid"
+                hybrid_petrol: "Hybrid (Benzin/Elektro)"
+                hybrid_diesel: "Hybrid (Diesel/Elektro)"
+                hydrogen: "Wasserstoff"
+                other: "Andere"

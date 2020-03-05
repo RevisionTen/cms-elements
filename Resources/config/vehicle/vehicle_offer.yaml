@@ -2,8 +2,16 @@ cms:
     page_elements:
         VehicleOffer:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleOffer
-            template: 'CmsElementsBundle:Vehicle:vehicle_offer.html.twig'
-            icon: 'fa fa-bullhorn'
+            template: 'CmsElementsBundle:Vehicle:offer.html.twig'
+            icon: 'fa fa-car'
             public: true
+            children:
+                - 'Row'
+                - 'VehicleEnVKV'
+        VehicleEnVKV:
+            class: RevisionTen\CmsElements\Elements\Vehicle\VehicleEnVKV
+            template: 'CmsElementsBundle:Vehicle:envkv.html.twig'
+            icon: 'fa fa-leaf'
+            public: false
             children:
                 - 'all'
