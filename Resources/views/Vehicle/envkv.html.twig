@@ -9,78 +9,68 @@
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
         {% if energyEfficiencyClass %}
-            <div class="col-12 col-sm-auto">
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}</span>
-                </p>
-                {% set energyEfficiencyClass = energyEfficiencyClass|replace({'+': 'A'}) %}
-                <img title="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
-                     alt="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
-                     class="w-100 h-auto"
-                     style="max-width: 250px;"
-                     src="{{ asset('bundles/cmselements/images/vehicle/energy-efficiency.svg') }}?#{{ energyEfficiencyClass }}"
-                >
+            <div class="col-12 col-sm-auto" style="max-width: 400px;">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            <span class="text-muted">{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClass }}</span>
+                        </p>
+                        <p class="small">
+                            Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt.
+                        </p>
+                    </div>
+                    <div class="col-auto" style="max-width: 150px;">
+                        {% set energyEfficiencyClass = energyEfficiencyClass|replace({'+': 'A'}) %}
+                        <p>
+                            <img title="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
+                                 alt="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
+                                 class="w-100 h-auto"
+                                 src="{{ asset('bundles/cmselements/images/vehicle/energy-efficiency.svg') }}?#{{ energyEfficiencyClass }}"
+                            >
+                        </p>
+                    </div>
+                </div>
             </div>
         {% endif %}
-        <div class="col-12 col-sm-auto">
-            <p>
-                <span class="text-muted">{{ 'vehicle.envkv.label.co2Emission'|trans }}</span><br/>
-                {{ element.data.co2Emission ?? 0 }} g/km
-            </p>
-            {% if element.data.combinedPowerConsumption is defined %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.combined'|trans }}</span><br/>
-                    {{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km
-                </p>
-            {% endif %}
-            {% if element.data.combined is defined %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.combined'|trans }}</span><br/>
-                    {{ element.data.combined|number_format(1, ',') }} l/100 km
-                </p>
-            {% endif %}
-            {% if element.data.outer is defined %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.outer'|trans }}</span><br/>
-                    {{ element.data.outer|number_format(1, ',') }} l/100 km
-                </p>
-            {% endif %}
-            {% if element.data.inner is defined %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.inner'|trans }}</span><br/>
-                    {{ element.data.inner|number_format(1, ',') }} l/100 km
-                </p>
-            {% endif %}
-            {% if element.data.emissionSticker is defined and element.data.emissionSticker is not empty %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.emissionSticker'|trans }}</span><br/>
-                    {{ element.data.emissionSticker }}
-                </p>
-            {% endif %}
-            {% if element.data.emissionClass is defined and element.data.emissionClass is not empty %}
-                <p>
-                    <span class="text-muted">{{ 'vehicle.envkv.label.emissionClass'|trans }}</span><br/>
-                    {{ element.data.emissionClass }}
-                </p>
-            {% endif %}
-        </div>
         <div class="col-12 col-sm">
-            <p class="text-muted">
-                Weitere Informationen zum offiziellen Kraftstoffverbrauch, den offiziellen spezifischen
-                CO2-Emissionen und dem Stromverbrauch neuer Personenkraftwagen können dem 'Leitfaden
-                über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagen'
-                entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT),
-                Hellmuth-Hirth-Str. 1, 73760 Ostfildern-Scharnhausen, und unter
-                <a rel="nofollow" href="http://www.dat.de/angebote/verlagsprodukte/leitfaden-kraftstoffverbrauch.html">www.dat.de</a>
-                unentgeltlich erhältlich ist. Die Angaben zu Kraftstoffverbrauch, CO2-Emission, Stromverbrauch
-                und Effizienzklasse sind abhängig von der gewählten Rad- und Reifengröße. Als Basis
-                für die Verbrauchsermittlung dient der ECE-Fahrzyklus. Die Angaben beziehen sich nicht
-                auf ein einzelnes Fahrzeug und sind nicht Bestandteil des Angebots, sondern dienen
-                allein Vergleichszwecken zwischen den verschiedenen Fahrzeugtypen. CO2-Emissionen,
-                die durch die Produktion und Bereitstellung des Kraftstoffes bzw. anderer Energieträger
-                entstehen, werden bei Ermittlung der CO2-Emissionen gemäß der Richtlinie 1999/94/EG
-                nicht berücksichtigt.
+            <p>
+                {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
+                {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
+                    {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km<br/>
+                {% endif %}
+                {% if element.data.combined is defined and element.data.combined is not empty %}
+                    {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
+                {% endif %}
+                {% if element.data.outer is defined and element.data.outer is not empty %}
+                    {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
+                {% endif %}
+                {% if element.data.inner is defined and element.data.inner is not empty %}
+                    {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
+                {% endif %}
+                {% if element.data.emissionSticker is defined and element.data.emissionSticker is not empty %}
+                    {{ 'vehicle.envkv.label.emissionSticker'|trans }} {{ element.data.emissionSticker }}<br/>
+                {% endif %}
+                {% if element.data.emissionClass is defined and element.data.emissionClass is not empty %}
+                    {{ 'vehicle.envkv.label.emissionClass'|trans }} {{ element.data.emissionClass }}
+                {% endif %}
             </p>
         </div>
     </div>
 </div>
+
+<p class="text-muted">
+    Weitere Informationen zum offiziellen Kraftstoffverbrauch, den offiziellen spezifischen
+    CO2-Emissionen und dem Stromverbrauch neuer Personenkraftwagen können dem "Leitfaden
+    über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagen"
+    entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT),
+    Hellmuth-Hirth-Str. 1, 73760 Ostfildern-Scharnhausen, und unter
+    <a rel="nofollow" href="http://www.dat.de/angebote/verlagsprodukte/leitfaden-kraftstoffverbrauch.html">www.dat.de</a>
+    unentgeltlich erhältlich ist. Die Angaben zu Kraftstoffverbrauch, CO2-Emission, Stromverbrauch
+    und Effizienzklasse sind abhängig von der gewählten Rad- und Reifengröße. Als Basis
+    für die Verbrauchsermittlung dient der ECE-Fahrzyklus. Die Angaben beziehen sich nicht
+    auf ein einzelnes Fahrzeug und sind nicht Bestandteil des Angebots, sondern dienen
+    allein Vergleichszwecken zwischen den verschiedenen Fahrzeugtypen. CO2-Emissionen,
+    die durch die Produktion und Bereitstellung des Kraftstoffes bzw. anderer Energieträger
+    entstehen, werden bei Ermittlung der CO2-Emissionen gemäß der Richtlinie 1999/94/EG
+    nicht berücksichtigt.
+</p>
