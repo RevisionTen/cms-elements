@@ -47,8 +47,28 @@ vehicle:
     financing:
         label:
             financingType: "Finanzierungsart"
+            msrp: "Unverbindliche Preisempfehlung des Herstellers"
+            savings: "Ersparnis"
             price: "Fahrzeugpreis (inkl. Überführungskosten)"
             cashPrice: "Barpreis / Hauspreis"
+            specialPayment: "Sonderzahlung"
+            downpayment: "Anzahlung"
+            netAmount: "Nettodarlehensbetrag (Anschaffungspreis)"
+            fixedInterestRate: "Sollzins (gebunden) p.a."
+            effectiveInterest: "Effektiver Jahreszins"
+            months: "Laufzeit"
+            kilometersCredit: "Jährliche Laufleistung"
+            kilometersLeasing: "Jährliche Laufleistung"
+            totalAmount: "Gesamtbetrag"
+            monthlyInstalment: "Monatsrate"
+            lastInstalment: "Schlussrate"
+            lastInstalmentIsLastMonthlyInstalment: "Schlussrate ist letzte Monatsrate"
+            legalDisclaimer: "Rechtstext"
+        help:
+            msrp: "Wenn Sie hier einen abweichenden Preis eingeben wird dieser zusammen mit der errechneten Ersparnis angezeigt."
+            kilometersCredit: "Muss nur bei Angeboten mit Rückkaufoption angegeben werden."
+            lastInstalmentIsLastMonthlyInstalment: "Wenn Sie diese Option aktivieren ist die Anzahl der normalen monatlichen Raten gleich die Laufzeit minus 1. Ansonsten entspricht die Anzahl der normalen monatlichen Raten der Laufzeit und die Schlussrate ist \"on top\"."
+            legalDisclaimer: "z.b. Inkl. Überführungskosten und Mehrwertsteuer. Zzgl. Zulassungskosten. Abbildung zeigt Sonderausstattung gegen Mehrpreis."
         choices:
             financingType:
                 cash: "Barpreis / Hauspreis"

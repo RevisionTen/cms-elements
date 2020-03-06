@@ -1,0 +1,37 @@
+{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : false %}
+<table class="table vehicle-financing-table vehicle-financing-cash">
+    {% if element.data.msrp is not empty %}
+        {% set savings = element.data.msrp - element.data.price %}
+        <tr class="vehicle-financing-cash-msrp">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.msrp'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+        <tr class="vehicle-financing-cash-savings">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.savings'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+    {% endif %}
+    <tr class="vehicle-financing-cash-price">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.cashPrice'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer %}<sup>2</sup>{% endif %}
+        </td>
+    </tr>
+</table>
+
+
+{% if legalDisclaimer %}
+    <div class="vehicle-financing-legal-disclaimer text-muted">
+        <div><sup>2</sup> {{ legalDisclaimer|raw|slice(5, -6) }}</div>
+    </div>
+{% endif %}

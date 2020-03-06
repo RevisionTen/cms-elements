@@ -19,7 +19,7 @@ cms:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleFinancing
             template: 'CmsElementsBundle:Vehicle:financing.html.twig'
             icon: 'fa fa-euro-sign'
-            public: false
+            public: true
         VehicleDatDisclaimer:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleDatDisclaimer
             template: 'CmsElementsBundle:Vehicle:dat_disclaimer.html.twig'
