@@ -1,12 +1,15 @@
 VehicleOffer: "Angebot"
 VehicleEnVKV: "Verbrauchsangaben (EnVKV)"
-
+VehicleDatDisclaimer: "Dat-Hinweis"
+VehicleFinancing: "Fahrzeugfinanzierung"
 
 vehicle:
     envkv:
         label:
-            envkv: "Verbrauchsangaben %vehicle% (%power% kW, Kraftstoff: %fuelType%)"
+            envkv: "Verbrauchsangaben %vehicle% (%motor% %power% kW, %fuelType%, %gearbox%)"
             title: "Fahrzeugtitel"
+            motor: "Motorisierung"
+            gearbox: "Schaltung"
             power: "Leistung in kW"
             fuelType: "Kraftstoff"
             energyEfficiencyClass: "Energieeffizienzklasse"
@@ -17,6 +20,12 @@ vehicle:
             outer: "Verbrauch ausserorts"
             inner: "Verbrauch innerorts"
             combinedPowerConsumption: "Stromverbrauch in kWh/100 km"
+            missingEnVKV: "Verbauchsangaben fehlen! Sie dürfen diese nur weglassen wenn es sich beim Angebot um Gebrauchtwagen oder Nutzfahrzeuge (die keine M1 Zulassung haben) handelt."
+            missingDatDisclaimer: "Dat-Hinweis fehlt! Bitte achten Sie darauf das der DAT-Hinweis mindest einmal auf der Seite enthalten ist."
+        placeholder:
+            motor: "z.b. 1,2-l-Turbo"
+            gearbox: "z.b. 6-Gang-Schaltgetriebe"
+            emissionClass: "z.b. Euro6"
         choices:
             fuel:
                 petrol: "Benzin"
@@ -30,3 +39,19 @@ vehicle:
                 hybrid_diesel: "Hybrid (Diesel/Elektro)"
                 hydrogen: "Wasserstoff"
                 other: "Andere"
+            emissionSticker:
+                green: "4 (Grün)"
+                yellow: "3 (Gelb)"
+                red: "2 (Rot)"
+                blue: "Blau (noch nicht eingeführt)"
+    financing:
+        label:
+            financingType: "Finanzierungsart"
+            price: "Fahrzeugpreis (inkl. Überführungskosten)"
+            cashPrice: "Barpreis / Hauspreis"
+        choices:
+            financingType:
+                cash: "Barpreis / Hauspreis"
+                credit: "Kreditfinanzierung"
+                leasingPrivate: "Leasing (Privatkunden)"
+                leasingBusiness: "Leasing (Geschäftskunden)"

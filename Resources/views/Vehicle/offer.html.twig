@@ -1,13 +1,35 @@
-<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }}">
-    <div class="m-4">
-        <h2>
-            {{ element.data.title }}
-        </h2>
-
+<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} vehicle-offer">
+    {% if edit %}
+        {% set hasEnVKV = false %}
+        {% set hasDatDisclaimer = false %}
         {% if element.elements is defined and element.elements|length > 0 %}
             {% for element in element.elements %}
-                {% include config.page_elements[element.elementName].template %}
+                {% if element.elementName == 'VehicleEnVKV' %}
+                    {% set hasEnVKV = true %}
+                {% elseif element.elementName == 'VehicleDatDisclaimer' %}
+                    {% set hasDatDisclaimer = true %}
+                {% endif %}
             {% endfor %}
         {% endif %}
-    </div>
+        {% if hasEnVKV == false %}
+            <div class="alert alert-warning">
+                {{ 'vehicle.envkv.label.missingEnVKV'|trans }}
+            </div>
+        {% endif %}
+        {% if hasDatDisclaimer == false %}
+            <div class="alert alert-warning">
+                {{ 'vehicle.envkv.label.missingDatDisclaimer'|trans }}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <h2 class="mb-4">
+        {{ element.data.title }}
+    </h2>
+
+    {% if element.elements is defined and element.elements|length > 0 %}
+        {% for element in element.elements %}
+            {% include config.page_elements[element.elementName].template %}
+        {% endfor %}
+    {% endif %}
 </div>

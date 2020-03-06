@@ -8,10 +8,20 @@ cms:
             children:
                 - 'Row'
                 - 'VehicleEnVKV'
+                - 'VehicleFinancing'
+                - 'VehicleDatDisclaimer'
         VehicleEnVKV:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleEnVKV
             template: 'CmsElementsBundle:Vehicle:envkv.html.twig'
             icon: 'fa fa-leaf'
             public: false
-            children:
-                - 'all'
+        VehicleFinancing:
+            class: RevisionTen\CmsElements\Elements\Vehicle\VehicleFinancing
+            template: 'CmsElementsBundle:Vehicle:financing.html.twig'
+            icon: 'fa fa-euro-sign'
+            public: false
+        VehicleDatDisclaimer:
+            class: RevisionTen\CmsElements\Elements\Vehicle\VehicleDatDisclaimer
+            template: 'CmsElementsBundle:Vehicle:dat_disclaimer.html.twig'
+            icon: 'fa fa-exclamation-triangle'
+            public: true

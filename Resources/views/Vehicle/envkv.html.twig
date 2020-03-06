@@ -1,10 +1,12 @@
-<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }}">
-    <h6>
+<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
+    <h6 class="mb-3">
         {{ 'vehicle.envkv.label.envkv'|trans({
             '%vehicle%': element.data.title,
             '%power%': element.data.power,
+            '%motor%': element.data.motor,
+            '%gearbox%': element.data.gearbox,
             '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
-        }) }}
+        }) }} <sup>1</sup>
     </h6>
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
@@ -13,10 +15,11 @@
                 <div class="row">
                     <div class="col">
                         <p>
-                            <span class="text-muted">{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClass }}</span>
+                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClass }}
                         </p>
                         <p class="small">
-                            Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt.
+                            {# Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt. #}
+                            Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
                         </p>
                     </div>
                     <div class="col-auto" style="max-width: 150px;">
@@ -32,7 +35,7 @@
                 </div>
             </div>
         {% endif %}
-        <div class="col-12 col-sm">
+        <div class="col-12 col-sm-auto">
             <p>
                 {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
                 {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
@@ -55,22 +58,12 @@
                 {% endif %}
             </p>
         </div>
+        <div class="col-12 col-sm">
+            <p>
+                <em>
+                    Gesetzl. vorgeschriebene Angaben gem. Pkw-EnVKV, basierend auf NEFZ-Werten. Die Kfz-Steuer richtet sich nach den häufig höheren WLTP-Werten.
+                </em>
+            </p>
+        </div>
     </div>
 </div>
-
-<p class="text-muted">
-    Weitere Informationen zum offiziellen Kraftstoffverbrauch, den offiziellen spezifischen
-    CO2-Emissionen und dem Stromverbrauch neuer Personenkraftwagen können dem "Leitfaden
-    über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagen"
-    entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT),
-    Hellmuth-Hirth-Str. 1, 73760 Ostfildern-Scharnhausen, und unter
-    <a rel="nofollow" href="http://www.dat.de/angebote/verlagsprodukte/leitfaden-kraftstoffverbrauch.html">www.dat.de</a>
-    unentgeltlich erhältlich ist. Die Angaben zu Kraftstoffverbrauch, CO2-Emission, Stromverbrauch
-    und Effizienzklasse sind abhängig von der gewählten Rad- und Reifengröße. Als Basis
-    für die Verbrauchsermittlung dient der ECE-Fahrzyklus. Die Angaben beziehen sich nicht
-    auf ein einzelnes Fahrzeug und sind nicht Bestandteil des Angebots, sondern dienen
-    allein Vergleichszwecken zwischen den verschiedenen Fahrzeugtypen. CO2-Emissionen,
-    die durch die Produktion und Bereitstellung des Kraftstoffes bzw. anderer Energieträger
-    entstehen, werden bei Ermittlung der CO2-Emissionen gemäß der Richtlinie 1999/94/EG
-    nicht berücksichtigt.
-</p>
