@@ -1,0 +1,114 @@
+{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : false %}
+<table class="table vehicle-financing-table vehicle-financing-credit">
+    {% if element.data.msrp is not empty %}
+        {% set savings = element.data.msrp - element.data.price %}
+        <tr class="vehicle-financing-credit-msrp">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.msrpShort'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+        <tr class="vehicle-financing-credit-savings">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.savings'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+    {% endif %}
+    <tr class="vehicle-financing-credit-price">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.cashPriceShort'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-downpayment">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.downpayment'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.downpayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-monthlyInstalment">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.numberOfMonthlyInstalments'|trans({
+                '%numberOfMonthlyInstalments%': element.data.lastInstalmentIsLastMonthlyInstalment ? (element.data.months - 1) : element.data.months
+            }) }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer %}<sup>3</sup>{% endif %}
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-netAmount">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.netAmount'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-fixedInterestRate">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-effectiveInterest">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.effectiveInterest'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.effectiveInterest|number_format(2, ',', '.') }} %
+        </td>
+    </tr>
+    <tr class="vehicle-financing-credit-months">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.months'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.months }}
+        </td>
+    </tr>
+    {% if element.data.kilometersCredit is not empty %}
+        <tr class="vehicle-financing-credit-kilometersCredit">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.kilometersCredit'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.kilometersCredit|number_format(2, ',', '.') }}
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.lastInstalment is not empty %}
+        <tr class="vehicle-financing-credit-lastInstalment">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.lastInstalment'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.lastInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+    {% endif %}
+    <tr class="vehicle-financing-credit-totalAmount">
+        <td class="vehicle-financing-table-label">
+            {{ 'vehicle.financing.label.totalAmount'|trans }}
+        </td>
+        <td class="vehicle-financing-table-value">
+            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+        </td>
+    </tr>
+</table>
+
+{% if legalDisclaimer %}
+    <div class="vehicle-financing-legal-disclaimer">
+        <div><sup>3</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+    </div>
+{% endif %}

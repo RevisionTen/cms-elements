@@ -48,12 +48,14 @@ vehicle:
         label:
             financingType: "Finanzierungsart"
             msrp: "Unverbindliche Preisempfehlung des Herstellers"
+            msrpShort: "UVP"
             savings: "Ersparnis"
             price: "Fahrzeugpreis (inkl. Überführungskosten)"
             cashPrice: "Barpreis / Hauspreis"
+            cashPriceShort: "Preis"
             specialPayment: "Sonderzahlung"
             downpayment: "Anzahlung"
-            netAmount: "Nettodarlehensbetrag (Anschaffungspreis)"
+            netAmount: "Nettodarlehensbetrag"
             fixedInterestRate: "Sollzins (gebunden) p.a."
             effectiveInterest: "Effektiver Jahreszins"
             months: "Laufzeit"
@@ -64,6 +66,7 @@ vehicle:
             lastInstalment: "Schlussrate"
             lastInstalmentIsLastMonthlyInstalment: "Schlussrate ist letzte Monatsrate"
             legalDisclaimer: "Rechtstext"
+            numberOfMonthlyInstalments: "%numberOfMonthlyInstalments% Monatsraten à"
         help:
             msrp: "Wenn Sie hier einen abweichenden Preis eingeben wird dieser zusammen mit der errechneten Ersparnis angezeigt."
             kilometersCredit: "Muss nur bei Angeboten mit Rückkaufoption angegeben werden."
