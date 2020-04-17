@@ -22,7 +22,21 @@ Example:
 ```YAML
 imports:
     - { resource: ../../vendor/revision-ten/cms-elements/Resources/config/vehicle/vehicle_offer.yaml }
+    - { resource: ../../vendor/revision-ten/cms-elements/Resources/config/better_default/all.yaml }
 ```
 
+#### List of elements:
+
+##### Vehicle
+- VehicleOffer
+- VehicleFinancing
+- VehicleEnVKV
+- VehicleDatDisclaimer
+
+##### Better default elements
+- Image (requires [Lozad.js][])
+
+
+[Lozad.js]: https://github.com/ApoorvSaxena/lozad.js
 [packagist]: https://packagist.org/packages/revision-ten/cms-elements
 [composer]: http://getcomposer.org/

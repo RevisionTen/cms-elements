@@ -5,6 +5,7 @@ cms:
             template: 'CmsElementsBundle:Vehicle:offer.html.twig'
             icon: 'fa fa-car'
             public: true
+            type: 'Section'
             children:
                 - 'Row'
                 - 'VehicleEnVKV'
