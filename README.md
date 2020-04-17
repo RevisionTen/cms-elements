@@ -19,10 +19,15 @@ Add the desired elements to your CMS config by importing their configurations.
 
 Example:
 *cms.yaml*
-```YAML
+```yaml
 imports:
     - { resource: ../../vendor/revision-ten/cms-elements/Resources/config/vehicle/vehicle_offer.yaml }
     - { resource: ../../vendor/revision-ten/cms-elements/Resources/config/better_default/all.yaml }
+```
+
+Import the typescript files if needed:
+```typescript
+import '../../../vendor/revision-ten/cms-elements/Typescript/BetterDefault/all';
 ```
 
 #### List of elements:
