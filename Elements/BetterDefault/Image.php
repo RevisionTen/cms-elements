@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace RevisionTen\CmsElements\Elements\BetterDefault;
 
 use RevisionTen\CMS\Form\Elements\Element;
-use RevisionTen\CMS\Form\Elements\ImageSettings;
 use RevisionTen\CMS\Form\Types\UploadType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

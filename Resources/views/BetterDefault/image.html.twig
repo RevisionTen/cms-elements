@@ -38,17 +38,45 @@
                 {% set height = fileHeight %}
             {% endif %}
 
-            {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))).webp() %}
-            {% set src1xWebP = web_image(filePath).zoomCrop(width, height).webp() %}
-            {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2).webp() %}
-            {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3).webp() %}
-            {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4).webp() %}
+            {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
+            {% set src1xWebP = web_image(filePath).zoomCrop(width, height) %}
+            {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2) %}
+            {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3) %}
+            {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4) %}
 
             {% set src05x = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
             {% set src1x = web_image(filePath).zoomCrop(width, height) %}
             {% set src2x = web_image(filePath).zoomCrop(width * 2, height * 2) %}
             {% set src3x = web_image(filePath).zoomCrop(width * 3, height * 3) %}
             {% set src4x = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+
+            {% set grayscale = element.data.settings.grayscale ?? false %}
+            {% if grayscale %}
+                {% set src05xWebP = src05xWebP.grayscale() %}
+                {% set src1xWebP = src1xWebP.grayscale() %}
+                {% set src2xWebP = src2xWebP.grayscale() %}
+                {% set src3xWebP = src3xWebP.grayscale() %}
+                {% set src4xWebP = src4xWebP.grayscale() %}
+                {% set src05x = src05x.grayscale() %}
+                {% set src1x = src1x.grayscale() %}
+                {% set src2x = src2x.grayscale() %}
+                {% set src3x = src3x.grayscale() %}
+                {% set src4x = src4x.grayscale() %}
+            {% endif %}
+
+            {% set fixOrientation = element.data.settings.fixOrientation ?? false %}
+            {% if fixOrientation %}
+                {% set src05xWebP = src05xWebP.fixOrientation() %}
+                {% set src1xWebP = src1xWebP.fixOrientation() %}
+                {% set src2xWebP = src2xWebP.fixOrientation() %}
+                {% set src3xWebP = src3xWebP.fixOrientation() %}
+                {% set src4xWebP = src4xWebP.fixOrientation() %}
+                {% set src05x = src05x.fixOrientation() %}
+                {% set src1x = src1x.fixOrientation() %}
+                {% set src2x = src2x.fixOrientation() %}
+                {% set src3x = src3x.fixOrientation() %}
+                {% set src4x = src4x.fixOrientation() %}
+            {% endif %}
 
             {% set heightPercentage = ((height / width) * 100)|number_format(2) %}
             <div class="position-relative w-100" style="padding-bottom: {{ heightPercentage }}%;">
@@ -58,11 +86,11 @@
                             width="{{ width }}"
                             height="{{ height }}"
                             srcset="
-                                {{ src05xWebP }} {{ (width * 0.5)|round(0) }}w,
-                                {{ src1xWebP }} {{ width }}w,
-                                {{ src2xWebP }} {{ width * 2 }}w,
-                                {{ src3xWebP }} {{ width * 3 }}w,
-                                {{ src4xWebP }} {{ width * 4 }}w
+                                {{ src05xWebP.webp() }} {{ (width * 0.5)|round(0) }}w,
+                                {{ src1xWebP.webp() }} {{ width }}w,
+                                {{ src2xWebP.webp() }} {{ width * 2 }}w,
+                                {{ src3xWebP.webp() }} {{ width * 3 }}w,
+                                {{ src4xWebP.webp() }} {{ width * 4 }}w
                             "
                     >
                     <source type="{{ mimeType }}"
