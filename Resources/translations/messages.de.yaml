@@ -3,6 +3,17 @@ VehicleEnVKV: "Verbrauchsangaben (EnVKV)"
 VehicleDatDisclaimer: "Dat-Hinweis"
 VehicleFinancing: "Fahrzeugfinanzierung"
 
+images:
+    label:
+        imagesPerRow: "Bilder pro Zeile"
+    value:
+        imagesPerRow12: "12"
+        imagesPerRow6: "6"
+        imagesPerRow4: "4"
+        imagesPerRow3: "3"
+        imagesPerRow2: "2"
+        imagesPerRow1: "1"
+
 vehicle:
     envkv:
         label:
