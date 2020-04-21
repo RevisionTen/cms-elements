@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let galleries = document.querySelectorAll('[data-gallery]') as NodeListOf<HTMLElement>;
     galleries.forEach((element: HTMLElement) => {
-        console.log(element.dataset.gallery);
         baguetteBox.run('[data-gallery="'+element.dataset.gallery+'"]');
     });
 
