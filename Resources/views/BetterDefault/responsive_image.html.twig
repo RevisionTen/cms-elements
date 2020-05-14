@@ -15,7 +15,7 @@
 
 
     {% if showOriginal or mimeType == 'image/svg+xml' or filePath|slice(-4) == '.svg' %}
-        <img class="img-fluid"
+        <img class="img-fluid d-block"
              title="{{ title }}"
              alt="{{ title }}"
              src="{{ filePath }}"
@@ -76,7 +76,7 @@
         <div class="position-relative w-100" style="padding-bottom: {{ heightPercentage }}%;">
             <picture class="lozad position-absolute w-100" title="{{ title }}" data-iesrc="{{ src1x }}" data-alt="{{ title }}">
                 <source type="image/webp"
-                        class="img-fluid"
+                        class="img-fluid d-block"
                         width="{{ width }}"
                         height="{{ height }}"
                         srcset="
@@ -88,7 +88,7 @@
                         "
                 >
                 <source type="{{ mimeType }}"
-                        class="img-fluid"
+                        class="img-fluid d-block"
                         width="{{ width }}"
                         height="{{ height }}"
                         srcset="
@@ -101,7 +101,7 @@
                 >
                 <noscript>
                     <img
-                            class="img-fluid"
+                            class="img-fluid d-block"
                             width="{{ width }}"
                             height="{{ height }}"
                             title="{{ title }}"
