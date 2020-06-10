@@ -34,42 +34,74 @@
             {% set height = fileHeight %}
         {% endif %}
 
+        {% set has2X = width <= 1920 %}
+        {% set has3X = width <= 720 %}
+        {% set has4X = width <= 480 %}
+
         {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
         {% set src1xWebP = web_image(filePath).zoomCrop(width, height) %}
-        {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2) %}
-        {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3) %}
-        {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+
+        {% if has2X %}
+            {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2) %}
+        {% endif %}
+        {% if has3X %}
+            {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3) %}
+        {% endif %}
+        {% if has4X %}
+            {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+        {% endif %}
 
         {% set src05x = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
         {% set src1x = web_image(filePath).zoomCrop(width, height) %}
-        {% set src2x = web_image(filePath).zoomCrop(width * 2, height * 2) %}
-        {% set src3x = web_image(filePath).zoomCrop(width * 3, height * 3) %}
-        {% set src4x = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+
+        {% if has2X %}
+            {% set src2x = web_image(filePath).zoomCrop(width * 2, height * 2) %}
+        {% endif %}
+        {% if has3X %}
+            {% set src3x = web_image(filePath).zoomCrop(width * 3, height * 3) %}
+        {% endif %}
+        {% if has4X %}
+            {% set src4x = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+        {% endif %}
 
         {% if grayscale %}
             {% set src05xWebP = src05xWebP.grayscale() %}
-            {% set src1xWebP = src1xWebP.grayscale() %}
-            {% set src2xWebP = src2xWebP.grayscale() %}
-            {% set src3xWebP = src3xWebP.grayscale() %}
-            {% set src4xWebP = src4xWebP.grayscale() %}
             {% set src05x = src05x.grayscale() %}
+            {% set src1xWebP = src1xWebP.grayscale() %}
             {% set src1x = src1x.grayscale() %}
-            {% set src2x = src2x.grayscale() %}
-            {% set src3x = src3x.grayscale() %}
-            {% set src4x = src4x.grayscale() %}
+
+            {% if has2X %}
+                {% set src2xWebP = src2xWebP.grayscale() %}
+                {% set src2x = src2x.grayscale() %}
+            {% endif %}
+            {% if has3X %}
+                {% set src3xWebP = src3xWebP.grayscale() %}
+                {% set src3x = src3x.grayscale() %}
+            {% endif %}
+            {% if has4X %}
+                {% set src4xWebP = src4xWebP.grayscale() %}
+                {% set src4x = src4x.grayscale() %}
+            {% endif %}
         {% endif %}
 
         {% if fixOrientation %}
             {% set src05xWebP = src05xWebP.fixOrientation() %}
             {% set src1xWebP = src1xWebP.fixOrientation() %}
-            {% set src2xWebP = src2xWebP.fixOrientation() %}
-            {% set src3xWebP = src3xWebP.fixOrientation() %}
-            {% set src4xWebP = src4xWebP.fixOrientation() %}
             {% set src05x = src05x.fixOrientation() %}
             {% set src1x = src1x.fixOrientation() %}
-            {% set src2x = src2x.fixOrientation() %}
-            {% set src3x = src3x.fixOrientation() %}
-            {% set src4x = src4x.fixOrientation() %}
+
+            {% if has2X %}
+                {% set src2xWebP = src2xWebP.fixOrientation() %}
+                {% set src2x = src2x.fixOrientation() %}
+            {% endif %}
+            {% if has3X %}
+                {% set src3xWebP = src3xWebP.fixOrientation() %}
+                {% set src3x = src3x.fixOrientation() %}
+            {% endif %}
+            {% if has4X %}
+                {% set src4xWebP = src4xWebP.fixOrientation() %}
+                {% set src4x = src4x.fixOrientation() %}
+            {% endif %}
         {% endif %}
 
         {% set heightPercentage = ((height / width) * 100)|number_format(2) %}
@@ -81,10 +113,16 @@
                         height="{{ height }}"
                         srcset="
                             {{ src05xWebP.webp() }} {{ (width * 0.5)|round(0) }}w,
-                            {{ src1xWebP.webp() }} {{ width }}w,
-                            {{ src2xWebP.webp() }} {{ width * 2 }}w,
-                            {{ src3xWebP.webp() }} {{ width * 3 }}w,
-                            {{ src4xWebP.webp() }} {{ width * 4 }}w
+                            {{ src1xWebP.webp() }} {{ width }}w
+                            {% if has2X %}
+                                ,{{ src2xWebP.webp() }} {{ width * 2 }}w
+                            {% endif %}
+                            {% if has3X %}
+                                ,{{ src3xWebP.webp() }} {{ width * 3 }}w
+                            {% endif %}
+                            {% if has4X %}
+                                ,{{ src4xWebP.webp() }} {{ width * 4 }}w
+                            {% endif %}
                         "
                 >
                 <source type="{{ mimeType }}"
@@ -94,9 +132,15 @@
                         srcset="
                             {{ src05x }} {{ (width * 0.5)|round(0) }}w,
                             {{ src1x }} {{ width }}w,
-                            {{ src2x }} {{ width * 2 }}w,
-                            {{ src3x }} {{ width * 3 }}w,
-                            {{ src4x }} {{ width * 4 }}w
+                            {% if has2X %}
+                                ,{{ src2x }} {{ width * 2 }}w
+                            {% endif %}
+                            {% if has3X %}
+                                ,{{ src3x }} {{ width * 3 }}w
+                            {% endif %}
+                            {% if has4X %}
+                                ,{{ src4x }} {{ width * 4 }}w
+                            {% endif %}
                         "
                 >
                 <noscript>
@@ -110,9 +154,15 @@
                             srcset="
                                 {{ src05x }} {{ (width * 0.5)|round(0) }}w,
                                 {{ src1x }} {{ width }}w,
-                                {{ src2x }} {{ width * 2 }}w,
-                                {{ src3x }} {{ width * 3 }}w,
-                                {{ src4x }} {{ width * 4 }}w
+                                {% if has2X %}
+                                    ,{{ src2x }} {{ width * 2 }}w
+                                {% endif %}
+                                {% if has3X %}
+                                    ,{{ src3x }} {{ width * 3 }}w
+                                {% endif %}
+                                {% if has4X %}
+                                    ,{{ src4x }} {{ width * 4 }}w
+                                {% endif %}
                             "
                             loading="lazy"
                     >
