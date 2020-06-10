@@ -131,7 +131,7 @@
                         height="{{ height }}"
                         srcset="
                             {{ src05x }} {{ (width * 0.5)|round(0) }}w,
-                            {{ src1x }} {{ width }}w,
+                            {{ src1x }} {{ width }}w
                             {% if has2X %}
                                 ,{{ src2x }} {{ width * 2 }}w
                             {% endif %}
@@ -153,7 +153,7 @@
                             src="{{ src1x }}"
                             srcset="
                                 {{ src05x }} {{ (width * 0.5)|round(0) }}w,
-                                {{ src1x }} {{ width }}w,
+                                {{ src1x }} {{ width }}w
                                 {% if has2X %}
                                     ,{{ src2x }} {{ width * 2 }}w
                                 {% endif %}
