@@ -85,6 +85,13 @@ class VehicleFinancing extends Element
                         'totalAmount',
                         'monthlyInstalment',
                     ]);
+
+                    // Net amount is optional.
+                    $form->add('netAmount', NumberType::class, array(
+                        'label' => 'vehicle.financing.label.netAmount',
+                        'scale' => 2,
+                        'required' => false,
+                    ));
                 } elseif ('leasingBusiness' === $financingType) {
                     self::addFields($form, [
                         'specialPayment',

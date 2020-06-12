@@ -43,14 +43,16 @@
             {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
         </td>
     </tr>
-    <tr class="vehicle-financing-leasing-private-netAmount">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.netAmount'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
-        </td>
-    </tr>
+    {% if element.data.netAmount is defined and element.data.netAmount is not empty %}
+        <tr class="vehicle-financing-leasing-private-netAmount">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.netAmount'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            </td>
+        </tr>
+    {% endif %}
     <tr class="vehicle-financing-leasing-private-fixedInterestRate">
         <td class="vehicle-financing-table-label">
             {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
@@ -80,7 +82,7 @@
             {{ 'vehicle.financing.label.kilometersLeasing'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.kilometersLeasing|number_format(2, ',', '.') }}
+            {{ element.data.kilometersLeasing|number_format(0, ',', '.') }} km
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-private-totalAmount">
