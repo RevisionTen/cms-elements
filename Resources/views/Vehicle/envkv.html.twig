@@ -55,7 +55,7 @@
                     {% endif %}
                 {% endif %}
                 {% if element.data.emissionSticker is defined and element.data.emissionSticker is not empty %}
-                    {{ 'vehicle.envkv.label.emissionSticker'|trans }} {{ element.data.emissionSticker }}<br/>
+                    {{ 'vehicle.envkv.label.emissionSticker'|trans }} {{ ('vehicle.envkv.choices.emissionSticker.' ~ element.data.emissionSticker)|trans }}<br/>
                 {% endif %}
                 {% if element.data.emissionClass is defined and element.data.emissionClass is not empty %}
                     {{ 'vehicle.envkv.label.emissionClass'|trans }} {{ element.data.emissionClass }}
