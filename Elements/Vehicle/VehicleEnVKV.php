@@ -127,7 +127,13 @@ class VehicleEnVKV extends Element
                         'constraints' => new NotBlank(),
                     ));
                 } else {
-                    if ('hybrid' !== $fuelType && 'hybrid_petrol' !== $fuelType && 'hybrid_diesel' !== $fuelType) {
+                    if ('hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType) {
+                        $form->add('combinedPowerConsumption', NumberType::class, array(
+                            'label' => 'vehicle.envkv.label.combinedPowerConsumption',
+                            'scale' => 1,
+                            'required' => false,
+                        ));
+                    } else {
                         $form->remove('combinedPowerConsumption');
                     }
 
