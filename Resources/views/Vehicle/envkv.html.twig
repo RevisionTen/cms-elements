@@ -38,17 +38,21 @@
         <div class="col-12 col-sm-auto">
             <p>
                 {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
-                {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
-                    {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km<br/>
+                {% if element.data.fuelType == 'electricity' or element.data.fuelType == 'hydrogen' or element.data.fuelType == 'hybrid' or element.data.fuelType == 'hybrid_petrol' or element.data.fuelType == 'hybrid_diesel' %}
+                    {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
+                        {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km<br/>
+                    {% endif %}
                 {% endif %}
-                {% if element.data.combined is defined and element.data.combined is not empty %}
-                    {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
-                {% endif %}
-                {% if element.data.outer is defined and element.data.outer is not empty %}
-                    {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
-                {% endif %}
-                {% if element.data.inner is defined and element.data.inner is not empty %}
-                    {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
+                {% if element.data.fuelType != 'electricity' and element.data.fuelType != 'hydrogen' %}
+                    {% if element.data.combined is defined and element.data.combined is not empty %}
+                        {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
+                    {% endif %}
+                    {% if element.data.outer is defined and element.data.outer is not empty %}
+                        {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
+                    {% endif %}
+                    {% if element.data.inner is defined and element.data.inner is not empty %}
+                        {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
+                    {% endif %}
                 {% endif %}
                 {% if element.data.emissionSticker is defined and element.data.emissionSticker is not empty %}
                     {{ 'vehicle.envkv.label.emissionSticker'|trans }} {{ element.data.emissionSticker }}<br/>
