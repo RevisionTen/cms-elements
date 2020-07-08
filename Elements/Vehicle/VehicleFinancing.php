@@ -47,6 +47,12 @@ class VehicleFinancing extends Element
             'required' => false,
         ));
 
+        $builder->add('legalDisclaimerNum', TextType::class, array(
+            'label' => 'vehicle.financing.label.legalDisclaimerNum',
+            'help' => 'vehicle.financing.help.legalDisclaimerNum',
+            'required' => false,
+        ));
+
         $formModifier = static function (FormInterface $form = null, ?string $financingType = null) {
             if ($form) {
                 if ('cash' === $financingType) {

@@ -77,12 +77,14 @@ vehicle:
             lastInstalment: "Schlussrate"
             lastInstalmentIsLastMonthlyInstalment: "Schlussrate ist letzte Monatsrate"
             legalDisclaimer: "Rechtstext"
+            legalDisclaimerNum: "Rechtstext-Sternchen/Zahl"
             numberOfMonthlyInstalments: "%numberOfMonthlyInstalments% Monatsraten à"
         help:
             msrp: "Wenn Sie hier einen abweichenden Preis eingeben wird dieser zusammen mit der errechneten Ersparnis angezeigt."
             kilometersCredit: "Muss nur bei Angeboten mit Rückkaufoption angegeben werden."
             lastInstalmentIsLastMonthlyInstalment: "Wenn Sie diese Option aktivieren ist die Anzahl der normalen monatlichen Raten gleich die Laufzeit minus 1. Ansonsten entspricht die Anzahl der normalen monatlichen Raten der Laufzeit und die Schlussrate ist \"on top\"."
             legalDisclaimer: "z.b. Inkl. Überführungskosten und Mehrwertsteuer. Zzgl. Zulassungskosten. Abbildung zeigt Sonderausstattung gegen Mehrpreis."
+            legalDisclaimerNum: "z.b. 1 oder *"
         choices:
             financingType:
                 cash: "Barpreis / Hauspreis"
