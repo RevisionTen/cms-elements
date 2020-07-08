@@ -6,7 +6,7 @@
             '%motor%': element.data.motor,
             '%gearbox%': element.data.gearbox,
             '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
-        }) }} <sup>1</sup>
+        }) }} <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup>
     </h6>
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">

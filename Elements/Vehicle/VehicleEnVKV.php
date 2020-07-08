@@ -28,6 +28,12 @@ class VehicleEnVKV extends Element
             'constraints' => new NotBlank(),
         ]);
 
+        $builder->add('legalDisclaimerNum', TextType::class, array(
+            'label' => 'vehicle.financing.label.legalDisclaimerNum',
+            'help' => 'vehicle.financing.help.legalDisclaimerNum',
+            'required' => false,
+        ));
+
         $builder->add('energyEfficiencyClass', ChoiceType::class, array(
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
             'placeholder' => 'vehicle.envkv.label.energyEfficiencyClass',

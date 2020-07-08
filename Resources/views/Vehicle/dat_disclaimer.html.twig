@@ -1,6 +1,6 @@
 <div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }}">
     <p>
-        <sup>1</sup> Weitere Informationen zum offiziellen Kraftstoff verbrauch und den offiziellen spezifischen
+        <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup> Weitere Informationen zum offiziellen Kraftstoff verbrauch und den offiziellen spezifischen
         CO2-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoff verbrauch
         und die CO2-Emissionen neuer Personenkraftwagen“ entnommen werden, der an allen Verkaufsstellen
         und bei der Deutschen Automobil Treuhand GmbH unter
