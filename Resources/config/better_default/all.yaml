@@ -1,3 +1,4 @@
 imports:
+    - { resource: ./form.yaml }
     - { resource: ./image.yaml }
     - { resource: ./images.yaml }

@@ -1,0 +1,9 @@
+element:
+    label:
+        fields: "Feld-Standardwerte"
+        formField: "Feld"
+        formType: "Typ"
+        formValue: "Wert oder URL-Parameter-Name"
+    value:
+        formTypeParameter: "Wert aus URL-Parameter"
+        formTypeValue: "Fester Wert"

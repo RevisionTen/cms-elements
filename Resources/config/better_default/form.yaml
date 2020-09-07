@@ -1,0 +1,17 @@
+cms:
+    page_elements:
+        Form:
+            class: RevisionTen\CmsElements\Elements\BetterDefault\Form
+            template: 'CmsElementsBundle:BetterDefault:form.html.twig'
+            public: true
+            icon: 'fab fa-wpforms'
+
+services:
+    RevisionTen\CmsElements\Elements\BetterDefault\Form:
+        autoconfigure: true
+        autowire: true
+        tags: [ form.type ]
+    RevisionTen\CmsElements\Controller\FormController:
+        autoconfigure: true
+        autowire: true
+        tags: [ controller.service_arguments ]

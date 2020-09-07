@@ -1,0 +1,5 @@
+<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }}">
+    {% if element.data.formUuid is defined and element.data.formUuid %}
+        {{ render(controller('CmsElementsBundle:Form:renderForm', {formUuid: element.data.formUuid, element: element})) }}
+    {% endif %}
+</div>
