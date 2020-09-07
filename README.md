@@ -46,6 +46,7 @@ Import stylesheets files:
 ##### Better default elements
 - Image (requires [Lozad.js][])
 - Images (requires [Lozad.js][] and [baguetteBox.js][])
+- Form
 
 
 [Lozad.js]: https://github.com/ApoorvSaxena/lozad.js
