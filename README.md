@@ -35,6 +35,14 @@ Import stylesheets files:
 @import '../../vendor/revision-ten/cms-elements/SCSS/BetterDefault/all';
 ```
 
+Add additional admin form themes to your projects twig.yaml:
+```YAML
+twig:
+    form_themes:
+        - 'CmsElementsBundle:Vehicle:form_theme.html.twig'
+```
+
+
 #### List of elements:
 
 ##### Vehicle

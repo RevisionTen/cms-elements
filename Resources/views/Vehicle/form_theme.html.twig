@@ -1,0 +1,152 @@
+
+{% block cms_elements_vehicle_envkv_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form is rootform -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.hasRangeValues) }}
+        {{ form_row(form.legalDisclaimerNum) }}
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.energyEfficiencyClass) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.emissionSticker) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.emissionClass) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.motor) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.gearbox) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.power) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.fuelType) }}
+            </div>
+        </div>
+
+        <div class="row">
+            {% if form.inner is defined %}
+                <div class="col">
+                    {% if form.innerMin is defined %}
+                        <div class="form-group">
+                            {{ form_label(form.inner) }}
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.innerMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.inner) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form_row(form.inner) }}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if form.outer is defined %}
+                <div class="col">
+                    {% if form.outerMin is defined %}
+                        <div class="form-group">
+                            {{ form_label(form.outer) }}
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.outerMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.outer) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form_row(form.outer) }}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if form.combined is defined %}
+                <div class="col">
+                    {% if form.combinedMin is defined %}
+                        <div class="form-group">
+                            {{ form_label(form.combined) }}
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.combinedMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.combined) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form_row(form.combined) }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if form.combinedPowerConsumption is defined %}
+            {% if form.combinedPowerConsumptionMin is defined %}
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(form.combinedPowerConsumption) }}
+                            <div class="w-100">
+                                <div class="form-row">
+                                    <div class="col">
+                                        {{ form_widget(form.combinedPowerConsumptionMin) }}
+                                    </div>
+                                    <div class="col">
+                                        {{ form_widget(form.combinedPowerConsumption) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {{ form_row(form.combinedPowerConsumption) }}
+            {% endif %}
+        {% endif %}
+
+        {% if form.co2EmissionMin is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_label(form.co2Emission) }}
+                        <div class="w-100">
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.co2EmissionMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2Emission) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {{ form_row(form.co2Emission) }}
+        {% endif %}
+
+        {{- block('form_rows') -}}
+
+        {{- form_rest(form) -}}
+    </div>
+{%- endblock cms_elements_vehicle_envkv_widget %}

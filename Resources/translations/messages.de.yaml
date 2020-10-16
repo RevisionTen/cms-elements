@@ -17,12 +17,15 @@ images:
 vehicle:
     envkv:
         label:
+            min: "von"
+            max: "bis"
             envkv: "Verbrauchsangaben %vehicle% (%motor% %power% kW, %fuelType%, %gearbox%)"
             title: "Fahrzeugtitel"
             motor: "Motorisierung"
             gearbox: "Schaltung"
             power: "Leistung in kW"
             fuelType: "Kraftstoff"
+            hasRangeValues: "Werte sind von-bis"
             energyEfficiencyClass: "Energieeffizienzklasse"
             emissionClass: "Emissionsklasse"
             emissionSticker: "Umweltplakette"
@@ -37,6 +40,8 @@ vehicle:
             motor: "z.b. 1,2-l-Turbo"
             gearbox: "z.b. 6-Gang-Schaltgetriebe"
             emissionClass: "z.b. Euro6"
+        help:
+            hasRangeValues: "Aktivieren Sie diese Option wenn Sie von-bis Werte angeben müssen (z.b. augrund von unterschiedlicher Bereifungen)."
         choices:
             fuel:
                 petrol: "Benzin"
