@@ -216,7 +216,7 @@ class VehicleEnVKV extends Element
                             $form->add('combinedMin', NumberType::class, array(
                                 'label' => 'vehicle.envkv.label.combined',
                                 'scale' => 1,
-                                'constraints' => new NotBlank(),
+                                'required' => false,
                                 'attr' => [
                                     'placeholder' => 'vehicle.envkv.label.min',
                                 ],
@@ -224,7 +224,7 @@ class VehicleEnVKV extends Element
                             $form->add('outerMin', NumberType::class, array(
                                 'label' => 'vehicle.envkv.label.outer',
                                 'scale' => 1,
-                                'constraints' => new NotBlank(),
+                                'required' => false,
                                 'attr' => [
                                     'placeholder' => 'vehicle.envkv.label.min',
                                 ],
@@ -232,7 +232,7 @@ class VehicleEnVKV extends Element
                             $form->add('innerMin', NumberType::class, array(
                                 'label' => 'vehicle.envkv.label.inner',
                                 'scale' => 1,
-                                'constraints' => new NotBlank(),
+                                'required' => false,
                                 'attr' => [
                                     'placeholder' => 'vehicle.envkv.label.min',
                                 ],
@@ -243,7 +243,7 @@ class VehicleEnVKV extends Element
                             $form->add('combinedPowerConsumptionMin', NumberType::class, array(
                                 'label' => 'vehicle.envkv.label.combinedPowerConsumption',
                                 'scale' => 1,
-                                'constraints' => new NotBlank(),
+                                'required' => false,
                                 'attr' => [
                                     'placeholder' => 'vehicle.envkv.label.min',
                                 ],
