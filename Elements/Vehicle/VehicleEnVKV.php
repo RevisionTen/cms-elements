@@ -35,18 +35,9 @@ class VehicleEnVKV extends Element
             'required' => false,
         ));
 
-        $builder->add('hasRangeValues', CheckboxType::class, array(
-            'label' => 'vehicle.envkv.label.hasRangeValues',
-            'help' => 'vehicle.envkv.help.hasRangeValues',
-            'required' => false,
-            'attr' => [
-                'data-condition' => true,
-            ],
-        ));
-
-        $builder->add('energyEfficiencyClass', ChoiceType::class, array(
+        $builder->add('energyEfficiencyClassMin', ChoiceType::class, array(
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
-            'placeholder' => 'vehicle.envkv.label.energyEfficiencyClass',
+            'placeholder' => 'vehicle.envkv.label.min',
             'choices' => [
                 'A+' => 'A+',
                 'A' => 'A',
@@ -63,9 +54,28 @@ class VehicleEnVKV extends Element
             ],
         ));
 
-        $builder->add('emissionSticker', ChoiceType::class, array(
+        $builder->add('energyEfficiencyClass', ChoiceType::class, array(
+            'label' => 'vehicle.envkv.label.energyEfficiencyClass',
+            'placeholder' => 'vehicle.envkv.label.max',
+            'choices' => [
+                'A+' => 'A+',
+                'A' => 'A',
+                'B' => 'B',
+                'C' => 'C',
+                'D' => 'D',
+                'E' => 'E',
+                'F' => 'F',
+                'G' => 'G',
+            ],
+            'constraints' => new NotBlank(),
+            'attr' => [
+                'class' => 'custom-select',
+            ],
+        ));
+
+        $builder->add('emissionStickerMin', ChoiceType::class, array(
             'label' => 'vehicle.envkv.label.emissionSticker',
-            'placeholder' => 'vehicle.envkv.label.emissionSticker',
+            'placeholder' => 'vehicle.envkv.label.min',
             'required' => false,
             'choices' => [
                 'vehicle.envkv.choices.emissionSticker.green' => 'green',
@@ -78,12 +88,44 @@ class VehicleEnVKV extends Element
             ],
         ));
 
+        $builder->add('emissionSticker', ChoiceType::class, array(
+            'label' => 'vehicle.envkv.label.emissionSticker',
+            'placeholder' => 'vehicle.envkv.label.max',
+            'required' => false,
+            'choices' => [
+                'vehicle.envkv.choices.emissionSticker.green' => 'green',
+                'vehicle.envkv.choices.emissionSticker.yellow' => 'yellow',
+                'vehicle.envkv.choices.emissionSticker.red' => 'red',
+                'vehicle.envkv.choices.emissionSticker.blue' => 'blue',
+            ],
+            'attr' => [
+                'class' => 'custom-select',
+            ],
+        ));
+
+        $builder->add('emissionClassMin', TextType::class, array(
+            'label' => 'vehicle.envkv.label.emissionClass',
+            'attr' => [
+                'placeholder' => 'vehicle.envkv.label.min',
+            ],
+            'required' => false,
+        ));
+
         $builder->add('emissionClass', TextType::class, array(
             'label' => 'vehicle.envkv.label.emissionClass',
             'attr' => [
-                'placeholder' => 'vehicle.envkv.placeholder.emissionClass',
+                'placeholder' => 'vehicle.envkv.label.max',
             ],
             'required' => false,
+        ));
+
+        $builder->add('co2EmissionMin', NumberType::class, array(
+            'label' => 'vehicle.envkv.label.co2Emission',
+            'required' => false,
+            'scale' => 2,
+            'attr' => [
+                'placeholder' => 'vehicle.envkv.label.min',
+            ],
         ));
 
         $builder->add('co2Emission', NumberType::class, array(
@@ -100,7 +142,7 @@ class VehicleEnVKV extends Element
             'attr' => [
                 'placeholder' => 'vehicle.envkv.placeholder.motor',
             ],
-            'constraints' => new NotBlank(),
+            'required' => false,
         ));
 
         $builder->add('gearbox', TextType::class, array(
@@ -108,13 +150,13 @@ class VehicleEnVKV extends Element
             'attr' => [
                 'placeholder' => 'vehicle.envkv.placeholder.gearbox',
             ],
-            'constraints' => new NotBlank(),
+            'required' => false,
         ));
 
         $builder->add('power', NumberType::class, array(
             'label' => 'vehicle.envkv.label.power',
             'scale' => 0,
-            'constraints' => new NotBlank(),
+            'required' => false,
         ));
 
         $builder->add('fuelType', ChoiceType::class, array(
@@ -140,122 +182,89 @@ class VehicleEnVKV extends Element
             ],
         ));
 
-        $formModifier = static function (FormInterface $form = null, ?string $fuelType = null, ?bool $hasRangeValues = null, bool $isSubmitted) {
+        $formModifier = static function (FormInterface $form = null, ?string $fuelType = null) {
             if ($form) {
-                if (null !== $fuelType) {
-                    $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
-                    $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
+                $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
+                $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
 
-                    if ($hasBattery) {
-                        $form->add('combinedPowerConsumption', NumberType::class, array(
-                            'label' => 'vehicle.envkv.label.combinedPowerConsumption',
-                            'scale' => 1,
-                            'constraints' => new NotBlank(),
-                            'attr' => [
-                                'placeholder' => 'vehicle.envkv.label.max',
-                            ],
-                        ));
-                    } else {
-                        $form->remove('combinedPowerConsumption');
-                        $form->remove('combinedPowerConsumptionMin');
-                    }
-
-                    if ($hasFossilFuel) {
-                        $form->add('inner', NumberType::class, array(
-                            'label' => 'vehicle.envkv.label.inner',
-                            'scale' => 1,
-                            'constraints' => new NotBlank(),
-                            'attr' => [
-                                'placeholder' => 'vehicle.envkv.label.max',
-                            ],
-                        ));
-                        $form->add('outer', NumberType::class, array(
-                            'label' => 'vehicle.envkv.label.outer',
-                            'scale' => 1,
-                            'constraints' => new NotBlank(),
-                            'attr' => [
-                                'placeholder' => 'vehicle.envkv.label.max',
-                            ],
-                        ));
-                        $form->add('combined', NumberType::class, array(
-                            'label' => 'vehicle.envkv.label.combined',
-                            'scale' => 1,
-                            'constraints' => new NotBlank(),
-                            'attr' => [
-                                'placeholder' => 'vehicle.envkv.label.max',
-                            ],
-                        ));
-                    } else {
-                        $form->remove('inner');
-                        $form->remove('innerMin');
-                        $form->remove('outer');
-                        $form->remove('outerMin');
-                        $form->remove('combined');
-                        $form->remove('combinedMin');
-                    }
+                if ($hasBattery) {
+                    $form->add('combinedPowerConsumptionMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedPowerConsumption',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('combinedPowerConsumption', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedPowerConsumption',
+                        'scale' => 1,
+                        'constraints' => new NotBlank(),
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
+                } else {
+                    $form->remove('combinedPowerConsumption');
+                    $form->remove('combinedPowerConsumptionMin');
                 }
 
-                if (null !== $hasRangeValues) {
-                    $submittedData = $isSubmitted ? $form->getData() : [];
-
-                    $hasFossilFuel = ($form->has('combined') || $form->has('outer') || $form->has('inner')) || (isset($submittedData['combined']) || isset($submittedData['outer']) || isset($submittedData['inner']));
-                    $hasBattery = $form->has('combinedPowerConsumption') || isset($submittedData['combinedPowerConsumption']);
-
-                    if ($hasRangeValues) {
-                        // All vehicle eco datas have co2emission field. Add range field.
-                        $form->add('co2EmissionMin', NumberType::class, array(
-                            'label' => 'vehicle.envkv.label.co2Emission',
-                            'required' => false,
-                            'scale' => 2,
-                            'attr' => [
-                                'placeholder' => 'vehicle.envkv.label.min',
-                            ],
-                        ));
-
-                        if ($hasFossilFuel) {
-                            $form->add('combinedMin', NumberType::class, array(
-                                'label' => 'vehicle.envkv.label.combined',
-                                'scale' => 1,
-                                'required' => false,
-                                'attr' => [
-                                    'placeholder' => 'vehicle.envkv.label.min',
-                                ],
-                            ));
-                            $form->add('outerMin', NumberType::class, array(
-                                'label' => 'vehicle.envkv.label.outer',
-                                'scale' => 1,
-                                'required' => false,
-                                'attr' => [
-                                    'placeholder' => 'vehicle.envkv.label.min',
-                                ],
-                            ));
-                            $form->add('innerMin', NumberType::class, array(
-                                'label' => 'vehicle.envkv.label.inner',
-                                'scale' => 1,
-                                'required' => false,
-                                'attr' => [
-                                    'placeholder' => 'vehicle.envkv.label.min',
-                                ],
-                            ));
-                        }
-
-                        if ($hasBattery) {
-                            $form->add('combinedPowerConsumptionMin', NumberType::class, array(
-                                'label' => 'vehicle.envkv.label.combinedPowerConsumption',
-                                'scale' => 1,
-                                'required' => false,
-                                'attr' => [
-                                    'placeholder' => 'vehicle.envkv.label.min',
-                                ],
-                            ));
-                        }
-                    } else {
-                        $form->remove('co2EmissionMin');
-                        $form->remove('combinedPowerConsumptionMin');
-                        $form->remove('combinedMin');
-                        $form->remove('outerMin');
-                        $form->remove('innerMin');
-                    }
+                if ($hasFossilFuel) {
+                    $form->add('inner', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.inner',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
+                    $form->add('outer', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.outer',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
+                    $form->add('combined', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combined',
+                        'scale' => 1,
+                        'constraints' => new NotBlank(),
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
+                    $form->add('combinedMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combined',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('outerMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.outer',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('innerMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.inner',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                } else {
+                    $form->remove('inner');
+                    $form->remove('innerMin');
+                    $form->remove('outer');
+                    $form->remove('outerMin');
+                    $form->remove('combined');
+                    $form->remove('combinedMin');
                 }
             }
         };
@@ -263,18 +272,12 @@ class VehicleEnVKV extends Element
         $builder->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) use ($formModifier) {
             $data = $event->getData();
             $fuelType = $data['fuelType'] ?? null;
-            $hasRangeValues = $data['hasRangeValues'] ?? null;
-            $formModifier($event->getForm(), $fuelType, $hasRangeValues, false);
+            $formModifier($event->getForm(), $fuelType);
         });
 
         $builder->get('fuelType')->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) use ($formModifier) {
             $fuelType = $event->getForm()->getData();
-            $formModifier($event->getForm()->getParent(), $fuelType, null, true);
-        });
-
-        $builder->get('hasRangeValues')->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) use ($formModifier) {
-            $hasRangeValues = $event->getForm()->getData();
-            $formModifier($event->getForm()->getParent(), null, $hasRangeValues, true);
+            $formModifier($event->getForm()->getParent(), $fuelType);
         });
     }
 

@@ -17,8 +17,8 @@ images:
 vehicle:
     envkv:
         label:
-            min: "von"
-            max: "bis"
+            min: "min"
+            max: "max"
             envkv: "Verbrauchsangaben %vehicle% (%motor% %power% kW, %fuelType%, %gearbox%)"
             title: "Fahrzeugtitel"
             motor: "Motorisierung"

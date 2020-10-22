@@ -6,18 +6,57 @@
         {%- endif -%}
 
         {{ form_row(form.title) }}
-        {{ form_row(form.hasRangeValues) }}
         {{ form_row(form.legalDisclaimerNum) }}
+
+        <div class="alert alert-info">
+            Wenn Sie keine min-Werte haben verwenden Sie bitte nur das jeweilige max-Wert-Feld.
+        </div>
 
         <div class="row">
             <div class="col">
-                {{ form_row(form.energyEfficiencyClass) }}
+                <div class="form-group">
+                    {{ form_label(form.energyEfficiencyClass) }}
+                    <div class="w-100">
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.energyEfficiencyClassMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.energyEfficiencyClass) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col">
-                {{ form_row(form.emissionSticker) }}
+                <div class="form-group">
+                    {{ form_label(form.emissionSticker) }}
+                    <div class="w-100">
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.emissionStickerMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.emissionSticker) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col">
-                {{ form_row(form.emissionClass) }}
+                <div class="form-group w-100">
+                    {{ form_label(form.emissionClass) }}
+                    <div class="w-100">
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.emissionClassMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.emissionClass) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -42,108 +81,88 @@
         <div class="row">
             {% if form.inner is defined %}
                 <div class="col">
-                    {% if form.innerMin is defined %}
-                        <div class="form-group">
-                            {{ form_label(form.inner) }}
-                            <div class="form-row">
-                                <div class="col">
-                                    {{ form_widget(form.innerMin) }}
-                                </div>
-                                <div class="col">
-                                    {{ form_widget(form.inner) }}
-                                </div>
+                    <div class="form-group">
+                        {{ form_label(form.inner) }}
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.innerMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.inner) }}
                             </div>
                         </div>
-                    {% else %}
-                        {{ form_row(form.inner) }}
-                    {% endif %}
+                    </div>
                 </div>
             {% endif %}
             {% if form.outer is defined %}
                 <div class="col">
-                    {% if form.outerMin is defined %}
-                        <div class="form-group">
-                            {{ form_label(form.outer) }}
-                            <div class="form-row">
-                                <div class="col">
-                                    {{ form_widget(form.outerMin) }}
-                                </div>
-                                <div class="col">
-                                    {{ form_widget(form.outer) }}
-                                </div>
+                    <div class="form-group">
+                        {{ form_label(form.outer) }}
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.outerMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.outer) }}
                             </div>
                         </div>
-                    {% else %}
-                        {{ form_row(form.outer) }}
-                    {% endif %}
+                    </div>
                 </div>
             {% endif %}
             {% if form.combined is defined %}
                 <div class="col">
-                    {% if form.combinedMin is defined %}
-                        <div class="form-group">
-                            {{ form_label(form.combined) }}
-                            <div class="form-row">
-                                <div class="col">
-                                    {{ form_widget(form.combinedMin) }}
-                                </div>
-                                <div class="col">
-                                    {{ form_widget(form.combined) }}
-                                </div>
+                    <div class="form-group">
+                        {{ form_label(form.combined) }}
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.combinedMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.combined) }}
                             </div>
                         </div>
-                    {% else %}
-                        {{ form_row(form.combined) }}
-                    {% endif %}
+                    </div>
                 </div>
             {% endif %}
         </div>
 
         {% if form.combinedPowerConsumption is defined %}
-            {% if form.combinedPowerConsumptionMin is defined %}
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            {{ form_label(form.combinedPowerConsumption) }}
-                            <div class="w-100">
-                                <div class="form-row">
-                                    <div class="col">
-                                        {{ form_widget(form.combinedPowerConsumptionMin) }}
-                                    </div>
-                                    <div class="col">
-                                        {{ form_widget(form.combinedPowerConsumption) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                {{ form_row(form.combinedPowerConsumption) }}
-            {% endif %}
-        {% endif %}
-
-        {% if form.co2EmissionMin is defined %}
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        {{ form_label(form.co2Emission) }}
+                        {{ form_label(form.combinedPowerConsumption) }}
                         <div class="w-100">
                             <div class="form-row">
                                 <div class="col">
-                                    {{ form_widget(form.co2EmissionMin) }}
+                                    {{ form_widget(form.combinedPowerConsumptionMin) }}
                                 </div>
                                 <div class="col">
-                                    {{ form_widget(form.co2Emission) }}
+                                    {{ form_widget(form.combinedPowerConsumption) }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        {% else %}
-            {{ form_row(form.co2Emission) }}
         {% endif %}
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    {{ form_label(form.co2Emission) }}
+                    <div class="w-100">
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_widget(form.co2EmissionMin) }}
+                            </div>
+                            <div class="col">
+                                {{ form_widget(form.co2Emission) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{- block('form_rows') -}}
 

@@ -1,13 +1,18 @@
 <div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
     <h6 class="mb-3">
-        {{ 'vehicle.envkv.label.envkv'|trans({
-            '%vehicle%': element.data.title,
-            '%power%': element.data.power,
-            '%motor%': element.data.motor,
-            '%gearbox%': element.data.gearbox,
-            '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
-        }) }} <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup>
+        {% if element.data.power is not null and element.data.motor is not null and element.data.gearbox is not null %}
+            {{ 'vehicle.envkv.label.envkv'|trans({
+                '%vehicle%': element.data.title,
+                '%power%': element.data.power ?? '',
+                '%motor%': element.data.motor ?? '',
+                '%gearbox%': element.data.gearbox ?? '',
+                '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
+            }) }} <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup>
+        {% else %}
+            {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }}) <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup>
+        {% endif %}
     </h6>
+    {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
         {% if energyEfficiencyClass %}
@@ -15,7 +20,7 @@
                 <div class="row">
                     <div class="col">
                         <p>
-                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClass }}
+                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
                         </p>
                         <p class="small">
                             {# Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt. #}
@@ -37,18 +42,17 @@
         {% endif %}
         <div class="col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
-            {% set hasRangeValues = element.data.hasRangeValues ?? false %}
             {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
             {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
             <p>
-                {% if hasRangeValues and element.data.co2EmissionMin is defined and element.data.co2EmissionMin %}
+                {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin %}
                     {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2EmissionMin ?? 0 }}-{{ element.data.co2Emission ?? 0 }} g/km<br/>
                 {% else %}
                     {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
                 {% endif %}
 
                 {% if hasBattery and element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
-                    {% if hasRangeValues and element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
+                    {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
                         {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedPowerConsumptionMin|number_format(1, ',') }}-{{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km<br/>
                     {% else %}
                         {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedPowerConsumption|number_format(1, ',') }} kWh/100 km<br/>
@@ -57,7 +61,7 @@
 
                 {% if hasFossilFuel %}
                     {% if element.data.combined is defined and element.data.combined is not empty %}
-                        {% if hasRangeValues and element.data.combinedMin is defined and element.data.combinedMin %}
+                        {% if element.data.combinedMin is defined and element.data.combinedMin %}
                             {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedMin|number_format(1, ',') }}-{{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
                         {% else %}
                             {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
@@ -65,7 +69,7 @@
                     {% endif %}
 
                     {% if element.data.outer is defined and element.data.outer is not empty %}
-                        {% if hasRangeValues and element.data.outerMin is defined and element.data.outerMin %}
+                        {% if element.data.outerMin is defined and element.data.outerMin %}
                             {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outerMin|number_format(1, ',') }}-{{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
                         {% else %}
                             {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
@@ -73,7 +77,7 @@
                     {% endif %}
 
                     {% if element.data.inner is defined and element.data.inner is not empty %}
-                        {% if hasRangeValues and element.data.innerMin is defined and element.data.innerMin %}
+                        {% if element.data.innerMin is defined and element.data.innerMin %}
                             {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.innerMin|number_format(1, ',') }}-{{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
                         {% else %}
                             {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
@@ -85,6 +89,9 @@
                     {{ 'vehicle.envkv.label.emissionSticker'|trans }} {{ ('vehicle.envkv.choices.emissionSticker.' ~ element.data.emissionSticker)|trans }}<br/>
                 {% endif %}
                 {% if element.data.emissionClass is defined and element.data.emissionClass is not empty %}
+                    {% if element.data.emissionClassMin is defined and element.data.emissionClassMin is not empty %}
+                        {{ 'vehicle.envkv.label.emissionClass'|trans }} {{ element.data.emissionClassMin }} -
+                    {% endif %}
                     {{ 'vehicle.envkv.label.emissionClass'|trans }} {{ element.data.emissionClass }}
                 {% endif %}
             </p>
