@@ -4,6 +4,7 @@ element:
         formField: "Feld"
         formType: "Typ"
         formValue: "Wert oder URL-Parameter-Name"
+        lightbox: "Lightbox aktivieren"
     value:
         formTypeParameter: "Wert aus URL-Parameter"
         formTypeValue: "Fester Wert"

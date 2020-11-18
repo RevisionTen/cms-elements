@@ -1,4 +1,5 @@
-<div {{ editorAttr(element, edit, 'bg-warning') }} class="{{ elementClasses(element) }}">
+{% set lightbox = element.data.lightbox ?? false %}
+<div {% if lightbox %}data-gallery="{{ element.uuid }}"{% endif %}  {{ editorAttr(element, edit, 'bg-warning') }} class="{{ elementClasses(element) }}">
     {% if element.data.image is defined and element.data.image %}
         {% set showOriginal = element.data.settings.showOriginal ?? false %}
         {% set grayscale = element.data.settings.grayscale ?? false %}
@@ -7,6 +8,16 @@
         {% set width = element.data.settings.width ?? null %}
         {% set height = element.data.settings.height ?? null %}
         {% set title = element.data.title ?? '' %}
+
+        {% if lightbox %}
+            {% set imageUrl = web_image(image.file ?? image).cropResize(1920, 1920) %}
+            <a target="_blank" href="{{ imageUrl }}" title="{{ title }}">
+        {% endif %}
+
         {% include '@CmsElements/BetterDefault/responsive_image.html.twig' %}
+
+        {% if lightbox %}
+            </a>
+        {% endif %}
     {% endif %}
 </div>
