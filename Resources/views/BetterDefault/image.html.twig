@@ -1,4 +1,5 @@
 {% set lightbox = element.data.lightbox ?? false %}
+{% set setMaxWidth = element.data.settings.setMaxWidth ?? false %}
 <div {% if lightbox %}data-gallery="{{ element.uuid }}"{% endif %}  {{ editorAttr(element, edit, 'bg-warning') }} class="{{ elementClasses(element) }}">
     {% if element.data.image is defined and element.data.image %}
         {% set showOriginal = element.data.settings.showOriginal ?? false %}
@@ -9,15 +10,22 @@
         {% set height = element.data.settings.height ?? null %}
         {% set title = element.data.title ?? '' %}
 
+        {% set alignCenter = element.data.styles is defined and 'text-center' in element.data.styles %}
+        {% set alignRight = element.data.styles is defined and 'text-right' in element.data.styles %}
+
         {% if lightbox %}
             {% set imageUrl = web_image(image.file ?? image).cropResize(1920, 1920) %}
-            <a target="_blank" href="{{ imageUrl }}" title="{{ title }}">
+            <a target="_blank" href="{{ imageUrl }}" title="{{ title }}" class="d-block {{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto' : '' }}" {% if setMaxWidth %}style="max-width: {{ width }}px;"{% endif %}>
+        {% elseif setMaxWidth and width %}
+            <div class="{{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto' : '' }}" style="max-width: {{ width }}px;">
         {% endif %}
 
         {% include '@CmsElements/BetterDefault/responsive_image.html.twig' %}
 
         {% if lightbox %}
             </a>
+        {% elseif setMaxWidth and width %}
+            </div>
         {% endif %}
     {% endif %}
 </div>

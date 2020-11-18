@@ -5,3 +5,6 @@ cms:
             template: 'CmsElementsBundle:BetterDefault:image.html.twig'
             public: true
             icon: 'fa fa-image'
+            styles:
+                align image center: 'text-center'
+                align image right: 'text-right'

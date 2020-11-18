@@ -1,7 +1,12 @@
+# Elements
 VehicleOffer: "Angebot"
 VehicleEnVKV: "Verbrauchsangaben (EnVKV)"
 VehicleDatDisclaimer: "Dat-Hinweis"
 VehicleFinancing: "Fahrzeugfinanzierung"
+
+# Styles
+align image center: "Bild zentrieren"
+align image right: "Bild rechtsbündig"
 
 images:
     label:
