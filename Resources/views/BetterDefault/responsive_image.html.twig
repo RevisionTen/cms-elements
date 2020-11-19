@@ -34,9 +34,9 @@
             {% set height = fileHeight %}
         {% endif %}
 
-        {% set has2X = width <= 1920 %}
-        {% set has3X = width <= 720 %}
-        {% set has4X = width <= 480 %}
+        {% set has2X = (has2X is defined and has2X) or (has2X is not defined and width <= 1920) %}
+        {% set has3X = (has3X is defined and has3X) or (has3X is not defined and width <= 720) %}
+        {% set has4X = (has4X is defined and has4X) or (has4X is not defined and width <= 480) %}
 
         {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
         {% set src1xWebP = web_image(filePath).zoomCrop(width, height) %}
