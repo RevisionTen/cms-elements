@@ -48,7 +48,7 @@ class VehicleEnVKV extends Element
                 'F' => 'F',
                 'G' => 'G',
             ],
-            'constraints' => new NotBlank(),
+            'required' => false,
             'attr' => [
                 'class' => 'custom-select',
             ],
