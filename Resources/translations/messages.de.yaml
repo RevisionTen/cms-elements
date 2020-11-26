@@ -89,6 +89,11 @@ vehicle:
             legalDisclaimer: "Rechtstext"
             legalDisclaimerNum: "Rechtstext-Sternchen/Zahl"
             numberOfMonthlyInstalments: "%numberOfMonthlyInstalments% Monatsraten à"
+        defaultLegalDisclaimer:
+            cash: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
+            credit: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
+            leasingBusiness: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
+            leasingPrivate: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
         help:
             msrp: "Wenn Sie hier einen abweichenden Preis eingeben wird dieser zusammen mit der errechneten Ersparnis angezeigt."
             kilometersCredit: "Muss nur bei Angeboten mit Rückkaufoption angegeben werden."

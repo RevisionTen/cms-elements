@@ -1,11 +1,13 @@
-{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : false %}
+{% set defaultLegalDisclaimer = false %}
+{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : defaultLegalDisclaimer %}
+{% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-leasing-business">
     <tr class="vehicle-financing-leasing-business-monthlyInstalment">
         <td class="vehicle-financing-table-label">
             {{ 'vehicle.financing.label.monthlyInstalment'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer %}<sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '5' }}</sup>{% endif %}
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '5' }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-business-specialPayment">
@@ -36,6 +38,6 @@
 
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
-        <div><sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '5' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+        <div><sup>{{ legalDisclaimerNum ?? '5' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
     </div>
 {% endif %}

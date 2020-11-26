@@ -1,4 +1,14 @@
-{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : false %}
+{#% set validUntil = element.data.validUntil ?? false %}
+{% set createdDate = element.data.createdDate ?? false %}
+{% set registrationDate = element.data.registrationDate ?? false %}
+{% set defaultLegalDisclaimer = validUntil and createdDate and registrationDate ? ('vehicle.financing.defaultLegalDisclaimer.credit'|trans({
+    '%validUntil%': validUntil|date('d.m.Y'),
+    '%createdDate%': createdDate|date('m/Y'),
+    '%registrationDate%': registrationDate|date('d.m.Y')
+})) : false %#}
+{% set defaultLegalDisclaimer = false %}
+{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : defaultLegalDisclaimer %}
+{% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-credit">
     {% if element.data.msrp is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -42,7 +52,7 @@
             }) }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer %}<sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '3' }}</sup>{% endif %}
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{legalDisclaimerNum ?? '3' }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-netAmount">
@@ -109,6 +119,6 @@
 
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
-        <div><sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '3' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+        <div><sup>{{ legalDisclaimerNum ?? '3' }}</sup> {{ legalDisclaimer|raw|replace({'<div>': '', '</div>': ''})|raw }}</div>
     </div>
 {% endif %}
