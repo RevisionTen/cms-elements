@@ -62,7 +62,7 @@ class VehicleFinancing extends Element
                     $form->add('price', NumberType::class, array(
                         'label' => 'vehicle.financing.label.cashPrice',
                         'scale' => 2,
-                        'constraints' => new NotBlank(),
+                        'required' => false,
                     ));
                 } elseif ('credit' === $financingType) {
                     self::addFields($form, [
@@ -138,7 +138,7 @@ class VehicleFinancing extends Element
             $form->add('price', NumberType::class, array(
                 'label' => 'vehicle.financing.label.price',
                 'scale' => 2,
-                'constraints' => new NotBlank(),
+                'required' => false,
             ));
         } else {
             $form->remove('price');

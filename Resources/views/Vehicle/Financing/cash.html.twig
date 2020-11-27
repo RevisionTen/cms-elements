@@ -21,14 +21,16 @@
             </td>
         </tr>
     {% endif %}
-    <tr class="vehicle-financing-cash-price">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.cashPriceShort'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '2' }}</sup>{% endif %}
-        </td>
-    </tr>
+    {% if element.data.price is not empty %}
+        <tr class="vehicle-financing-cash-price">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.cashPriceShort'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '2' }}</sup>{% endif %}
+            </td>
+        </tr>
+    {% endif %}
 </table>
 
 {% if legalDisclaimer %}
