@@ -6,9 +6,12 @@
     '%createdDate%': createdDate|date('m/Y'),
     '%registrationDate%': registrationDate|date('d.m.Y')
 })) : false %#}
-{% set defaultLegalDisclaimer = false %}
-{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : defaultLegalDisclaimer %}
+{% set defaultLegalDisclaimer = null %}
+{% set defaultFixedInterestRateDisclaimer = '<div>'~('vehicle.financing.defaultFixedInterestRateDisclaimer.credit'|trans)~'</div>' %}
+{% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
+{% set fixedInterestRateDisclaimer = element.data.fixedInterestRateDisclaimer ?? defaultFixedInterestRateDisclaimer %}
+{% set fixedInterestRateDisclaimerNum = element.data.fixedInterestRateDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-credit">
     {% if element.data.msrp is not empty and element.data.price is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -54,7 +57,7 @@
             }) }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{legalDisclaimerNum ?? '3' }}</sup>{% endif %}
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '3' }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-netAmount">
@@ -70,7 +73,7 @@
             {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
+            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} % {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-effectiveInterest">
@@ -121,6 +124,11 @@
 
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
-        <div><sup>{{ legalDisclaimerNum ?? '3' }}</sup> {{ legalDisclaimer|raw|replace({'<div>': '', '</div>': ''})|raw }}</div>
+        <div><sup>{{ legalDisclaimerNum ?? '3' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+    </div>
+{% endif %}
+{% if fixedInterestRateDisclaimer and fixedInterestRateDisclaimerNum %}
+    <div class="vehicle-financing-legal-disclaimer">
+        <div><sup>{{ fixedInterestRateDisclaimerNum }}</sup> {{ fixedInterestRateDisclaimer|raw|slice(5, -6)|raw }}</div>
     </div>
 {% endif %}

@@ -1,6 +1,9 @@
-{% set defaultLegalDisclaimer = false %}
-{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : defaultLegalDisclaimer %}
+{% set defaultLegalDisclaimer = null %}
+{% set defaultFixedInterestRateDisclaimer = '<div>'~('vehicle.financing.defaultFixedInterestRateDisclaimer.leasingPrivate'|trans)~'</div>' %}
+{% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
+{% set fixedInterestRateDisclaimer = element.data.fixedInterestRateDisclaimer ?? defaultFixedInterestRateDisclaimer %}
+{% set fixedInterestRateDisclaimerNum = element.data.fixedInterestRateDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-leasing-private">
     {% if element.data.msrp is not empty and element.data.price is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -62,7 +65,7 @@
             {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
+            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} % {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-private-effectiveInterest">
@@ -102,5 +105,10 @@
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
         <div><sup>{{ legalDisclaimerNum ?? '4' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+    </div>
+{% endif %}
+{% if fixedInterestRateDisclaimer and fixedInterestRateDisclaimerNum %}
+    <div class="vehicle-financing-legal-disclaimer">
+        <div><sup>{{ fixedInterestRateDisclaimerNum }}</sup> {{ fixedInterestRateDisclaimer|raw|slice(5, -6)|raw }}</div>
     </div>
 {% endif %}

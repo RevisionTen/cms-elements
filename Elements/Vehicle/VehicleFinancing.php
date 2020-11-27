@@ -41,15 +41,15 @@ class VehicleFinancing extends Element
             ],
         ));
 
-        $builder->add('legalDisclaimer', TrixType::class, array(
-            'label' => 'vehicle.financing.label.legalDisclaimer',
-            'help' => 'vehicle.financing.help.legalDisclaimer',
-            'required' => false,
-        ));
-
         $builder->add('legalDisclaimerNum', TextType::class, array(
             'label' => 'vehicle.financing.label.legalDisclaimerNum',
             'help' => 'vehicle.financing.help.legalDisclaimerNum',
+            'required' => false,
+        ));
+
+        $builder->add('legalDisclaimer', TrixType::class, array(
+            'label' => 'vehicle.financing.label.legalDisclaimer',
+            'help' => 'vehicle.financing.help.legalDisclaimer',
             'required' => false,
         ));
 
@@ -71,6 +71,8 @@ class VehicleFinancing extends Element
                         'downpayment',
                         'netAmount',
                         'fixedInterestRate',
+                        'fixedInterestRateDisclaimer',
+                        'fixedInterestRateDisclaimerNum',
                         'effectiveInterest',
                         'months',
                         'kilometersCredit',
@@ -85,6 +87,8 @@ class VehicleFinancing extends Element
                         'specialPayment',
                         'netAmount',
                         'fixedInterestRate',
+                        'fixedInterestRateDisclaimer',
+                        'fixedInterestRateDisclaimerNum',
                         'effectiveInterest',
                         'months',
                         'kilometersLeasing',
@@ -182,6 +186,25 @@ class VehicleFinancing extends Element
             ));
         } else {
             $form->remove('fixedInterestRate');
+        }
+
+        if (in_array('fixedInterestRateDisclaimerNum', $fields, true)) {
+            $form->add('fixedInterestRateDisclaimerNum', TextType::class, array(
+                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimerNum',
+                'required' => false,
+            ));
+        } else {
+            $form->remove('fixedInterestRateDisclaimerNum');
+        }
+
+        if (in_array('fixedInterestRateDisclaimer', $fields, true)) {
+            $form->add('fixedInterestRateDisclaimer', TrixType::class, array(
+                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimer',
+                'help' => 'vehicle.financing.help.fixedInterestRateDisclaimer',
+                'required' => false,
+            ));
+        } else {
+            $form->remove('fixedInterestRateDisclaimer');
         }
 
         if (in_array('effectiveInterest', $fields, true)) {

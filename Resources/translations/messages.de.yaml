@@ -78,6 +78,8 @@ vehicle:
             downpayment: "Anzahlung"
             netAmount: "Nettodarlehensbetrag"
             fixedInterestRate: "Sollzins (gebunden) p.a."
+            fixedInterestRateDisclaimer: "Sollzins Rechtstext"
+            fixedInterestRateDisclaimerNum: "Sollzins Rechtstext-Sternchen/Zahl"
             effectiveInterest: "Effektiver Jahreszins"
             months: "Laufzeit"
             kilometersCredit: "Jährliche Laufleistung"
@@ -94,12 +96,16 @@ vehicle:
             credit: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
             leasingBusiness: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
             leasingPrivate: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
+        defaultFixedInterestRateDisclaimer:
+            credit: "Gebunden für die gesamte Vertragslaufzeit."
+            leasingPrivate: "Gebunden für die gesamte Vertragslaufzeit."
         help:
             msrp: "Wenn Sie hier einen abweichenden Preis eingeben wird dieser zusammen mit der errechneten Ersparnis angezeigt."
             kilometersCredit: "Muss nur bei Angeboten mit Rückkaufoption angegeben werden."
             lastInstalmentIsLastMonthlyInstalment: "Wenn Sie diese Option aktivieren ist die Anzahl der normalen monatlichen Raten gleich die Laufzeit minus 1. Ansonsten entspricht die Anzahl der normalen monatlichen Raten der Laufzeit und die Schlussrate ist \"on top\"."
             legalDisclaimer: "z.b. Inkl. Überführungskosten und Mehrwertsteuer. Zzgl. Zulassungskosten. Abbildung zeigt Sonderausstattung gegen Mehrpreis."
             legalDisclaimerNum: "z.b. 1 oder *"
+            fixedInterestRateDisclaimer: "z.b. \"Gebunden für die gesamte Vertragslaufzeit.\""
         choices:
             financingType:
                 cash: "Barpreis / Hauspreis"

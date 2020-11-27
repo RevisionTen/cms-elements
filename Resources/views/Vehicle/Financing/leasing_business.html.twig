@@ -1,5 +1,5 @@
-{% set defaultLegalDisclaimer = false %}
-{% set legalDisclaimer = element.data.legalDisclaimer is defined and element.data.legalDisclaimer is not empty ? element.data.legalDisclaimer : defaultLegalDisclaimer %}
+{% set defaultLegalDisclaimer = null %}
+{% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-leasing-business">
     <tr class="vehicle-financing-leasing-business-monthlyInstalment">
