@@ -10,6 +10,7 @@
         {% if imageEntry.image is defined and imageEntry.image %}
             {% set image = imageEntry.image %}
             {% set title = imageEntry.title ?? '' %}
+            {% set alt = imageEntry.alt ?? title %}
             {% set imageUrl = imageEntry.image.file ?? '' %}
 
             <a class="{{ imagesPerRow }} mb-3" href="{{ imageUrl }}" title="{{ title}}">

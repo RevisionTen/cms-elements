@@ -1,4 +1,6 @@
 {% if image is defined and image %}
+    {% set alt = alt is defined and alt ? alt : title %}
+    {% set prettyName = alt|slugify %}
 
     {% set hasMetaData = image is iterable and image.file is defined %}
     {% if hasMetaData %}
@@ -12,7 +14,6 @@
         {% set fileWidth = 500 %}
         {% set fileHeight = 500 %}
     {% endif %}
-
 
     {% if showOriginal or mimeType == 'image/svg+xml' or filePath|slice(-4) == '.svg' %}
         <img class="img-fluid d-block"
@@ -38,30 +39,30 @@
         {% set has3X = (has3X is defined and has3X) or (has3X is not defined and width <= 720) %}
         {% set has4X = (has4X is defined and has4X) or (has4X is not defined and width <= 480) %}
 
-        {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
-        {% set src1xWebP = web_image(filePath).zoomCrop(width, height) %}
+        {% set src05xWebP = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))).setPrettyName(prettyName) %}
+        {% set src1xWebP = web_image(filePath).zoomCrop(width, height).setPrettyName(prettyName) %}
 
         {% if has2X %}
-            {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2) %}
+            {% set src2xWebP = web_image(filePath).zoomCrop(width * 2, height * 2).setPrettyName(prettyName) %}
         {% endif %}
         {% if has3X %}
-            {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3) %}
+            {% set src3xWebP = web_image(filePath).zoomCrop(width * 3, height * 3).setPrettyName(prettyName) %}
         {% endif %}
         {% if has4X %}
-            {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+            {% set src4xWebP = web_image(filePath).zoomCrop(width * 4, height * 4).setPrettyName(prettyName) %}
         {% endif %}
 
-        {% set src05x = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))) %}
-        {% set src1x = web_image(filePath).zoomCrop(width, height) %}
+        {% set src05x = web_image(filePath).zoomCrop(((width * 0.5)|round(0)), ((height * 0.5)|round(0))).setPrettyName(prettyName) %}
+        {% set src1x = web_image(filePath).zoomCrop(width, height).setPrettyName(prettyName) %}
 
         {% if has2X %}
-            {% set src2x = web_image(filePath).zoomCrop(width * 2, height * 2) %}
+            {% set src2x = web_image(filePath).zoomCrop(width * 2, height * 2).setPrettyName(prettyName) %}
         {% endif %}
         {% if has3X %}
-            {% set src3x = web_image(filePath).zoomCrop(width * 3, height * 3) %}
+            {% set src3x = web_image(filePath).zoomCrop(width * 3, height * 3).setPrettyName(prettyName) %}
         {% endif %}
         {% if has4X %}
-            {% set src4x = web_image(filePath).zoomCrop(width * 4, height * 4) %}
+            {% set src4x = web_image(filePath).zoomCrop(width * 4, height * 4).setPrettyName(prettyName) %}
         {% endif %}
 
         {% if grayscale %}

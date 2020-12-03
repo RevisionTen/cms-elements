@@ -9,6 +9,7 @@
         {% set width = element.data.settings.width ?? null %}
         {% set height = element.data.settings.height ?? null %}
         {% set title = element.data.title ?? '' %}
+        {% set alt = element.data.alt ?? title %}
 
         {% set alignCenter = element.data.styles is defined and 'text-center' in element.data.styles %}
         {% set alignRight = element.data.styles is defined and 'text-right' in element.data.styles %}

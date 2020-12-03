@@ -34,6 +34,13 @@ class Image extends Element
             'constraints' => new NotBlank(),
         ]);
 
+        $builder->add('alt', TextType::class, [
+            'label' => 'element.label.alt',
+            'help' => 'element.help.alt',
+            'translation_domain' => 'cms',
+            'required' => false,
+        ]);
+
         $builder->add('image', UploadType::class, [
             'label' => 'element.label.image',
             'translation_domain' => 'cms',

@@ -6,6 +6,9 @@ element:
         formValue: "Wert oder URL-Parameter-Name"
         lightbox: "Lightbox aktivieren"
         setMaxWidth: "Maximale Darstellungsbreite auf eingegebenen Wert limitieren"
+        alt: "Alt-Tag (SEO)"
     value:
         formTypeParameter: "Wert aus URL-Parameter"
         formTypeValue: "Fester Wert"
+    help:
+        alt: "Bleibt dieses Feld leer, wird stattdessen der Titel als Alt-Tag verwendet."
