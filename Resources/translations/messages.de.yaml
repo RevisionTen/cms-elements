@@ -34,7 +34,7 @@ vehicle:
             energyEfficiencyClass: "Energieeffizienzklasse"
             emissionClass: "Emissionsklasse"
             emissionSticker: "Umweltplakette"
-            co2Emission: "CO²-Emissionen komb."
+            co2Emission: "CO2-Emissionen komb."
             combined: "Verbrauch komb."
             outer: "Verbrauch ausserorts"
             inner: "Verbrauch innerorts"
@@ -67,6 +67,7 @@ vehicle:
                 blue: "Blau (noch nicht eingeführt)"
     financing:
         label:
+            euro: "€"
             financingType: "Finanzierungsart"
             msrp: "Unverbindliche Preisempfehlung des Herstellers"
             msrpShort: "UVP"
@@ -74,7 +75,9 @@ vehicle:
             price: "Fahrzeugpreis (inkl. Überführungskosten)"
             cashPrice: "Barpreis / Hauspreis"
             cashPriceShort: "Preis"
-            specialPayment: "Sonderzahlung"
+            specialPayment: "Leasingsonderzahlung"
+            specialPaymentDisclaimer: "Leasingsonderzahlung Rechtstext"
+            specialPaymentDisclaimerNum: "Leasingsonderzahlung Rechtstext-Sternchen/Zahl"
             downpayment: "Anzahlung"
             netAmount: "Nettodarlehensbetrag"
             fixedInterestRate: "Sollzins (gebunden) p.a."
@@ -88,9 +91,10 @@ vehicle:
             monthlyInstalment: "Monatsrate"
             lastInstalment: "Schlussrate"
             lastInstalmentIsLastMonthlyInstalment: "Schlussrate ist letzte Monatsrate"
-            legalDisclaimer: "Rechtstext"
-            legalDisclaimerNum: "Rechtstext-Sternchen/Zahl"
+            legalDisclaimer: "Rate/Preis Rechtstext"
+            legalDisclaimerNum: "Rate/Preis Rechtstext-Sternchen/Zahl"
             numberOfMonthlyInstalments: "%numberOfMonthlyInstalments% Monatsraten à"
+            numberOfMonthlyLeasingInstalments: "%numberOfMonthlyInstalments% mtl. Leasingraten à"
         defaultLegalDisclaimer:
             cash: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
             credit: "Gültig bis %validUntil%, Stand %createdDate%, Zulassung %registrationDate%."
@@ -106,6 +110,7 @@ vehicle:
             legalDisclaimer: "z.b. Inkl. Überführungskosten und Mehrwertsteuer. Zzgl. Zulassungskosten. Abbildung zeigt Sonderausstattung gegen Mehrpreis."
             legalDisclaimerNum: "z.b. 1 oder *"
             fixedInterestRateDisclaimer: "z.b. \"Gebunden für die gesamte Vertragslaufzeit.\""
+            specialPaymentDisclaimer: ""
         choices:
             financingType:
                 cash: "Barpreis / Hauspreis"

@@ -1,9 +1,12 @@
 {% set defaultLegalDisclaimer = null %}
+{% set defaultSpecialPaymentDisclaimer = null %}
 {% set defaultFixedInterestRateDisclaimer = '<div>'~('vehicle.financing.defaultFixedInterestRateDisclaimer.leasingPrivate'|trans)~'</div>' %}
 {% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
 {% set fixedInterestRateDisclaimer = element.data.fixedInterestRateDisclaimer ?? defaultFixedInterestRateDisclaimer %}
 {% set fixedInterestRateDisclaimerNum = element.data.fixedInterestRateDisclaimerNum ?? null %}
+{% set specialPaymentDisclaimer = element.data.specialPaymentDisclaimer ?? defaultSpecialPaymentDisclaimer %}
+{% set specialPaymentDisclaimerNum = element.data.specialPaymentDisclaimerNum ?? null %}
 <table class="table vehicle-financing-table vehicle-financing-leasing-private">
     {% if element.data.msrp is not empty and element.data.price is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -12,7 +15,7 @@
                 {{ 'vehicle.financing.label.msrpShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
         <tr class="vehicle-financing-leasing-private-savings">
@@ -20,7 +23,7 @@
                 {{ 'vehicle.financing.label.savings'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
@@ -30,16 +33,18 @@
                 {{ 'vehicle.financing.label.cashPriceShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
     <tr class="vehicle-financing-leasing-private-monthlyInstalment">
         <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.monthlyInstalment'|trans }}
+            {{ 'vehicle.financing.label.numberOfMonthlyLeasingInstalments'|trans({
+                '%numberOfMonthlyInstalments%': element.data.months
+            }) }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '4' }}</sup>{% endif %}
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '4' }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-private-specialPayment">
@@ -47,7 +52,7 @@
             {{ 'vehicle.financing.label.specialPayment'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
         </td>
     </tr>
     {% if element.data.netAmount is defined and element.data.netAmount is not empty %}
@@ -56,16 +61,16 @@
                 {{ 'vehicle.financing.label.netAmount'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
     <tr class="vehicle-financing-leasing-private-fixedInterestRate">
         <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
+            {{ 'vehicle.financing.label.fixedInterestRate'|trans }} {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} % {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
+            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-private-effectiveInterest">
@@ -97,7 +102,7 @@
             {{ 'vehicle.financing.label.totalAmount'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
         </td>
     </tr>
 </table>
@@ -105,6 +110,11 @@
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
         <div><sup>{{ legalDisclaimerNum ?? '4' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>
+    </div>
+{% endif %}
+{% if specialPaymentDisclaimer and specialPaymentDisclaimerNum %}
+    <div class="vehicle-financing-legal-disclaimer">
+        <div><sup>{{ specialPaymentDisclaimerNum }}</sup> {{ specialPaymentDisclaimer|raw|slice(5, -6)|raw }}</div>
     </div>
 {% endif %}
 {% if fixedInterestRateDisclaimer and fixedInterestRateDisclaimerNum %}

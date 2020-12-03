@@ -20,7 +20,7 @@
                 {{ 'vehicle.financing.label.msrpShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
         <tr class="vehicle-financing-credit-savings">
@@ -28,7 +28,7 @@
                 {{ 'vehicle.financing.label.savings'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
@@ -38,7 +38,7 @@
                 {{ 'vehicle.financing.label.cashPriceShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
@@ -47,7 +47,7 @@
             {{ 'vehicle.financing.label.downpayment'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.downpayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            {{ element.data.downpayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-monthlyInstalment">
@@ -57,7 +57,7 @@
             }) }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '3' }}</sup>{% endif %}
+            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '3' }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-netAmount">
@@ -65,15 +65,15 @@
             {{ 'vehicle.financing.label.netAmount'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            {{ element.data.netAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-fixedInterestRate">
         <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.fixedInterestRate'|trans }}
+            {{ 'vehicle.financing.label.fixedInterestRate'|trans }} {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} % {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
+            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
         </td>
     </tr>
     <tr class="vehicle-financing-credit-effectiveInterest">
@@ -108,7 +108,7 @@
                 {{ 'vehicle.financing.label.lastInstalment'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.lastInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.lastInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
@@ -117,7 +117,7 @@
             {{ 'vehicle.financing.label.totalAmount'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
         </td>
     </tr>
 </table>

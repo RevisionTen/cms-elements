@@ -38,19 +38,8 @@ class VehicleFinancing extends Element
             'constraints' => new NotBlank(),
             'attr' => [
                 'data-condition' => true,
+                'class' => 'custom-select',
             ],
-        ));
-
-        $builder->add('legalDisclaimerNum', TextType::class, array(
-            'label' => 'vehicle.financing.label.legalDisclaimerNum',
-            'help' => 'vehicle.financing.help.legalDisclaimerNum',
-            'required' => false,
-        ));
-
-        $builder->add('legalDisclaimer', TrixType::class, array(
-            'label' => 'vehicle.financing.label.legalDisclaimer',
-            'help' => 'vehicle.financing.help.legalDisclaimer',
-            'required' => false,
         ));
 
         $formModifier = static function (FormInterface $form = null, ?string $financingType = null) {
@@ -87,6 +76,8 @@ class VehicleFinancing extends Element
                         'specialPayment',
                         'netAmount',
                         'fixedInterestRate',
+                        'specialPaymentDisclaimer',
+                        'specialPaymentDisclaimerNum',
                         'fixedInterestRateDisclaimer',
                         'fixedInterestRateDisclaimerNum',
                         'effectiveInterest',
@@ -105,6 +96,8 @@ class VehicleFinancing extends Element
                 } elseif ('leasingBusiness' === $financingType) {
                     self::addFields($form, [
                         'specialPayment',
+                        'specialPaymentDisclaimer',
+                        'specialPaymentDisclaimerNum',
                         'months',
                         'kilometersLeasing',
                         'monthlyInstalment',
@@ -127,6 +120,27 @@ class VehicleFinancing extends Element
 
     private static function addFields(FormInterface $form, array $fields): void
     {
+        $form->remove('msrp');
+        $form->remove('price');
+        $form->remove('specialPayment');
+        $form->remove('downpayment');
+        $form->remove('netAmount');
+        $form->remove('fixedInterestRate');
+        $form->remove('effectiveInterest');
+        $form->remove('months');
+        $form->remove('kilometersCredit');
+        $form->remove('kilometersLeasing');
+        $form->remove('lastInstalment');
+        $form->remove('lastInstalmentIsLastMonthlyInstalment');
+        $form->remove('totalAmount');
+        $form->remove('monthlyInstalment');
+        $form->remove('legalDisclaimerNum');
+        $form->remove('specialPaymentDisclaimerNum');
+        $form->remove('fixedInterestRateDisclaimerNum');
+        $form->remove('legalDisclaimer');
+        $form->remove('specialPaymentDisclaimer');
+        $form->remove('fixedInterestRateDisclaimer');
+
         if (in_array('msrp', $fields, true)) {
             $form->add('msrp', NumberType::class, array(
                 'label' => 'vehicle.financing.label.msrp',
@@ -134,8 +148,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'required' => false,
             ));
-        } else {
-            $form->remove('msrp');
         }
 
         if (in_array('price', $fields, true)) {
@@ -144,8 +156,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'required' => false,
             ));
-        } else {
-            $form->remove('price');
         }
 
         if (in_array('specialPayment', $fields, true)) {
@@ -154,8 +164,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('specialPayment');
         }
 
         if (in_array('downpayment', $fields, true)) {
@@ -164,8 +172,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('downpayment');
         }
 
         if (in_array('netAmount', $fields, true)) {
@@ -174,8 +180,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('netAmount');
         }
 
         if (in_array('fixedInterestRate', $fields, true)) {
@@ -184,27 +188,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('fixedInterestRate');
-        }
-
-        if (in_array('fixedInterestRateDisclaimerNum', $fields, true)) {
-            $form->add('fixedInterestRateDisclaimerNum', TextType::class, array(
-                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimerNum',
-                'required' => false,
-            ));
-        } else {
-            $form->remove('fixedInterestRateDisclaimerNum');
-        }
-
-        if (in_array('fixedInterestRateDisclaimer', $fields, true)) {
-            $form->add('fixedInterestRateDisclaimer', TrixType::class, array(
-                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimer',
-                'help' => 'vehicle.financing.help.fixedInterestRateDisclaimer',
-                'required' => false,
-            ));
-        } else {
-            $form->remove('fixedInterestRateDisclaimer');
         }
 
         if (in_array('effectiveInterest', $fields, true)) {
@@ -213,8 +196,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('effectiveInterest');
         }
 
         if (in_array('months', $fields, true)) {
@@ -223,8 +204,6 @@ class VehicleFinancing extends Element
                 'scale' => 0,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('months');
         }
 
         if (in_array('kilometersCredit', $fields, true)) {
@@ -234,8 +213,6 @@ class VehicleFinancing extends Element
                 'scale' => 0,
                 'required' => false,
             ));
-        } else {
-            $form->remove('kilometersCredit');
         }
 
         if (in_array('kilometersLeasing', $fields, true)) {
@@ -244,8 +221,6 @@ class VehicleFinancing extends Element
                 'scale' => 0,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('kilometersLeasing');
         }
 
         if (in_array('lastInstalment', $fields, true)) {
@@ -259,9 +234,6 @@ class VehicleFinancing extends Element
                 'help' => 'vehicle.financing.help.lastInstalmentIsLastMonthlyInstalment',
                 'required' => false,
             ));
-        } else {
-            $form->remove('lastInstalment');
-            $form->remove('lastInstalmentIsLastMonthlyInstalment');
         }
 
         if (in_array('totalAmount', $fields, true)) {
@@ -270,8 +242,6 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('totalAmount');
         }
 
         if (in_array('monthlyInstalment', $fields, true)) {
@@ -280,8 +250,46 @@ class VehicleFinancing extends Element
                 'scale' => 2,
                 'constraints' => new NotBlank(),
             ));
-        } else {
-            $form->remove('monthlyInstalment');
+        }
+
+
+        // Legal.
+        $form->add('legalDisclaimerNum', TextType::class, array(
+            'label' => 'vehicle.financing.label.legalDisclaimerNum',
+            'help' => 'vehicle.financing.help.legalDisclaimerNum',
+            'required' => false,
+        ));
+        if (in_array('specialPaymentDisclaimerNum', $fields, true)) {
+            $form->add('specialPaymentDisclaimerNum', TextType::class, array(
+                'label' => 'vehicle.financing.label.specialPaymentDisclaimerNum',
+                'required' => false,
+            ));
+        }
+        if (in_array('fixedInterestRateDisclaimerNum', $fields, true)) {
+            $form->add('fixedInterestRateDisclaimerNum', TextType::class, array(
+                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimerNum',
+                'required' => false,
+            ));
+        }
+
+        $form->add('legalDisclaimer', TrixType::class, array(
+            'label' => 'vehicle.financing.label.legalDisclaimer',
+            'help' => 'vehicle.financing.help.legalDisclaimer',
+            'required' => false,
+        ));
+        if (in_array('specialPaymentDisclaimer', $fields, true)) {
+            $form->add('specialPaymentDisclaimer', TrixType::class, array(
+                'label' => 'vehicle.financing.label.specialPaymentDisclaimer',
+                'help' => 'vehicle.financing.help.specialPaymentDisclaimer',
+                'required' => false,
+            ));
+        }
+        if (in_array('fixedInterestRateDisclaimer', $fields, true)) {
+            $form->add('fixedInterestRateDisclaimer', TrixType::class, array(
+                'label' => 'vehicle.financing.label.fixedInterestRateDisclaimer',
+                'help' => 'vehicle.financing.help.fixedInterestRateDisclaimer',
+                'required' => false,
+            ));
         }
     }
 

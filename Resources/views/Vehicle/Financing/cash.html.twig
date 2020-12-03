@@ -9,7 +9,7 @@
                 {{ 'vehicle.financing.label.msrpShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ element.data.msrp|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
         <tr class="vehicle-financing-cash-savings">
@@ -17,7 +17,7 @@
                 {{ 'vehicle.financing.label.savings'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} €
+                {{ savings|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
             </td>
         </tr>
     {% endif %}
@@ -27,7 +27,7 @@
                 {{ 'vehicle.financing.label.cashPriceShort'|trans }}
             </td>
             <td class="vehicle-financing-table-value">
-                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} € {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '2' }}</sup>{% endif %}
+                {{ element.data.price|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '2' }}</sup>{% endif %}
             </td>
         </tr>
     {% endif %}
