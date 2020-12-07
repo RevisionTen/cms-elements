@@ -1,6 +1,10 @@
-{% set defaultLegalDisclaimer = null %}
-{% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
+{% set disclaimer = element.data.disclaimer ?? null %}
+
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
+
+{# Deprecated #}
+{% set legalDisclaimer = element.data.legalDisclaimer ?? null %}
+
 <table class="table vehicle-financing-table vehicle-financing-cash">
     {% if element.data.msrp is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -33,6 +37,13 @@
     {% endif %}
 </table>
 
+{% if disclaimer %}
+    <div class="vehicle-financing-legal-disclaimer">
+        {{ disclaimer|raw }}
+    </div>
+{% endif %}
+
+{# Deprecated #}
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
         <div><sup>{{ legalDisclaimerNum ?? '2' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>

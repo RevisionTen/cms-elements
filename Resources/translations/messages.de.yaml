@@ -91,6 +91,7 @@ vehicle:
             monthlyInstalment: "Monatsrate"
             lastInstalment: "Schlussrate"
             lastInstalmentIsLastMonthlyInstalment: "Schlussrate ist letzte Monatsrate"
+            disclaimer: "Rechtstext"
             legalDisclaimer: "Rate/Preis Rechtstext"
             legalDisclaimerNum: "Rate/Preis Rechtstext-Sternchen/Zahl"
             numberOfMonthlyInstalments: "%numberOfMonthlyInstalments% Monatsraten à"

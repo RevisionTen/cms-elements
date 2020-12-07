@@ -1,17 +1,12 @@
-{#% set validUntil = element.data.validUntil ?? false %}
-{% set createdDate = element.data.createdDate ?? false %}
-{% set registrationDate = element.data.registrationDate ?? false %}
-{% set defaultLegalDisclaimer = validUntil and createdDate and registrationDate ? ('vehicle.financing.defaultLegalDisclaimer.credit'|trans({
-    '%validUntil%': validUntil|date('d.m.Y'),
-    '%createdDate%': createdDate|date('m/Y'),
-    '%registrationDate%': registrationDate|date('d.m.Y')
-})) : false %#}
-{% set defaultLegalDisclaimer = null %}
-{% set defaultFixedInterestRateDisclaimer = '<div>'~('vehicle.financing.defaultFixedInterestRateDisclaimer.credit'|trans)~'</div>' %}
-{% set legalDisclaimer = element.data.legalDisclaimer ?? defaultLegalDisclaimer %}
+{% set disclaimer = element.data.disclaimer ?? null %}
+
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
-{% set fixedInterestRateDisclaimer = element.data.fixedInterestRateDisclaimer ?? defaultFixedInterestRateDisclaimer %}
 {% set fixedInterestRateDisclaimerNum = element.data.fixedInterestRateDisclaimerNum ?? null %}
+
+{# Deprecated #}
+{% set legalDisclaimer = element.data.legalDisclaimer ?? null %}
+{% set fixedInterestRateDisclaimer = element.data.fixedInterestRateDisclaimer ?? null %}
+
 <table class="table vehicle-financing-table vehicle-financing-credit">
     {% if element.data.msrp is not empty and element.data.price is not empty %}
         {% set savings = element.data.msrp - element.data.price %}
@@ -122,6 +117,13 @@
     </tr>
 </table>
 
+{% if disclaimer %}
+    <div class="vehicle-financing-legal-disclaimer">
+        {{ disclaimer|raw }}
+    </div>
+{% endif %}
+
+{# Deprecated #}
 {% if legalDisclaimer %}
     <div class="vehicle-financing-legal-disclaimer">
         <div><sup>{{ legalDisclaimerNum ?? '3' }}</sup> {{ legalDisclaimer|raw|slice(5, -6)|raw }}</div>

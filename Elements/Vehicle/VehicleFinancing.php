@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RevisionTen\CmsElements\Elements\Vehicle;
 
 use RevisionTen\CMS\Form\Elements\Element;
+use RevisionTen\CMS\Form\Types\CKEditorType;
 use RevisionTen\CMS\Form\Types\TrixType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -256,7 +257,6 @@ class VehicleFinancing extends Element
         // Legal.
         $form->add('legalDisclaimerNum', TextType::class, array(
             'label' => 'vehicle.financing.label.legalDisclaimerNum',
-            'help' => 'vehicle.financing.help.legalDisclaimerNum',
             'required' => false,
         ));
         if (in_array('specialPaymentDisclaimerNum', $fields, true)) {
@@ -271,6 +271,11 @@ class VehicleFinancing extends Element
                 'required' => false,
             ));
         }
+
+        $form->add('disclaimer', CKEditorType::class, array(
+            'label' => 'vehicle.financing.label.disclaimer',
+            'required' => false,
+        ));
 
         $form->add('legalDisclaimer', TrixType::class, array(
             'label' => 'vehicle.financing.label.legalDisclaimer',
