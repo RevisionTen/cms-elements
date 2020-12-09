@@ -20,10 +20,10 @@
     </tr>
     <tr class="vehicle-financing-leasing-business-specialPayment">
         <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.specialPayment'|trans }}
+            {{ 'vehicle.financing.label.specialPayment'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
+            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
         </td>
     </tr>
     <tr class="vehicle-financing-leasing-business-months">
