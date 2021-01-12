@@ -85,6 +85,7 @@ vehicle:
             fixedInterestRateDisclaimerNum: "Sollzins Rechtstext-Sternchen/Zahl"
             effectiveInterest: "Effektiver Jahreszins"
             months: "Laufzeit"
+            monthsUnit: "Monate"
             kilometersCredit: "Jährliche Laufleistung"
             kilometersLeasing: "Jährliche Laufleistung"
             totalAmount: "Gesamtbetrag"
