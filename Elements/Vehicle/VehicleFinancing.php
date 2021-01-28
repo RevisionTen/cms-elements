@@ -61,7 +61,7 @@ class VehicleFinancing extends Element
                         'downpayment',
                         'netAmount',
                         'fixedInterestRate',
-                        'fixedInterestRateDisclaimer',
+                        //'fixedInterestRateDisclaimer',
                         'fixedInterestRateDisclaimerNum',
                         'effectiveInterest',
                         'months',
@@ -77,9 +77,9 @@ class VehicleFinancing extends Element
                         'specialPayment',
                         'netAmount',
                         'fixedInterestRate',
-                        'specialPaymentDisclaimer',
+                        //'specialPaymentDisclaimer',
                         'specialPaymentDisclaimerNum',
-                        'fixedInterestRateDisclaimer',
+                        //'fixedInterestRateDisclaimer',
                         'fixedInterestRateDisclaimerNum',
                         'effectiveInterest',
                         'months',
@@ -97,7 +97,7 @@ class VehicleFinancing extends Element
                 } elseif ('leasingBusiness' === $financingType) {
                     self::addFields($form, [
                         'specialPayment',
-                        'specialPaymentDisclaimer',
+                        //'specialPaymentDisclaimer',
                         'specialPaymentDisclaimerNum',
                         'months',
                         'kilometersLeasing',
@@ -106,6 +106,36 @@ class VehicleFinancing extends Element
                 }
             }
         };
+
+        // Migrate legalDisclaimer input to disclaimer field.
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            // New field.
+            $disclaimer = $data['disclaimer'] ?? '';
+
+            // Old fields.
+            $legalDisclaimer = $data['legalDisclaimer'] ?? null;
+            $specialPaymentDisclaimer = $data['specialPaymentDisclaimer'] ?? null;
+            $fixedInterestRateDisclaimer = $data['fixedInterestRateDisclaimer'] ?? null;
+
+            // Move data.
+            if (!empty($legalDisclaimer)) {
+                $data['disclaimer'] .= $legalDisclaimer;
+                $data['legalDisclaimer'] = null;
+            }
+            if (!empty($specialPaymentDisclaimer)) {
+                $data['disclaimer'] .= $specialPaymentDisclaimer;
+                $data['specialPaymentDisclaimer'] = null;
+            }
+            if (!empty($fixedInterestRateDisclaimer)) {
+                $data['disclaimer'] .= $fixedInterestRateDisclaimer;
+                $data['fixedInterestRateDisclaimer'] = null;
+            }
+
+            $event->setData($data);
+        });
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) use ($formModifier) {
             $data = $event->getData();
@@ -139,8 +169,8 @@ class VehicleFinancing extends Element
         $form->remove('specialPaymentDisclaimerNum');
         $form->remove('fixedInterestRateDisclaimerNum');
         $form->remove('legalDisclaimer');
-        $form->remove('specialPaymentDisclaimer');
-        $form->remove('fixedInterestRateDisclaimer');
+        //$form->remove('specialPaymentDisclaimer');
+        //$form->remove('fixedInterestRateDisclaimer');
 
         if (in_array('msrp', $fields, true)) {
             $form->add('msrp', NumberType::class, array(
@@ -274,9 +304,15 @@ class VehicleFinancing extends Element
 
         $form->add('disclaimer', CKEditorType::class, array(
             'label' => 'vehicle.financing.label.disclaimer',
+            'help' => 'vehicle.financing.help.legalDisclaimer',
             'required' => false,
         ));
 
+        /*
+        $form->add('disclaimer', CKEditorType::class, array(
+            'label' => 'vehicle.financing.label.disclaimer',
+            'required' => false,
+        ));
         $form->add('legalDisclaimer', TrixType::class, array(
             'label' => 'vehicle.financing.label.legalDisclaimer',
             'help' => 'vehicle.financing.help.legalDisclaimer',
@@ -295,7 +331,7 @@ class VehicleFinancing extends Element
                 'help' => 'vehicle.financing.help.fixedInterestRateDisclaimer',
                 'required' => false,
             ));
-        }
+        }*/
     }
 
     /**

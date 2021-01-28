@@ -169,3 +169,109 @@
         {{- form_rest(form) -}}
     </div>
 {%- endblock cms_elements_vehicle_envkv_widget %}
+
+
+{% block cms_elements_vehicle_financing_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form is rootform -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+
+        {{ form_row(form.financingType) }}
+
+        {% if form.msrp is defined %}
+            {{ form_row(form.msrp) }}
+        {% endif %}
+
+        {% if form.monthlyInstalment is defined %}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.monthlyInstalment) }}
+                </div>
+                {% if form.legalDisclaimerNum is defined %}
+                    <div class="col-4">
+                        {{ form_row(form.legalDisclaimerNum) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if form.price is defined %}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.price) }}
+                </div>
+                {% if form.legalDisclaimerNum is defined and form.monthlyInstalment is not defined %}
+                    <div class="col-4">
+                        {{ form_row(form.legalDisclaimerNum) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if form.downpayment is defined %}
+            {{ form_row(form.downpayment) }}
+        {% endif %}
+
+        {% if form.specialPayment is defined %}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.specialPayment) }}
+                </div>
+                {% if form.specialPaymentDisclaimerNum is defined %}
+                    <div class="col-4">
+                        {{ form_row(form.specialPaymentDisclaimerNum) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if form.netAmount is defined %}
+            {{ form_row(form.netAmount) }}
+        {% endif %}
+
+        {% if form.fixedInterestRate is defined %}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.fixedInterestRate) }}
+                </div>
+                {% if form.fixedInterestRateDisclaimerNum is defined %}
+                    <div class="col-4">
+                        {{ form_row(form.fixedInterestRateDisclaimerNum) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if form.effectiveInterest is defined %}
+            {{ form_row(form.effectiveInterest) }}
+        {% endif %}
+
+        {% if form.totalAmount is defined %}
+            {{ form_row(form.totalAmount) }}
+        {% endif %}
+
+        {% if form.months is defined %}
+            {{ form_row(form.months) }}
+        {% endif %}
+
+        {% if form.kilometersCredit is defined %}
+            {{ form_row(form.kilometersCredit) }}
+        {% elseif form.kilometersLeasing is defined %}
+            {{ form_row(form.kilometersLeasing) }}
+        {% endif %}
+
+        {% if form.lastInstalment is defined %}
+            {{ form_row(form.lastInstalment) }}
+            {{ form_row(form.lastInstalmentIsLastMonthlyInstalment) }}
+        {% endif %}
+
+        {% if form.disclaimer is defined %}
+            {{ form_row(form.disclaimer) }}
+        {% endif %}
+
+        {{- block('form_rows') -}}
+
+        {{- form_rest(form) -}}
+    </div>
+{%- endblock cms_elements_vehicle_financing_widget %}
