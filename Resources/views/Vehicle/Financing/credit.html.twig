@@ -2,6 +2,7 @@
 
 {% set legalDisclaimerNum = element.data.legalDisclaimerNum ?? null %}
 {% set fixedInterestRateDisclaimerNum = element.data.fixedInterestRateDisclaimerNum ?? null %}
+{% set downpaymentDisclaimerNum = element.data.downpaymentDisclaimerNum ?? null %}
 
 {# Deprecated #}
 {% set legalDisclaimer = element.data.legalDisclaimer ?? null %}
@@ -42,7 +43,7 @@
             {{ 'vehicle.financing.label.downpayment'|trans }}
         </td>
         <td class="vehicle-financing-table-value">
-            {{ element.data.downpayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
+            {{ element.data.downpayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if downpaymentDisclaimerNum %}<sup>{{ downpaymentDisclaimerNum }}</sup>{% endif %}
         </td>
     </tr>
     <tr class="vehicle-financing-credit-monthlyInstalment">

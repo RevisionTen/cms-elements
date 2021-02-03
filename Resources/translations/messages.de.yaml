@@ -79,6 +79,7 @@ vehicle:
             specialPaymentDisclaimer: "Leasingsonderzahlung Rechtstext"
             specialPaymentDisclaimerNum: "Leasingsonderzahlung Sternchen/Zahl"
             downpayment: "Anzahlung"
+            downpaymentDisclaimerNum: "Anzahlung Sternchen/Zahl"
             netAmount: "Nettodarlehensbetrag"
             fixedInterestRate: "Sollzins (gebunden) p.a."
             fixedInterestRateDisclaimer: "Sollzins Rechtstext"

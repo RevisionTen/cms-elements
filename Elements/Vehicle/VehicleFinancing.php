@@ -59,6 +59,7 @@ class VehicleFinancing extends Element
                         'msrp',
                         'price',
                         'downpayment',
+                        'downpaymentDisclaimerNum',
                         'netAmount',
                         'fixedInterestRate',
                         //'fixedInterestRateDisclaimer',
@@ -169,6 +170,7 @@ class VehicleFinancing extends Element
         $form->remove('specialPaymentDisclaimerNum');
         $form->remove('fixedInterestRateDisclaimerNum');
         $form->remove('legalDisclaimer');
+        $form->remove('downpaymentDisclaimerNum');
         //$form->remove('specialPaymentDisclaimer');
         //$form->remove('fixedInterestRateDisclaimer');
 
@@ -298,6 +300,12 @@ class VehicleFinancing extends Element
         if (in_array('fixedInterestRateDisclaimerNum', $fields, true)) {
             $form->add('fixedInterestRateDisclaimerNum', TextType::class, array(
                 'label' => 'vehicle.financing.label.fixedInterestRateDisclaimerNum',
+                'required' => false,
+            ));
+        }
+        if (in_array('downpaymentDisclaimerNum', $fields, true)) {
+            $form->add('downpaymentDisclaimerNum', TextType::class, array(
+                'label' => 'vehicle.financing.label.downpaymentDisclaimerNum',
                 'required' => false,
             ));
         }
