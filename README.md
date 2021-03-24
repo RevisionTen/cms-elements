@@ -13,6 +13,7 @@ composer req revision-ten/cms-elements
 Enable the bundle by adding it to your bundles.php:
 ```PHP
 RevisionTen\CmsElements\CmsElementsBundle::class => ['all' => true],
+Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle::class => ['all' => true],
 ```
 
 Add the desired elements to your CMS config by importing their configurations.
