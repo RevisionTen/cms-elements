@@ -39,24 +39,28 @@
             </td>
         </tr>
     {% endif %}
-    <tr class="vehicle-financing-leasing-private-monthlyInstalment">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.numberOfMonthlyLeasingInstalments'|trans({
-                '%numberOfMonthlyInstalments%': element.data.months
-            }) }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '4' }}</sup>{% endif %}
-        </td>
-    </tr>
-    <tr class="vehicle-financing-leasing-private-specialPayment">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.specialPayment'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
-        </td>
-    </tr>
+    {% if element.data.monthlyInstalment is defined and element.data.monthlyInstalment is not empty %}
+        <tr class="vehicle-financing-leasing-private-monthlyInstalment">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.numberOfMonthlyLeasingInstalments'|trans({
+                    '%numberOfMonthlyInstalments%': element.data.months
+                }) }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '4' }}</sup>{% endif %}
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.specialPayment is defined and element.data.specialPayment is not empty %}
+        <tr class="vehicle-financing-leasing-private-specialPayment">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.specialPayment'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
+            </td>
+        </tr>
+    {% endif %}
     {% if element.data.netAmount is defined and element.data.netAmount is not empty %}
         <tr class="vehicle-financing-leasing-private-netAmount">
             <td class="vehicle-financing-table-label">
@@ -67,30 +71,36 @@
             </td>
         </tr>
     {% endif %}
-    <tr class="vehicle-financing-leasing-private-fixedInterestRate">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.fixedInterestRate'|trans }} {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
-        </td>
-    </tr>
-    <tr class="vehicle-financing-leasing-private-effectiveInterest">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.effectiveInterest'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.effectiveInterest|number_format(2, ',', '.') }} %
-        </td>
-    </tr>
-    <tr class="vehicle-financing-leasing-private-months">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.months'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.months }} {{ 'vehicle.financing.label.monthsUnit'|trans }}
-        </td>
-    </tr>
+    {% if element.data.fixedInterestRate is defined and element.data.fixedInterestRate is not empty %}
+        <tr class="vehicle-financing-leasing-private-fixedInterestRate">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.fixedInterestRate'|trans }} {% if fixedInterestRateDisclaimerNum %}<sup>{{ fixedInterestRateDisclaimerNum }}</sup>{% endif %}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.fixedInterestRate|number_format(2, ',', '.') }} %
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.effectiveInterest is defined and element.data.effectiveInterest is not empty %}
+        <tr class="vehicle-financing-leasing-private-effectiveInterest">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.effectiveInterest'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.effectiveInterest|number_format(2, ',', '.') }} %
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.months is defined and element.data.months is not empty %}
+        <tr class="vehicle-financing-leasing-private-months">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.months'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.months }} {{ 'vehicle.financing.label.monthsUnit'|trans }}
+            </td>
+        </tr>
+    {% endif %}
     {% if element.data.kilometersLeasing is defined and element.data.kilometersLeasing is not empty %}
         <tr class="vehicle-financing-leasing-private-kilometersLeasing">
             <td class="vehicle-financing-table-label">
@@ -111,14 +121,16 @@
             </td>
         </tr>
     {% endif %}
-    <tr class="vehicle-financing-leasing-private-totalAmount">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.totalAmount'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
-        </td>
-    </tr>
+    {% if element.data.totalAmount is defined and element.data.totalAmount is not empty %}
+        <tr class="vehicle-financing-leasing-private-totalAmount">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.totalAmount'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.totalAmount|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
+            </td>
+        </tr>
+    {% endif %}
 </table>
 
 {% if disclaimer %}

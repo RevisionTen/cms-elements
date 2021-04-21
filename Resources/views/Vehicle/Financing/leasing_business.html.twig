@@ -8,32 +8,38 @@
 {% set specialPaymentDisclaimer = element.data.specialPaymentDisclaimer ?? null %}
 
 <table class="table vehicle-financing-table vehicle-financing-leasing-business">
-    <tr class="vehicle-financing-leasing-business-monthlyInstalment">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.numberOfMonthlyLeasingInstalments'|trans({
-                '%numberOfMonthlyInstalments%': element.data.months
-            }) }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '5' }}</sup>{% endif %}
-        </td>
-    </tr>
-    <tr class="vehicle-financing-leasing-business-specialPayment">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.specialPayment'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
-        </td>
-    </tr>
-    <tr class="vehicle-financing-leasing-business-months">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.months'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.months }} {{ 'vehicle.financing.label.monthsUnit'|trans }}
-        </td>
-    </tr>
+    {% if element.data.monthlyInstalment is defined and element.data.monthlyInstalment is not empty %}
+        <tr class="vehicle-financing-leasing-business-monthlyInstalment">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.numberOfMonthlyLeasingInstalments'|trans({
+                    '%numberOfMonthlyInstalments%': element.data.months
+                }) }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.monthlyInstalment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }} {% if legalDisclaimer or legalDisclaimerNum %}<sup>{{ legalDisclaimerNum ?? '5' }}</sup>{% endif %}
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.specialPayment is defined and element.data.specialPayment is not empty %}
+        <tr class="vehicle-financing-leasing-business-specialPayment">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.specialPayment'|trans }} {% if specialPaymentDisclaimerNum %}<sup>{{ specialPaymentDisclaimerNum }}</sup>{% endif %}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.specialPayment|number_format(2, ',', '.')|replace({',00': ',-'}) }} {{ 'vehicle.financing.label.euro'|trans }}
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.months is defined and element.data.months is not empty %}
+        <tr class="vehicle-financing-leasing-business-months">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.months'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.months }} {{ 'vehicle.financing.label.monthsUnit'|trans }}
+            </td>
+        </tr>
+    {% endif %}
     {% if element.data.kilometersLeasing is defined and element.data.kilometersLeasing is not empty %}
         <tr class="vehicle-financing-leasing-business-kilometersLeasing">
             <td class="vehicle-financing-table-label">
