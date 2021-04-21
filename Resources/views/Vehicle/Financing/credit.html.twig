@@ -98,6 +98,16 @@
             </td>
         </tr>
     {% endif %}
+    {% if element.data.kilometersCreditTotal is defined and element.data.kilometersCreditTotal is not empty %}
+        <tr class="vehicle-financing-credit-kilometersCreditTotal">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.kilometersCreditTotal'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.kilometersCreditTotal|number_format(2, ',', '.') }}
+            </td>
+        </tr>
+    {% endif %}
     {% if element.data.lastInstalment is not empty %}
         <tr class="vehicle-financing-credit-lastInstalment">
             <td class="vehicle-financing-table-label">

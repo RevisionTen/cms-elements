@@ -91,14 +91,26 @@
             {{ element.data.months }} {{ 'vehicle.financing.label.monthsUnit'|trans }}
         </td>
     </tr>
-    <tr class="vehicle-financing-leasing-private-kilometersLeasing">
-        <td class="vehicle-financing-table-label">
-            {{ 'vehicle.financing.label.kilometersLeasing'|trans }}
-        </td>
-        <td class="vehicle-financing-table-value">
-            {{ element.data.kilometersLeasing|number_format(0, ',', '.') }} km
-        </td>
-    </tr>
+    {% if element.data.kilometersLeasing is defined and element.data.kilometersLeasing is not empty %}
+        <tr class="vehicle-financing-leasing-private-kilometersLeasing">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.kilometersLeasing'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.kilometersLeasing|number_format(0, ',', '.') }} km
+            </td>
+        </tr>
+    {% endif %}
+    {% if element.data.kilometersLeasingTotal is defined and element.data.kilometersLeasingTotal is not empty %}
+        <tr class="vehicle-financing-leasing-private-kilometersLeasingTotal">
+            <td class="vehicle-financing-table-label">
+                {{ 'vehicle.financing.label.kilometersLeasingTotal'|trans }}
+            </td>
+            <td class="vehicle-financing-table-value">
+                {{ element.data.kilometersLeasingTotal|number_format(0, ',', '.') }} km
+            </td>
+        </tr>
+    {% endif %}
     <tr class="vehicle-financing-leasing-private-totalAmount">
         <td class="vehicle-financing-table-label">
             {{ 'vehicle.financing.label.totalAmount'|trans }}
