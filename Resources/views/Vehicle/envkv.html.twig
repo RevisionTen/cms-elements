@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col">
                         <p>
-                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
+                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin is defined and element.data.energyEfficiencyClassMin  ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
                         </p>
                         <p class="small">
                             {# Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt. #}

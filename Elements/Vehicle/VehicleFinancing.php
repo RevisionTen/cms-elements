@@ -123,15 +123,15 @@ class VehicleFinancing extends Element
 
             // Move data.
             if (!empty($legalDisclaimer)) {
-                $data['disclaimer'] .= $legalDisclaimer;
+                $data['disclaimer'] = ($data['disclaimer'] ?? '').$legalDisclaimer;
                 $data['legalDisclaimer'] = null;
             }
             if (!empty($specialPaymentDisclaimer)) {
-                $data['disclaimer'] .= $specialPaymentDisclaimer;
+                $data['disclaimer'] = ($data['disclaimer'] ?? '').$specialPaymentDisclaimer;
                 $data['specialPaymentDisclaimer'] = null;
             }
             if (!empty($fixedInterestRateDisclaimer)) {
-                $data['disclaimer'] .= $fixedInterestRateDisclaimer;
+                $data['disclaimer'] = ($data['disclaimer'] ?? '').$fixedInterestRateDisclaimer;
                 $data['fixedInterestRateDisclaimer'] = null;
             }
 
