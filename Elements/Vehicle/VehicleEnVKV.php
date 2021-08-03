@@ -115,24 +115,6 @@ class VehicleEnVKV extends Element
             'required' => false,
         ));
 
-        $builder->add('co2EmissionMin', NumberType::class, array(
-            'label' => 'vehicle.envkv.label.co2Emission',
-            'required' => false,
-            'scale' => 2,
-            'attr' => [
-                'placeholder' => 'vehicle.envkv.label.min',
-            ],
-        ));
-
-        $builder->add('co2Emission', NumberType::class, array(
-            'label' => 'vehicle.envkv.label.co2Emission',
-            'required' => false,
-            'scale' => 2,
-            'attr' => [
-                'placeholder' => 'vehicle.envkv.label.max',
-            ],
-        ));
-
         $builder->add('motor', TextType::class, array(
             'label' => 'vehicle.envkv.label.motor',
             'attr' => [
@@ -254,6 +236,22 @@ class VehicleEnVKV extends Element
                             'placeholder' => 'vehicle.envkv.label.min',
                         ],
                     ));
+                    $form->add('co2EmissionMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.co2Emission',
+                        'required' => false,
+                        'scale' => 2,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('co2Emission', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.co2Emission',
+                        'required' => false,
+                        'scale' => 2,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
                 } else {
                     $form->remove('inner');
                     $form->remove('innerMin');
@@ -261,6 +259,8 @@ class VehicleEnVKV extends Element
                     $form->remove('outerMin');
                     $form->remove('combined');
                     $form->remove('combinedMin');
+                    $form->remove('co2EmissionMin');
+                    $form->remove('co2Emission');
                 }
             }
         };

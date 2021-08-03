@@ -1,16 +1,6 @@
 <div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
     <h6 class="mb-3">
-        {% if element.data.power is not null and element.data.motor is not null and element.data.gearbox is not null %}
-            {{ 'vehicle.envkv.label.envkv'|trans({
-                '%vehicle%': element.data.title,
-                '%power%': element.data.power ?? '',
-                '%motor%': element.data.motor ?? '',
-                '%gearbox%': element.data.gearbox ?? '',
-                '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
-            }) }}
-        {% else %}
-            {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }})
-        {% endif %}
+        {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }}{% if element.data.motor %}, {{ element.data.motor }}{% endif %}{% if element.data.gearbox %}, {{ element.data.gearbox }}{% endif %}{% if element.data.power %}, {{ element.data.power }} kW{% endif %})
     </h6>
     {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}

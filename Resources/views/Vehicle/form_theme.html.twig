@@ -146,23 +146,25 @@
             </div>
         {% endif %}
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    {{ form_label(form.co2Emission) }}
-                    <div class="w-100">
-                        <div class="form-row">
-                            <div class="col">
-                                {{ form_widget(form.co2EmissionMin) }}
-                            </div>
-                            <div class="col">
-                                {{ form_widget(form.co2Emission) }}
+        {% if form.co2Emission is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_label(form.co2Emission) }}
+                        <div class="w-100">
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.co2EmissionMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2Emission) }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         {{- block('form_rows') -}}
 
@@ -316,23 +318,25 @@
             </div>
         {% endif %}
 
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    {{ form_label(form.co2Emission) }}
-                    <div class="w-100">
-                        <div class="form-row">
-                            <div class="col">
-                                {{ form_widget(form.co2EmissionMin) }}
-                            </div>
-                            <div class="col">
-                                {{ form_widget(form.co2Emission) }}
+        {% if form.co2Emission is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_label(form.co2Emission) }}
+                        <div class="w-100">
+                            <div class="form-row">
+                                <div class="col">
+                                    {{ form_widget(form.co2EmissionMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2Emission) }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         {{- block('form_rows') -}}
 
