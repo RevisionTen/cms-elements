@@ -9,11 +9,17 @@ cms:
             children:
                 - 'Row'
                 - 'VehicleEnVKV'
+                - 'VehicleWLTP'
                 - 'VehicleFinancing'
                 - 'VehicleDatDisclaimer'
         VehicleEnVKV:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleEnVKV
             template: 'CmsElementsBundle:Vehicle:envkv.html.twig'
+            icon: 'fa fa-leaf'
+            public: false
+        VehicleWLTP:
+            class: RevisionTen\CmsElements\Elements\Vehicle\VehicleWLTP
+            template: 'CmsElementsBundle:Vehicle:wltp.html.twig'
             icon: 'fa fa-leaf'
             public: false
         VehicleFinancing:

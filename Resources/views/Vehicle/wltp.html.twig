@@ -1,0 +1,174 @@
+<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
+    <h6 class="mb-3">
+        {% if element.data.power is not null and element.data.motor is not null and element.data.gearbox is not null %}
+            {{ 'vehicle.envkv.label.envkv'|trans({
+                '%vehicle%': element.data.title,
+                '%power%': element.data.power ?? '',
+                '%motor%': element.data.motor ?? '',
+                '%gearbox%': element.data.gearbox ?? '',
+                '%fuelType%': ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans,
+            }) }}
+        {% else %}
+            {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }})
+        {% endif %}
+    </h6>
+    {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
+    {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
+    <div class="row">
+        {% if energyEfficiencyClass %}
+            <div class="col-12 col-sm-auto" style="max-width: 400px;">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin is defined and element.data.energyEfficiencyClassMin  ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
+                        </p>
+                        <p class="small">
+                            {# Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt. #}
+                            Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
+                        </p>
+                    </div>
+                    <div class="col-auto" style="max-width: 150px;">
+                        {% set energyEfficiencyClass = energyEfficiencyClass|replace({'+': 'A'}) %}
+                        <p>
+                            <img title="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
+                                 alt="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
+                                 class="w-100 h-auto"
+                                 src="{{ asset('bundles/cmselements/images/vehicle/energy-efficiency.svg') }}?#{{ energyEfficiencyClass }}"
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-12 col-sm-auto">
+            {% set fuelType = element.data.fuelType %}
+            {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
+            {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
+            <p>
+
+                {% if hasFossilFuel and hasBattery %}
+
+                    {# Hybrid #}
+                    {% if element.data.combined is defined and element.data.combined is not empty %}
+                        {% if element.data.combinedMin is defined and element.data.combinedMin %}
+                            {{ 'vehicle.wltp.label.combinedFuelHybrid'|trans({
+                                '%value%': element.data.combinedMin|number_format(1, ',') ~ '-' ~ element.data.combined|number_format(1, ',')
+                            }) }}
+                            <br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.combinedFuelHybrid'|trans({
+                                '%value%': element.data.combined|number_format(1, ',')
+                            }) }}
+                            <br/>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
+                        {{ 'vehicle.wltp.label.co2EmissionHybrid'|trans({
+                            '%value%': (element.data.co2EmissionMin ?? 0) ~ '-' ~ (element.data.co2Emission ?? 0)
+                        }) }}
+                        <br/>
+                    {% else %}
+                        {{ 'vehicle.wltp.label.co2EmissionHybrid'|trans({
+                            '%value%': (element.data.co2Emission ?? '-')
+                        }) }}
+                        <br/>
+                    {% endif %}
+
+                    {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
+                        {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
+                            {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
+                                '%value%': element.data.combinedPowerConsumptionMin|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumption|number_format(1, ',')
+                            })|raw }}<br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
+                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
+                            })|raw }}<br/>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if element.data.range is defined and element.data.range is not empty %}
+                        {% if element.data.rangeMin is defined and element.data.rangeMin %}
+                            {{ 'vehicle.wltp.label.range'|trans({
+                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
+                            })|raw }}<br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.range'|trans({
+                                '%value%': element.data.range|number_format(0, ',', '.')
+                            })|raw }}<br/>
+                        {% endif %}
+                    {% endif %}
+
+                {% elseif hasFossilFuel %}
+
+                    {# Fossil fuel only #}
+                    {% if element.data.combined is defined and element.data.combined is not empty %}
+                        {% if element.data.combinedMin is defined and element.data.combinedMin %}
+                            {{ 'vehicle.wltp.label.combinedFuel'|trans({
+                                '%value%': element.data.combinedMin|number_format(1, ',') ~ '-' ~ element.data.combined|number_format(1, ',')
+                            })|raw }}
+                            <br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.combinedFuel'|trans({
+                                '%value%': element.data.combined|number_format(1, ',')
+                            })|raw }}
+                            <br/>
+                        {% endif %}
+                    {% endif %}
+                    {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
+                        {{ 'vehicle.wltp.label.co2EmissionFuel'|trans({
+                            '%value%': (element.data.co2EmissionMin ?? 0) ~ '-' ~ (element.data.co2Emission ?? 0)
+                        }) }}
+                        <br/>
+                    {% else %}
+                        {{ 'vehicle.wltp.label.co2EmissionFuel'|trans({
+                            '%value%': (element.data.co2Emission ?? '-')
+                        }) }}
+                        <br/>
+                    {% endif %}
+
+                {% elseif hasBattery %}
+
+                    {# Pure BEV #}
+                    {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
+                        {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
+                            {{ 'vehicle.wltp.label.combinedPowerBEV'|trans({
+                                '%value%': element.data.combinedPowerConsumptionMin|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumption|number_format(1, ',')
+                            })|raw }}<br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.combinedPowerBEV'|trans({
+                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
+                            })|raw }}<br/>
+                        {% endif %}
+                    {% endif %}
+                    {% if element.data.range is defined and element.data.range is not empty %}
+                        {% if element.data.rangeMin is defined and element.data.rangeMin %}
+                            {{ 'vehicle.wltp.label.range'|trans({
+                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
+                            })|raw }}<br/>
+                        {% else %}
+                            {{ 'vehicle.wltp.label.range'|trans({
+                                '%value%': element.data.range|number_format(0, ',', '.')
+                            })|raw }}<br/>
+                        {% endif %}
+                    {% endif %}
+
+                {% endif %}
+
+            </p>
+        </div>
+        <div class="col-12">
+            <p>
+                <em>
+                    {% if hasFossilFuel and hasBattery %}
+                        {{ 'vehicle.wltp.label.legalDisclaimerHybrid'|trans|raw }}
+                    {% elseif hasFossilFuel %}
+                        {{ 'vehicle.wltp.label.legalDisclaimerFuel'|trans|raw }}
+                    {% elseif hasBattery %}
+                        {{ 'vehicle.wltp.label.legalDisclaimerBEV'|trans|raw }}
+                    {% endif %}
+                </em>
+            </p>
+        </div>
+    </div>
+</div>

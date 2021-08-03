@@ -1,6 +1,7 @@
 # Elements
 VehicleOffer: "Angebot"
 VehicleEnVKV: "Verbrauchsangaben (EnVKV)"
+VehicleWLTP: "Verbrauchsangaben (WLTP)"
 VehicleDatDisclaimer: "Dat-Hinweis"
 VehicleFinancing: "Fahrzeugfinanzierung"
 
@@ -20,6 +21,18 @@ images:
         imagesPerRow1: "1"
 
 vehicle:
+    wltp:
+        label:
+            range: "Elektrische Reichweite (WLTP) in km: %value%"
+            co2EmissionFuel: "CO2-Emissionen kombiniert in g/km: - (NEFZ); %value% (WLTP)"
+            co2EmissionHybrid: "CO2-Emissionen gewichtet kombiniert in g/km: - (NEFZ); %value% (WLTP)"
+            combinedFuel: "Kraftstoffverbrauch kombiniert in l/100km: - (NEFZ); %value% (WLTP)"
+            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in l/100 km: - (NEFZ); %value% (WLTP)"
+            combinedPowerBEV: "Stromverbrauch in kWh/100 km: - (NEFZ); %value% (WLTP)"
+            combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100: - (NEFZ); %value% (WLTP)"
+            legalDisclaimerHybrid: "Offizielle Angaben zu Kraftstoffverbrauch, CO2-Emissionen, Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. <br><br>Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO2-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagenmodelle“ entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT), Hellmuth-Hirth-Str. 1, 73760 Ostfildern und unter https://www.dat.de/co2/ unentgeltlich erhältlich ist."
+            legalDisclaimerFuel: "Offizielle Angaben zu Kraftstoffverbrauch und CO2-Emissionen wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. <br><br>Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO2-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagenmodelle“ entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT), Hellmuth-Hirth-Str. 1, 73760 Ostfildern und unter https://www.dat.de/co2/ unentgeltlich erhältlich ist."
+            legalDisclaimerBEV: "Offizielle Angaben zu Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nicht mehr nach NEFZ, sondern nur noch nach WLTP. <br><br>Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO2-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagenmodelle“ entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT), Hellmuth-Hirth-Str. 1, 73760 Ostfildern und unter https://www.dat.de/co2/ unentgeltlich erhältlich ist."
     envkv:
         label:
             min: "min"
@@ -30,6 +43,8 @@ vehicle:
             gearbox: "Schaltung"
             power: "Leistung in kW"
             fuelType: "Kraftstoff"
+            range: "Elektrische Reichweite in km"
+            rangeMin: "Elektrische Reichweite in km"
             hasRangeValues: "Werte sind von-bis"
             energyEfficiencyClass: "Energieeffizienzklasse"
             emissionClass: "Emissionsklasse"

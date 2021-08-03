@@ -6,7 +6,6 @@ namespace RevisionTen\CmsElements\Elements\Vehicle;
 
 use RevisionTen\CMS\Form\Elements\Element;
 use RevisionTen\CMS\Form\Types\CKEditorType;
-use RevisionTen\CMS\Form\Types\TrixType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -20,9 +19,6 @@ use function in_array;
 
 class VehicleFinancing extends Element
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -343,9 +339,6 @@ class VehicleFinancing extends Element
         }*/
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'cms_elements_vehicle_financing';

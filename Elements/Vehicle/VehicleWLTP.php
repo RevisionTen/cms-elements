@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class VehicleEnVKV extends Element
+class VehicleWLTP extends Element
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,12 +25,7 @@ class VehicleEnVKV extends Element
             'constraints' => new NotBlank(),
         ]);
 
-        $builder->add('legalDisclaimerNum', TextType::class, array(
-            'label' => 'vehicle.financing.label.legalDisclaimerNum',
-            'help' => 'vehicle.financing.help.legalDisclaimerNum',
-            'required' => false,
-        ));
-
+        /*
         $builder->add('energyEfficiencyClassMin', ChoiceType::class, array(
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
             'placeholder' => 'vehicle.envkv.label.min',
@@ -63,7 +58,7 @@ class VehicleEnVKV extends Element
                 'F' => 'F',
                 'G' => 'G',
             ],
-            'constraints' => new NotBlank(),
+            'required' => false,
             'attr' => [
                 'class' => 'custom-select',
             ],
@@ -115,6 +110,8 @@ class VehicleEnVKV extends Element
             'required' => false,
         ));
 
+        */
+
         $builder->add('co2EmissionMin', NumberType::class, array(
             'label' => 'vehicle.envkv.label.co2Emission',
             'required' => false,
@@ -161,15 +158,15 @@ class VehicleEnVKV extends Element
             'choices' => [
                 'vehicle.envkv.choices.fuel.petrol' => 'petrol',
                 'vehicle.envkv.choices.fuel.diesel' => 'diesel',
-                'vehicle.envkv.choices.fuel.lpg' => 'lpg',
-                'vehicle.envkv.choices.fuel.cng' => 'cng',
-                'vehicle.envkv.choices.fuel.gas' => 'gas',
+                #'vehicle.envkv.choices.fuel.lpg' => 'lpg',
+                #'vehicle.envkv.choices.fuel.cng' => 'cng',
+                #'vehicle.envkv.choices.fuel.gas' => 'gas',
                 'vehicle.envkv.choices.fuel.electricity' => 'electricity',
                 'vehicle.envkv.choices.fuel.hybrid' => 'hybrid',
                 'vehicle.envkv.choices.fuel.hybrid_petrol' => 'hybrid_petrol',
                 'vehicle.envkv.choices.fuel.hybrid_diesel' => 'hybrid_diesel',
-                'vehicle.envkv.choices.fuel.hydrogen' => 'hydrogen',
-                'vehicle.envkv.choices.fuel.other' => 'other',
+                #'vehicle.envkv.choices.fuel.hydrogen' => 'hydrogen',
+                #'vehicle.envkv.choices.fuel.other' => 'other',
             ],
             'constraints' => new NotBlank(),
             'attr' => [
@@ -200,28 +197,30 @@ class VehicleEnVKV extends Element
                             'placeholder' => 'vehicle.envkv.label.max',
                         ],
                     ));
+                    $form->add('rangeMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.rangeMin',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('range', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.range',
+                        'scale' => 1,
+                        'constraints' => new NotBlank(),
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
                 } else {
                     $form->remove('combinedPowerConsumption');
                     $form->remove('combinedPowerConsumptionMin');
+                    $form->remove('range');
+                    $form->remove('rangeMin');
                 }
 
                 if ($hasFossilFuel) {
-                    $form->add('inner', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.inner',
-                        'scale' => 1,
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.max',
-                        ],
-                    ));
-                    $form->add('outer', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.outer',
-                        'scale' => 1,
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.max',
-                        ],
-                    ));
                     $form->add('combined', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.combined',
                         'scale' => 1,
@@ -238,27 +237,7 @@ class VehicleEnVKV extends Element
                             'placeholder' => 'vehicle.envkv.label.min',
                         ],
                     ));
-                    $form->add('outerMin', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.outer',
-                        'scale' => 1,
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.min',
-                        ],
-                    ));
-                    $form->add('innerMin', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.inner',
-                        'scale' => 1,
-                        'required' => false,
-                        'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.min',
-                        ],
-                    ));
                 } else {
-                    $form->remove('inner');
-                    $form->remove('innerMin');
-                    $form->remove('outer');
-                    $form->remove('outerMin');
                     $form->remove('combined');
                     $form->remove('combinedMin');
                 }
@@ -279,6 +258,6 @@ class VehicleEnVKV extends Element
 
     public function getBlockPrefix(): string
     {
-        return 'cms_elements_vehicle_envkv';
+        return 'cms_elements_vehicle_wltp';
     }
 }
