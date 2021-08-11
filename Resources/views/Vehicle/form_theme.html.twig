@@ -247,8 +247,17 @@
             <div class="col">
                 {{ form_row(form.gearbox) }}
             </div>
+        </div>
+
+        <div class="row">
             <div class="col">
                 {{ form_row(form.power) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.horsepower) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.weight) }}
             </div>
         </div>
 
@@ -257,6 +266,21 @@
                 {{ form_row(form.fuelType) }}
             </div>
         </div>
+
+        {% if form.fuel is defined or form.cubicCapacity is defined %}
+            <div class="row">
+                {% if form.fuel is defined %}
+                    <div class="col">
+                        {{ form_row(form.fuel) }}
+                    </div>
+                {% endif %}
+                {% if form.cubicCapacity is defined %}
+                    <div class="col">
+                        {{ form_row(form.cubicCapacity) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
 
         <div class="row">
             {% if form.combined is defined %}

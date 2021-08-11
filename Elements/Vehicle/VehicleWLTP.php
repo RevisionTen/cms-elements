@@ -134,9 +134,21 @@ class VehicleWLTP extends Element
             'required' => false,
         ));
 
+        $builder->add('horsepower', NumberType::class, array(
+            'label' => 'vehicle.envkv.label.horsepower',
+            'scale' => 0,
+            'required' => false,
+        ));
+
+        $builder->add('weight', NumberType::class, array(
+            'label' => 'vehicle.envkv.label.weight',
+            'scale' => 0,
+            'required' => false,
+        ));
+
         $builder->add('fuelType', ChoiceType::class, array(
-            'label' => 'vehicle.envkv.label.fuelType',
-            'placeholder' => 'vehicle.envkv.label.fuelType',
+            'label' => 'vehicle.wltp.label.fuelType',
+            'placeholder' => 'vehicle.wltp.label.fuelType',
             'choices' => [
                 'vehicle.envkv.choices.fuel.petrol' => 'petrol',
                 'vehicle.envkv.choices.fuel.diesel' => 'diesel',
@@ -203,6 +215,18 @@ class VehicleWLTP extends Element
                 }
 
                 if ($hasFossilFuel) {
+                    $form->add('fuel', TextType::class, array(
+                        'label' => 'vehicle.envkv.label.fuel',
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.placeholder.fuel',
+                        ],
+                        'required' => false,
+                    ));
+                    $form->add('cubicCapacity', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.cubicCapacity',
+                        'scale' => 0,
+                        'required' => false,
+                    ));
                     $form->add('combined', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.combined',
                         'scale' => 1,
@@ -240,6 +264,8 @@ class VehicleWLTP extends Element
                     $form->remove('combinedMin');
                     $form->remove('co2EmissionMin');
                     $form->remove('co2Emission');
+                    $form->remove('fuel');
+                    $form->remove('cubicCapacity');
                 }
             }
         };

@@ -77,6 +77,15 @@
                         {% endif %}
                     {% endif %}
 
+                    <br/>
+
+                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
+                        {{ 'vehicle.wltp.label.hybridPower'|trans({
+                            '%kw%':element.data.power|number_format(0, ',', '.'),
+                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
+                        }) }}
+                        <br/>
+                    {% endif %}
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
@@ -87,6 +96,24 @@
                                 '%value%': element.data.range|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% endif %}
+                    {% endif %}
+                    {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
+                        {{ 'vehicle.wltp.label.cubicCapacity'|trans({
+                            '%value%': element.data.cubicCapacity|number_format(0, ',', '.')
+                        }) }}
+                        <br/>
+                    {% endif %}
+                    {% if element.data.fuel is defined and element.data.fuel is not empty %}
+                        {{ 'vehicle.wltp.label.fuel'|trans({
+                            '%value%': element.data.fuel
+                        }) }}
+                        <br/>
+                    {% endif %}
+                    {% if element.data.weight is defined and element.data.weight is not empty %}
+                        {{ 'vehicle.wltp.label.weight'|trans({
+                            '%value%': element.data.weight|number_format(0, ',', '.')
+                        }) }}
+                        <br/>
                     {% endif %}
 
                 {% elseif hasFossilFuel %}
@@ -117,6 +144,32 @@
                         <br/>
                     {% endif %}
 
+                    <br/>
+
+                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
+                        {{ 'vehicle.wltp.label.power'|trans({
+                            '%kw%':element.data.power|number_format(0, ',', '.'),
+                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
+                        }) }}
+                        <br/>
+                    {% endif %}
+                    {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
+                        {{ 'vehicle.wltp.label.cubicCapacity'|trans({
+                            '%value%': element.data.cubicCapacity|number_format(0, ',', '.')
+                        }) }}
+                        <br/>
+                    {% endif %}
+                    {{ 'vehicle.wltp.label.fuel'|trans({
+                        '%value%': element.data.fuel ?? (('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans)
+                    }) }}
+                    <br/>
+                    {% if element.data.weight is defined and element.data.weight is not empty %}
+                        {{ 'vehicle.wltp.label.weight'|trans({
+                            '%value%': element.data.weight|number_format(0, ',', '.')
+                        }) }}
+                        <br/>
+                    {% endif %}
+
                 {% elseif hasBattery %}
 
                     {# Pure BEV #}
@@ -141,6 +194,19 @@
                                 '%value%': element.data.range|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% endif %}
+                    {% endif %}
+                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
+                        {{ 'vehicle.wltp.label.electricPower'|trans({
+                            '%kw%':element.data.power|number_format(0, ',', '.'),
+                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
+                        }) }}
+                        <br/>
+                    {% endif %}
+                    {% if element.data.weight is defined and element.data.weight is not empty %}
+                        {{ 'vehicle.wltp.label.weight'|trans({
+                            '%value%': element.data.weight|number_format(0, ',', '.')
+                        }) }}
+                        <br/>
                     {% endif %}
 
                 {% endif %}
