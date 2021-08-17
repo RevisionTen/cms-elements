@@ -2,7 +2,7 @@ cms:
     page_elements:
         Form:
             class: RevisionTen\CmsElements\Elements\BetterDefault\Form
-            template: 'CmsElementsBundle:BetterDefault:form.html.twig'
+            template: '@CmsElements/BetterDefault/form.html.twig'
             public: true
             icon: 'fab fa-wpforms'
 
