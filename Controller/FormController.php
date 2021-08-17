@@ -32,8 +32,12 @@ class FormController extends AbstractController
             }
         }
 
+        $controller = 'RevisionTen\Forms\Controller\FormController::renderFormAction';
+        if (method_exists(\RevisionTen\Forms\Controller\FormController::class, 'renderCmsForm')) {
+            $controller = 'RevisionTen\Forms\Controller\FormController::renderCmsForm';
+        }
 
-        return $this->forward('RevisionTen\Forms\Controller\FormController::renderFormAction', [
+        return $this->forward($controller, [
             'formUuid' => $formUuid,
             'defaultData' => $defaultData,
         ]);
