@@ -1,7 +1,8 @@
 <div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
-    <h6 class="mb-3">
-        {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }}{% if element.data.motor %}, {{ element.data.motor }}{% endif %}{% if element.data.gearbox %}, {{ element.data.gearbox }}{% endif %}{% if element.data.power %}, {{ element.data.power }} kW{% endif %})
-    </h6>
+    <h5 class="mb-3">
+        {{ element.data.title }}
+    </h5>
+
     {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
@@ -42,7 +43,7 @@
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
                             {{ 'vehicle.wltp.label.combinedFuelHybrid'|trans({
-                                '%value%': element.data.combinedMin|number_format(1, ',') ~ '-' ~ element.data.combined|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ',')
                             }) }}
                             <br/>
                         {% else %}
@@ -55,7 +56,7 @@
 
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
                         {{ 'vehicle.wltp.label.co2EmissionHybrid'|trans({
-                            '%value%': (element.data.co2EmissionMin ?? 0) ~ '-' ~ (element.data.co2Emission ?? 0)
+                            '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
                         }) }}
                         <br/>
                     {% else %}
@@ -68,7 +69,7 @@
                     {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
                             {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
-                                '%value%': element.data.combinedPowerConsumptionMin|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumption|number_format(1, ',')
+                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
@@ -79,6 +80,12 @@
 
                     <br/>
 
+                    {% if element.data.motor %}
+                        {{ 'vehicle.wltp.label.motor'|trans({
+                            '%value%': element.data.motor
+                        })|raw }}
+                        <br/>
+                    {% endif %}
                     {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
                         {{ 'vehicle.wltp.label.hybridPower'|trans({
                             '%kw%':element.data.power|number_format(0, ',', '.'),
@@ -86,10 +93,16 @@
                         }) }}
                         <br/>
                     {% endif %}
+                    {% if element.data.gearbox %}
+                        {{ 'vehicle.wltp.label.gearbox'|trans({
+                            '%value%': element.data.gearbox
+                        })|raw }}
+                        <br/>
+                    {% endif %}
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
+                                '%value%': element.data.range|number_format(0, ',', '.') ~ '-' ~ element.data.rangeMin|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
@@ -122,7 +135,7 @@
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
                             {{ 'vehicle.wltp.label.combinedFuel'|trans({
-                                '%value%': element.data.combinedMin|number_format(1, ',') ~ '-' ~ element.data.combined|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ',')
                             })|raw }}
                             <br/>
                         {% else %}
@@ -134,7 +147,7 @@
                     {% endif %}
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
                         {{ 'vehicle.wltp.label.co2EmissionFuel'|trans({
-                            '%value%': (element.data.co2EmissionMin ?? 0) ~ '-' ~ (element.data.co2Emission ?? 0)
+                            '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
                         }) }}
                         <br/>
                     {% else %}
@@ -146,11 +159,23 @@
 
                     <br/>
 
+                    {% if element.data.motor %}
+                        {{ 'vehicle.wltp.label.motor'|trans({
+                            '%value%': element.data.motor
+                        })|raw }}
+                        <br/>
+                    {% endif %}
                     {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
                         {{ 'vehicle.wltp.label.power'|trans({
                             '%kw%':element.data.power|number_format(0, ',', '.'),
                             '%ps%': element.data.horsepower|number_format(0, ',', '.'),
                         }) }}
+                        <br/>
+                    {% endif %}
+                    {% if element.data.gearbox %}
+                        {{ 'vehicle.wltp.label.gearbox'|trans({
+                            '%value%': element.data.gearbox
+                        })|raw }}
                         <br/>
                     {% endif %}
                     {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
@@ -176,7 +201,7 @@
                     {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
                             {{ 'vehicle.wltp.label.combinedPowerBEV'|trans({
-                                '%value%': element.data.combinedPowerConsumptionMin|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumption|number_format(1, ',')
+                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.combinedPowerBEV'|trans({
@@ -187,13 +212,22 @@
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
+                                '%value%': element.data.range|number_format(0, ',', '.') ~ '-' ~ element.data.rangeMin|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
                                 '%value%': element.data.range|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% endif %}
+                    {% endif %}
+
+                    <br/>
+
+                    {% if element.data.motor %}
+                        {{ 'vehicle.wltp.label.motor'|trans({
+                            '%value%': element.data.motor
+                        })|raw }}
+                        <br/>
                     {% endif %}
                     {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
                         {{ 'vehicle.wltp.label.electricPower'|trans({
@@ -202,6 +236,16 @@
                         }) }}
                         <br/>
                     {% endif %}
+                    {% if element.data.gearbox %}
+                        {{ 'vehicle.wltp.label.gearbox'|trans({
+                            '%value%': element.data.gearbox
+                        })|raw }}
+                        <br/>
+                    {% endif %}
+                    {{ 'vehicle.wltp.label.fuel'|trans({
+                        '%value%': 'vehicle.wltp.label.fuelElectricity'|trans
+                    }) }}
+                    <br/>
                     {% if element.data.weight is defined and element.data.weight is not empty %}
                         {{ 'vehicle.wltp.label.weight'|trans({
                             '%value%': element.data.weight|number_format(0, ',', '.')
