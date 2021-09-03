@@ -1,5 +1,5 @@
-<div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }} mt-4 mb-4">
-    <h5 class="mb-3">
+<div {{ editorAttr(element, edit) }} class="vehicle-wltp {{ elementClasses(element) }} mt-4 mb-4">
+    <h5 class="vehicle-wltp-heading mb-3">
         {{ element.data.title }}
     </h5>
 
@@ -31,7 +31,7 @@
                 </div>
             </div>
         {% endif %}
-        <div class="col-12 col-sm-auto">
+        <div class="vehicle-wltp-body col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
             {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
             {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
@@ -257,7 +257,7 @@
 
             </p>
         </div>
-        <div class="col-12">
+        <div class="vehicle-wltp-disclaimer col-12">
             <p>
                 <em>
                     {% if hasFossilFuel and hasBattery %}
