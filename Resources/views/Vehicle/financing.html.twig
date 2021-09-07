@@ -1,12 +1,12 @@
 <div {{ editorAttr(element, edit) }} class="{{ elementClasses(element) }}">
     {% set financingType = element.data.financingType is defined and element.data.financingType is not empty ? element.data.financingType : false %}
     {% if financingType == 'cash' %}
-        {% include '@CmsElements/Vehicle/Financing:cash.html.twig' %}
+        {% include '@CmsElements/Vehicle/Financing/cash.html.twig' %}
     {% elseif financingType == 'credit' %}
-        {% include '@CmsElements/Vehicle/Financing:credit.html.twig' %}
+        {% include '@CmsElements/Vehicle/Financing/credit.html.twig' %}
     {% elseif financingType == 'leasingPrivate' %}
-        {% include '@CmsElements/Vehicle/Financing:leasing_private.html.twig' %}
+        {% include '@CmsElements/Vehicle/Financing/leasing_private.html.twig' %}
     {% elseif financingType == 'leasingBusiness' %}
-        {% include '@CmsElements/Vehicle/Financing:leasing_business.html.twig' %}
+        {% include '@CmsElements/Vehicle/Financing/leasing_business.html.twig' %}
     {% endif %}
 </div>
