@@ -2,6 +2,6 @@ cms:
     page_elements:
         Images:
             class: RevisionTen\CmsElements\Elements\BetterDefault\Images
-            template: 'CmsElementsBundle:BetterDefault:images.html.twig'
+            template: '@CmsElements/BetterDefault/images.html.twig'
             public: true
             icon: 'fa fa-images'

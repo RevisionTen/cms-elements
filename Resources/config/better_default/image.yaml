@@ -2,7 +2,7 @@ cms:
     page_elements:
         Image:
             class: RevisionTen\CmsElements\Elements\BetterDefault\Image
-            template: 'CmsElementsBundle:BetterDefault:image.html.twig'
+            template: '@CmsElements/BetterDefault/image.html.twig'
             public: true
             icon: 'fa fa-image'
             styles:

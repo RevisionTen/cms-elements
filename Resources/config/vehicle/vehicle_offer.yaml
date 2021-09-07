@@ -2,7 +2,7 @@ cms:
     page_elements:
         VehicleOffer:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleOffer
-            template: 'CmsElementsBundle:Vehicle:offer.html.twig'
+            template: '@CmsElements/Vehicle/offer.html.twig'
             icon: 'fa fa-car'
             public: true
             type: 'Section'
@@ -14,21 +14,21 @@ cms:
                 - 'VehicleDatDisclaimer'
         VehicleEnVKV:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleEnVKV
-            template: 'CmsElementsBundle:Vehicle:envkv.html.twig'
+            template: '@CmsElements/Vehicle/envkv.html.twig'
             icon: 'fa fa-leaf'
             public: false
         VehicleWLTP:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleWLTP
-            template: 'CmsElementsBundle:Vehicle:wltp.html.twig'
+            template: '@CmsElements/Vehicle/wltp.html.twig'
             icon: 'fa fa-leaf'
             public: false
         VehicleFinancing:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleFinancing
-            template: 'CmsElementsBundle:Vehicle:financing.html.twig'
+            template: '@CmsElements/Vehicle/financing.html.twig'
             icon: 'fa fa-euro-sign'
             public: true
         VehicleDatDisclaimer:
             class: RevisionTen\CmsElements\Elements\Vehicle\VehicleDatDisclaimer
-            template: 'CmsElementsBundle:Vehicle:dat_disclaimer.html.twig'
+            template: '@CmsElements/Vehicle/dat_disclaimer.html.twig'
             icon: 'fa fa-exclamation-triangle'
             public: true
