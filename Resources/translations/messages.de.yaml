@@ -51,7 +51,7 @@ vehicle:
             title: "Fahrzeugtitel"
             motor: "Motorisierung"
             fuel: "Kraftstoff"
-            gearbox: "Getriebeart (Schaltung/Automatik)"
+            gearbox: "Getriebeart"
             power: "Leistung in kW"
             horsepower: "Leistung in PS"
             cubicCapacity: "Hubraum in cm³"
@@ -73,7 +73,7 @@ vehicle:
         placeholder:
             motor: "z.b. 1,2-l-Turbo"
             fuel: "z.b. Benzin, Super E10"
-            gearbox: "z.b. 6-Gang-Schaltgetriebe"
+            gearbox: "Schaltung/Automatik"
             emissionClass: "z.b. Euro6"
         help:
             hasRangeValues: "Aktivieren Sie diese Option wenn Sie von-bis Werte angeben müssen (z.b. augrund von unterschiedlicher Bereifungen)."
