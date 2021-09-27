@@ -1,96 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="550" height="570" viewBox="0, 0, 55, 57">
-  <style>
-    .label{opacity:0}
-        .label:target,#disabled:target~#unknown{opacity:1}
-        #disabled:target~path{filter:url(#disabled)}
-  </style>
-  <filter id="disabled">
-    <feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"/>
-  </filter>
-  <path d="M21 8H0v6h21l3-3-3-3z" fill="#58AB27"/>
-  <text transform="translate(10.5 11)">
-    <tspan x="7.165" y="2" font-family="Arial" font-size="5" fill="#FFF">A</tspan>
-  </text>
-  <path d="M18 1H0v6h18l3-3-3-3z" fill="#009036"/>
-  <text transform="translate(8.919 4)">
-    <tspan x="4.125" y="2" font-family="Arial" font-size="5" fill="#FFF">A⁺</tspan>
-  </text>
-  <path d="M24 15H0v6h24l3-3-3-3z" fill="#B1C800"/>
-  <text transform="translate(12 18)">
-    <tspan x="8.665" y="2" font-family="Arial" font-size="5" fill="#FFF">B</tspan>
-  </text>
-  <path d="M27 22H0v6h27l3-3-3-3z" fill="#FFEC00"/>
-  <text transform="translate(13.5 25)">
-    <tspan x="9.889" y="2" font-family="Arial" font-size="5" fill="#FFF">C</tspan>
-  </text>
-  <path d="M30 29H0v6h30l3-3-3-3z" fill="#FECC00"/>
-  <text transform="translate(15 32)">
-    <tspan x="11.389" y="2" font-family="Arial" font-size="5" fill="#FFF">D</tspan>
-  </text>
-  <path d="M33 36H0v6h33l3-3-3-3z" fill="#F29400"/>
-  <text transform="translate(16.5 39)">
-    <tspan x="13.165" y="2" font-family="Arial" font-size="5" fill="#FFF">E</tspan>
-  </text>
-  <path d="M36 43H0v6h36l3-3-3-3z" fill="#E2001A"/>
-  <text transform="translate(18 46)">
-    <tspan x="14.946" y="2" font-family="Arial" font-size="5" fill="#FFF">F</tspan>
-  </text>
-  <path d="M42 50H0v6h39l3-3-3-3z" fill="#E2001A"/>
-  <text transform="translate(20.5 53)">
-    <tspan x="14.946" y="2" font-family="sans-serif" font-size="5" fill="#FFF">G</tspan>
-  </text>
-  <g class="label" id="AA">
-    <path d="M44 8l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 4)">
-      <tspan x="-2.877" y="2" font-family="Arial" font-size="6" fill="#FFF">A⁺</tspan>
-    </text>
-  </g>
-  <g class="label" id="A">
-    <path d="M44 15l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 11)">
-      <tspan x="-2.001" y="2" font-family="Arial" font-size="6" fill="#FFF">A</tspan>
-    </text>
-  </g>
-  <g class="label" id="B">
-    <path d="M44 22l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 18)">
-      <tspan x="-2.001" y="2" font-family="Arial" font-size="6" fill="#FFF">B</tspan>
-    </text>
-  </g>
-  <g class="label" id="C">
-    <path d="M44 29l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 25)">
-      <tspan x="-2.167" y="2" font-family="Arial" font-size="6" fill="#FFF">C</tspan>
-    </text>
-  </g>
-  <g class="label" id="D">
-    <path d="M44 36l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 32)">
-      <tspan x="-2.167" y="2" font-family="Arial" font-size="6" fill="#FFF">D</tspan>
-    </text>
-  </g>
-  <g class="label" id="E">
-    <path d="M44 43l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 39)">
-      <tspan x="-2.001" y="2" font-family="Arial" font-size="6" fill="#FFF">E</tspan>
-    </text>
-  </g>
-  <g class="label" id="F">
-    <path d="M44 50l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 46)">
-      <tspan x="-1.833" y="2" font-family="Arial" font-size="6" fill="#FFF">F</tspan>
-    </text>
-  </g>
-  <g class="label" id="G">
-    <path d="M47 57l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(50.5 53)">
-      <tspan x="-1.833" y="2" font-family="sans-serif" font-size="6" fill="#FFF">G</tspan>
-    </text>
-  </g>
-  <g class="label" id="unknown">
-    <path d="M44 32l-4-4 4-4h11v8H44z"/>
-    <text transform="translate(49.5 28)">
-      <tspan x="-2.167" y="2" font-family="Arial" font-size="6" fill="#FFF">?</tspan>
-    </text>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="550" height="777" viewBox="0 0 550 777" style="enable-background:new 0 0 550 777;" xml:space="preserve">
+<style type="text/css">
+	.label{opacity:0}
+	.label:target,#disabled:target~#unknown{opacity:1}
+	#disabled:target~path{filter:url(#disabled)}
+</style>
+
+<path fill="#00943d" d="M116.6,77H0.6v60h116l30-30L116.6,77z"/>
+<text transform="matrix(1 0 0 1 42.019 127)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+<text transform="matrix(1 0 0 1 75.319 127)" font-family="Helvetica" font-size="55" fill="#FFF">⁺⁺⁺</text>
+
+<path fill="#00943d" d="M149,147H0v60h149l30-30L149,147z"/>
+<text transform="matrix(1 0 0 1 90.4375 197)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+<text transform="matrix(1 0 0 1 123.7375 197)" font-family="Helvetica" font-size="55" fill="#FFF">⁺⁺</text>
+
+<path fill="#45ab29" d="M180,217H0v60h180l30-30L180,217z"/>
+<text transform="matrix(1 0 0 1 130.4375 267)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+<text transform="matrix(1 0 0 1 163.7375 267)" font-family="Helvetica" font-size="55" fill="#FFF">⁺</text>
+
+<path fill="#bfd100" d="M210,287H0v60h210l30-30L210,287z"/>
+<text transform="matrix(1 0 0 1 176.6484 337)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+
+<path fill="#bfd100" d="M240,357H0v60h240l30-30L240,357z"/>
+<text transform="matrix(1 0 0 1 206.6484 407)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+
+<path fill="#ffed00" d="M270,427H0v60h270l30-30L270,427z"/>
+<text transform="matrix(1 0 0 1 233.8906 477)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+
+<path fill="#ee6300" d="M300,497H0v60h300l30-30L300,497z"/>
+<text transform="matrix(1 0 0 1 263.8906 547)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+
+<path fill="#e7000e" d="M330,567H0v60h330l30-30L330,567z"/>
+<text transform="matrix(1 0 0 1 296.6484 617)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+
+<path fill="#e7000e" d="M360,637H0v60h360l30-30L360,637z"/>
+<text transform="matrix(1 0 0 1 329.4609 687)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+
+<path  fill="#e7000e" d="M420,707H0v60h390l30-30l-30-30H420z"/>
+<text transform="matrix(1 0 0 1 354.4609 757)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+
+
+<g id="AAAA" class="label">
+	<path d="M399.9,147l-40-40l40-40h150v80H399.9z"/>
+	<text transform="matrix(1 0 0 1 407.127 127)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+	<text transform="matrix(1 0 0 1 447.127 127)" font-family="Helvetica" font-size="55" fill="#FFF">⁺⁺⁺</text>
+</g>
+<g id="AAA" class="label">
+	<path d="M439.9,217l-40-40l40-40h110v80H439.9z"/>
+	<text transform="matrix(1 0 0 1 436.8926 197)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+	<text transform="matrix(1 0 0 1 476.8926 197)" font-family="Helvetica" font-size="55" fill="#FFF">⁺⁺</text>
+</g>
+<g id="AA" class="label">
+	<path d="M440,287l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 466.2266 267)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+	<text transform="matrix(1 0 0 1 506.2266 267)" font-family="Helvetica" font-size="55" fill="#FFF">⁺</text>
+</g>
+<g id="A" class="label">
+	<path d="M440,357l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 337)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+</g>
+<g id="B" class="label">
+	<path d="M440,427l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 407)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+</g>
+<g id="C" class="label">
+	<path d="M440,497l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 477)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+</g>
+<g id="D" class="label">
+	<path d="M440,567l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 547)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+</g>
+<g id="E" class="label">
+	<path d="M440,637l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 617)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+</g>
+<g id="F" class="label">
+	<path d="M440,707l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 476.6719 687)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+</g>
+<g id="G" class="label">
+	<path d="M470,777l-40-40l40-40h110v80H440H470z"/>
+	<text transform="matrix(1 0 0 1 486.6719 757)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+</g>
+<g id="unknown" class="label">
+	<path d="M440,527l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 507)" font-family="Arial" font-size="55" fill="#FFF">?</text>
+</g>
 </svg>
+
+

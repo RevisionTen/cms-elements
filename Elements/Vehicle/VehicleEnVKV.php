@@ -35,6 +35,8 @@ class VehicleEnVKV extends Element
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
             'placeholder' => 'vehicle.envkv.label.min',
             'choices' => [
+                'A+++' => 'A+++',
+                'A++' => 'A++',
                 'A+' => 'A+',
                 'A' => 'A',
                 'B' => 'B',
@@ -54,6 +56,8 @@ class VehicleEnVKV extends Element
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
             'placeholder' => 'vehicle.envkv.label.max',
             'choices' => [
+                'A+++' => 'A+++',
+                'A++' => 'A++',
                 'A+' => 'A+',
                 'A' => 'A',
                 'B' => 'B',
