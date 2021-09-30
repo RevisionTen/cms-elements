@@ -44,7 +44,7 @@ class VehicleFinancing extends Element
                 if ('cash' === $financingType) {
                     self::addFields($form, [
                         'msrp',
-                    ]);
+                    ], $financingType);
                     $form->add('price', NumberType::class, array(
                         'label' => 'vehicle.financing.label.cashPrice',
                         'scale' => 2,
@@ -66,7 +66,7 @@ class VehicleFinancing extends Element
                         'lastInstalment',
                         'totalAmount',
                         'monthlyInstalment',
-                    ]);
+                    ], $financingType);
                 } elseif ('leasingPrivate' === $financingType) {
                     self::addFields($form, [
                         'msrp',
@@ -83,7 +83,7 @@ class VehicleFinancing extends Element
                         'kilometersLeasing',
                         'totalAmount',
                         'monthlyInstalment',
-                    ]);
+                    ], $financingType);
 
                     /*
                     // Net amount is optional.
@@ -100,7 +100,7 @@ class VehicleFinancing extends Element
                         'months',
                         'kilometersLeasing',
                         'monthlyInstalment',
-                    ]);
+                    ], $financingType);
                 }
             }
         };
@@ -147,7 +147,7 @@ class VehicleFinancing extends Element
         });
     }
 
-    private static function addFields(FormInterface $form, array $fields): void
+    private static function addFields(FormInterface $form, array $fields, ?string $financingType = null): void
     {
         $form->remove('msrp');
         $form->remove('price');
@@ -205,10 +205,12 @@ class VehicleFinancing extends Element
         }
 
         if (in_array('netAmount', $fields, true)) {
+            $isRequired = $financingType === null || $financingType !== 'leasingPrivate';
             $form->add('netAmount', NumberType::class, array(
                 'label' => 'vehicle.financing.label.netAmount',
                 'scale' => 2,
-                'constraints' => new NotBlank(),
+                'constraints' => $isRequired ? new NotBlank() : null,
+                'required' => $isRequired,
             ));
         }
 
