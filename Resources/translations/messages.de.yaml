@@ -152,3 +152,32 @@ vehicle:
                 credit: "Kreditfinanzierung"
                 leasingPrivate: "Leasing (Privatkunden)"
                 leasingBusiness: "Leasing (Geschäftskunden)"
+
+ecoData:
+    label:
+        energyEfficiencyClass: "Energieeffizienzklasse:"
+        co2Emission: "CO₂-Emission kombiniert:"
+        combinedFuelConsumption: "Kraftstoffverbrauch in l/100 km kombiniert:"
+        combinedPowerConsumption: "Stromverbrauch in kWh/100 km kombiniert:"
+        range: "Elektrische Reichweite (WLTP) in km:"
+        zeroEmission: "0 g/km"
+    wltp:
+        energyEfficiencyClassMinMax: "%max% - %min% (WLTP)"
+        energyEfficiencyClass: "%max% (WLTP)"
+        co2EmissionMinMax: "%max% - %min% g/km (WLTP)"
+        co2Emission: "%max% g/km (WLTP)"
+        combinedFuelConsumptionMinMax: "%max% - %min% (WLTP)"
+        combinedFuelConsumption: "%max% (WLTP)"
+        combinedPowerConsumptionMinMax: "%max% - %min% (WLTP)"
+        combinedPowerConsumption: "%max% (WLTP)"
+        rangeMinMax: "%min% - %max%"
+        range: "%max%"
+    nefz:
+        energyEfficiencyClassMinMax: "%max% - %min% (NEFZ)"
+        energyEfficiencyClass: "%max% (NEFZ)"
+        co2EmissionMinMax: "%max% - %min% g/km (NEFZ)"
+        co2Emission: "%max% g/km (NEFZ)"
+        combinedFuelConsumptionMinMax: "%max% - %min% (NEFZ)"
+        combinedFuelConsumption: "%max% (NEFZ)"
+        combinedPowerConsumptionMinMax: "%max% - %min% (NEFZ)"
+        combinedPowerConsumption: "%max% (NEFZ)"
