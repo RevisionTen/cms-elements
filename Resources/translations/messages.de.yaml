@@ -172,6 +172,12 @@ ecoData:
         combinedPowerConsumption: "%max% (WLTP)"
         rangeMinMax: "%min% - %max%"
         range: "%max%"
+        power: "Leistung: %kw% kW (%ps% PS)"
+        electricPower: "Spitzenleistung: %kw% kW (%ps% PS)"
+        hybridPower: "Systemleistung: %kw% kW (%ps% PS)"
+        cubicCapacity: "Hubraum: %value% cm³"
+        fuel: "Kraftstoff: %value%"
+        weight: "Masse des Fahrzeugs: %value% kg"
     nefz:
         energyEfficiencyClassMinMax: "%max% - %min% (NEFZ)"
         energyEfficiencyClass: "%max% (NEFZ)"
