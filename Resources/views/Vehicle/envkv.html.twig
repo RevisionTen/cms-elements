@@ -46,7 +46,7 @@
             {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
             <p>
                 {% if hasFossilFuel == false %}
-                    {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
+                    {{ 'vehicle.envkv.label.co2Emission'|trans }} 0 g/km<br/>
                 {% elseif element.data.co2EmissionMin is defined and element.data.co2EmissionMin %}
                     {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2EmissionMin ?? 0 }}-{{ element.data.co2Emission ?? 0 }} g/km<br/>
                 {% endif %}
