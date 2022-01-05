@@ -247,18 +247,109 @@
             <div class="col">
                 {{ form_row(form.gearbox) }}
             </div>
+            <div class="col">
+                {{ form_row(form.weight) }}
+            </div>
         </div>
 
         <div class="row">
             <div class="col">
-                {{ form_row(form.power) }}
+                <label class="form-label">
+                    {{ 'vehicle.wltp.form.powerLabel'|trans }}
+                </label>
+                <div class="row gx-2">
+                    <div class="col">
+                        <div class="row align-items-center gx-1">
+                            <div class="col">
+                                {{ form_row(form.power, { label: false }) }}
+                            </div>
+                            <div class="col-auto">
+                                <div class="mb-3">
+                                    kW
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center gx-1">
+                            <div class="col">
+                                {{ form_row(form.horsepower, { label: false }) }}
+                            </div>
+                            <div class="col-auto">
+                                <div class="mb-3">
+                                    PS
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                {{ form_row(form.horsepower) }}
-            </div>
-            <div class="col">
-                {{ form_row(form.weight) }}
-            </div>
+
+            {% if form.fuelPower is defined %}
+                <div class="col">
+                    <label class="form-label">
+                        {{ 'vehicle.wltp.form.fuelPowerLabel'|trans }}
+                    </label>
+                    <div class="row gx-2">
+                        <div class="col">
+                            <div class="row align-items-center gx-1">
+                                <div class="col">
+                                    {{ form_row(form.fuelPower, { label: false }) }}
+                                </div>
+                                <div class="col-auto">
+                                    <div class="mb-3">
+                                        kW
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center gx-1">
+                                <div class="col">
+                                    {{ form_row(form.fuelHorsepower, { label: false }) }}
+                                </div>
+                                <div class="col-auto">
+                                    <div class="mb-3">
+                                        PS
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label class="form-label">
+                        {{ 'vehicle.wltp.form.electricPowerLabel'|trans }}
+                    </label>
+                    <div class="row gx-2">
+                        <div class="col">
+                            <div class="row align-items-center gx-1">
+                                <div class="col">
+                                    {{ form_row(form.electricPower, { label: false }) }}
+                                </div>
+                                <div class="col-auto">
+                                    <div class="mb-3">
+                                        kW
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row align-items-center gx-1">
+                                <div class="col">
+                                    {{ form_row(form.electricHorsepower, { label: false }) }}
+                                </div>
+                                <div class="col-auto">
+                                    <div class="mb-3">
+                                        PS
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
         <div class="row">

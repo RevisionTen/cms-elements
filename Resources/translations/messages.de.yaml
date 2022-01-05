@@ -21,12 +21,35 @@ images:
         imagesPerRow1: "1"
 
 vehicle:
-    wltp:
+    wltpOnly:
         label:
+            co2EmissionFuel: "CO₂-Emissionen kombiniert in g/km: %value% (WLTP)"
+            co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: %value% (WLTP)"
+            combinedFuel: "Kraftstoffverbrauch kombiniert in l/100km: %value% (WLTP)"
+            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in l/100km: %value% (WLTP)"
+            combinedPowerBEV: "Stromverbrauch in kWh/100km: %value% (WLTP)"
+            combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: %value% (WLTP)"
+    wltp:
+        form:
+            powerLabel: "Gesamtleistung"
+            power: "Gesamtleistung in kW"
+            horsepower: "Gesamtleistung in PS"
+            fuelPowerLabel: "Verbrennerleistung"
+            fuelPower: "Verbrennerleistung in kW"
+            fuelHorsepower: "Verbrennerleistung in PS"
+            electricPowerLabel: "Elektroleistung"
+            electricPower: "Elektroleistung in kW"
+            electricHorsepower: "Elektroleistung in PS"
+        help:
+            hideNEFZ: "aktivieren Sie diese Option wenn sie für dieses Angebot auch ein NEFZ-Element eingebunden haben"
+        label:
+            hideNEFZ: "NEFZ-Platzhalter ausblenden"
             range: "Elektrische Reichweite (WLTP) in km: %value%"
             power: "Leistung: %kw% kW (%ps% PS)"
             electricPower: "Spitzenleistung: %kw% kW (%ps% PS)"
             hybridPower: "Systemleistung: %kw% kW (%ps% PS)"
+            hybridFuelPower: "Leistung Verbrenner: %kw% kW (%ps% PS)"
+            hybridElectricPower: "Leistung Elektromotor: %kw% kW (%ps% PS)"
             cubicCapacity: "Hubraum: %value% cm³"
             motor: "Motor: %value%"
             gearbox: "Getriebeart: %value%"

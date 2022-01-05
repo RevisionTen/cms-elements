@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RevisionTen\CmsElements\Elements\Vehicle;
 
 use RevisionTen\CMS\Form\Elements\Element;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +25,12 @@ class VehicleWLTP extends Element
             'label' => 'vehicle.envkv.label.title',
             'constraints' => new NotBlank(),
         ]);
+
+        $builder->add('hideNEFZ', CheckboxType::class, array(
+            'label' => 'vehicle.wltp.label.hideNEFZ',
+            'help' => 'vehicle.wltp.help.hideNEFZ',
+            'required' => false,
+        ));
 
         /*
         $builder->add('energyEfficiencyClassMin', ChoiceType::class, array(
@@ -128,14 +135,14 @@ class VehicleWLTP extends Element
             'required' => false,
         ));
 
+        // Power (KW) and horsepower (PS) describes the total power of the vehicle.
         $builder->add('power', NumberType::class, array(
-            'label' => 'vehicle.envkv.label.power',
+            'label' => 'vehicle.wltp.form.power',
             'scale' => 0,
             'required' => false,
         ));
-
         $builder->add('horsepower', NumberType::class, array(
-            'label' => 'vehicle.envkv.label.horsepower',
+            'label' => 'vehicle.wltp.form.horsepower',
             'scale' => 0,
             'required' => false,
         ));
@@ -173,6 +180,35 @@ class VehicleWLTP extends Element
             if ($form) {
                 $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
                 $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
+
+                // Add additional power specs for hybrid vehicles.
+                if ($hasFossilFuel && $hasBattery) {
+                    $form->add('fuelPower', NumberType::class, array(
+                        'label' => 'vehicle.wltp.form.fuelPower',
+                        'scale' => 0,
+                        'required' => false,
+                    ));
+                    $form->add('fuelHorsepower', NumberType::class, array(
+                        'label' => 'vehicle.wltp.form.fuelHorsepower',
+                        'scale' => 0,
+                        'required' => false,
+                    ));
+                    $form->add('electricPower', NumberType::class, array(
+                        'label' => 'vehicle.wltp.form.electricPower',
+                        'scale' => 0,
+                        'required' => false,
+                    ));
+                    $form->add('electricHorsepower', NumberType::class, array(
+                        'label' => 'vehicle.wltp.form.electricHorsepower',
+                        'scale' => 0,
+                        'required' => false,
+                    ));
+                } else {
+                    $form->remove('fuelPower');
+                    $form->remove('fuelHorsepower');
+                    $form->remove('electricPower');
+                    $form->remove('electricHorsepower');
+                }
 
                 if ($hasBattery) {
                     $form->add('combinedPowerConsumptionMin', NumberType::class, array(
