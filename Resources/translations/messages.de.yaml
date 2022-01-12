@@ -179,16 +179,16 @@ vehicle:
 ecoData:
     label:
         energyEfficiencyClass: "Energieeffizienzklasse:"
-        co2Emission: "CO₂-Emission kombiniert:"
-        combinedFuelConsumption: "Kraftstoffverbrauch in l/100 km kombiniert:"
-        combinedPowerConsumption: "Stromverbrauch in kWh/100 km kombiniert:"
+        co2Emission: "CO₂-Emission kombiniert in g/km:"
+        combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in l/100 km:"
+        combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
         range: "Elektrische Reichweite (WLTP) in km:"
-        zeroEmission: "0 g/km"
+        zeroEmission: "0 g/km" # Todo: remove.
     wltp:
         energyEfficiencyClassMinMax: "%max% - %min% (WLTP)"
         energyEfficiencyClass: "%max% (WLTP)"
-        co2EmissionMinMax: "%max% - %min% g/km (WLTP)"
-        co2Emission: "%max% g/km (WLTP)"
+        co2EmissionMinMax: "%max% - %min% (WLTP)"
+        co2Emission: "%max% (WLTP)"
         combinedFuelConsumptionMinMax: "%max% - %min% (WLTP)"
         combinedFuelConsumption: "%max% (WLTP)"
         combinedPowerConsumptionMinMax: "%max% - %min% (WLTP)"
@@ -204,8 +204,8 @@ ecoData:
     nefz:
         energyEfficiencyClassMinMax: "%max% - %min% (NEFZ)"
         energyEfficiencyClass: "%max% (NEFZ)"
-        co2EmissionMinMax: "%max% - %min% g/km (NEFZ)"
-        co2Emission: "%max% g/km (NEFZ)"
+        co2EmissionMinMax: "%max% - %min% (NEFZ)"
+        co2Emission: "%max% (NEFZ)"
         combinedFuelConsumptionMinMax: "%max% - %min% (NEFZ)"
         combinedFuelConsumption: "%max% (NEFZ)"
         combinedPowerConsumptionMinMax: "%max% - %min% (NEFZ)"

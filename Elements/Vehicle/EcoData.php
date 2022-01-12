@@ -8,6 +8,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EcoData
 {
+    public bool $showNefzPlaceholders = false;
+
     // WLTP
 
     public ?string $energyEfficiencyClassMin = null;
@@ -138,6 +140,16 @@ class EcoData
         return !($this->co2EmissionMin || $this->co2EmissionMax || $this->nefzCo2EmissionMin || $this->nefzCo2EmissionMax);
     }
 
+    public function hasNefz(): bool
+    {
+        return $this->nefzCombinedFuelConsumptionMax || $this->nefzCombinedPowerConsumptionMax;
+    }
+
+    public function hasWltp(): bool
+    {
+        return $this->combinedFuelConsumptionMax || $this->combinedPowerConsumptionMax;
+    }
+
     public function getText(TranslatorInterface $translator, ?string $separator = '; ', ?array $excludedFields = null): string
     {
         $text = [];
@@ -146,7 +158,17 @@ class EcoData
         $text['combinedPowerConsumption'] = $this->getEcoText($translator, 'combinedPowerConsumption', true, 2);
 
         if ($this->isZeroEmissionVehicle() && $this->hasConsumption()) {
-            $text['co2Emission'] = $translator->trans('ecoData.label.co2Emission').' '.$translator->trans('ecoData.label.zeroEmission');
+            $co2Emission = '';
+            $hasNefz = $this->hasNefz();
+            $hasWltp = $this->hasWltp();
+            if (($this->showNefzPlaceholders && $hasWltp) || $hasNefz) {
+                $emissions = $hasNefz ? 0 : '-';
+                $co2Emission = $translator->trans('ecoData.label.co2Emission').' '.$translator->trans('ecoData.nefz.co2Emission', ['%max%' => $emissions]);
+            }
+            if ($hasWltp) {
+                $co2Emission .= $translator->trans('ecoData.label.co2Emission').' '.$translator->trans('ecoData.wltp.co2Emission', ['%max%' => 0]);
+            }
+            $text['co2Emission'] = $co2Emission;
         } else {
             $text['co2Emission'] = $this->getEcoText($translator, 'co2Emission', true, 0);
         }
@@ -214,32 +236,40 @@ class EcoData
             $hasWltp = null !== $wltp_min || null !== $wltp_max;
             $hasNefz = null !== $nefz_min || null !== $nefz_max;
 
+            // For NEFZ placeholders to be shown, the property must exist, be null and have a WLTP counterpart.
+            $nefzProperty = 'nefz'.ucfirst($fieldName).'Max';
+            $hasNefzPlaceholder = $this->showNefzPlaceholders && !$hasNefz && $hasWltp && property_exists(__CLASS__, $nefzProperty);
+
             if ($hasNefz) {
                 if (null !== $nefz_min && null !== $nefz_max) {
                     $text .= ' '.$translator->trans('ecoData.nefz.'.$fieldName.'MinMax', [
-                            '%min%' => $formatNumber ? number_format($nefz_min, $decimals, ',', '.') : $nefz_min,
-                            '%max%' => $formatNumber ? number_format($nefz_max, $decimals, ',', '.') : $nefz_max,
-                        ]);
+                        '%min%' => $formatNumber ? number_format($nefz_min, $decimals, ',', '.') : $nefz_min,
+                        '%max%' => $formatNumber ? number_format($nefz_max, $decimals, ',', '.') : $nefz_max,
+                    ]);
                 } elseif (null !== $nefz_max) {
                     $text .= ' '.$translator->trans('ecoData.nefz.'.$fieldName, [
-                            '%max%' => $formatNumber ? number_format($nefz_max, $decimals, ',', '.') : $nefz_max,
-                        ]);
+                        '%max%' => $formatNumber ? number_format($nefz_max, $decimals, ',', '.') : $nefz_max,
+                    ]);
                 }
+            } elseif ($hasNefzPlaceholder) {
+                $text .= ' '.$translator->trans('ecoData.nefz.'.$fieldName, [
+                    '%max%' => '-',
+                ]);
             }
 
             if ($hasWltp) {
-                if ($hasNefz) {
+                if ($hasNefz || $hasNefzPlaceholder) {
                     $text .= ';';
                 }
                 if (null !== $wltp_min && null !== $wltp_max) {
                     $text .= ' '.$translator->trans('ecoData.wltp.'.$fieldName.'MinMax', [
-                            '%min%' => $formatNumber ? number_format($wltp_min, $decimals, ',', '.') : $wltp_min,
-                            '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
-                        ]);
+                        '%min%' => $formatNumber ? number_format($wltp_min, $decimals, ',', '.') : $wltp_min,
+                        '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
+                    ]);
                 } elseif (null !== $wltp_max) {
                     $text .= ' '.$translator->trans('ecoData.wltp.'.$fieldName, [
-                            '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
-                        ]);
+                        '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
+                    ]);
                 }
             }
 
