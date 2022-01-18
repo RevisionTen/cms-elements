@@ -73,7 +73,6 @@ class EcoData
         // WLTP:
         if ($hasFossilFuel) {
             $ecoData->cubicCapacity = !empty($wltp['cubicCapacity']) ? (int) $wltp['cubicCapacity'] : null;
-            $ecoData->fuel = $wltp['fuel'] ?? null;
             $ecoData->combinedFuelConsumptionMin = $wltp['combinedMin'] ?? null;
             $ecoData->combinedFuelConsumptionMax = $wltp['combined'] ?? null;
         }
@@ -84,11 +83,20 @@ class EcoData
             $ecoData->combinedPowerConsumptionMax = $wltp['combinedPowerConsumption'] ?? null;
         }
         if ($hasBattery && !$hasFossilFuel) {
+            // Pure BEV.
             $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
             $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? 0;
         } else {
             $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
             $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
+        }
+        if (!$hasBattery && $hasFossilFuel) {
+            // Pure ICE.
+            $ecoData->fuel = $wltp['fuel'] ?? null;
+            if (empty($ecoData->fuel ) && ('diesel' === $fuelType || 'petrol' === $fuelType)) {
+                // Infer fuel from fuelType.
+                $ecoData->fuel  = $fuelType;
+            }
         }
         $ecoData->energyEfficiencyClassMin = $wltp['energyEfficiencyClassMin'] ?? null;
         $ecoData->energyEfficiencyClassMax = $wltp['energyEfficiencyClass'] ?? null;
@@ -206,26 +214,11 @@ class EcoData
                 '%value%' => $this->cubicCapacity,
             ]);
         }
-        if ($this->hasFuelConsumption() && !$this->hasPowerConsumption()) {
-            $fuelFallback = null;
-            $fuelType = $wltp['fuelType'] ?? ($nefz['fuelType'] ?? null);
-            switch ($fuelType) {
-                case 'hybrid_petrol':
-                case 'petrol':
-                    $fuelFallback = 'petrol';
-                    break;
-                case 'hybrid_diesel':
-                case 'diesel':
-                    $fuelFallback = 'diesel';
-                    break;
-            }
-            $fuelFallback = $fuelFallback ? $translator->trans('ecoData.fuelTypes.'.$fuelFallback) : null;
-            $fuel = $this->fuel ?? $fuelFallback;
-            if ($fuel) {
-                $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
-                    '%value%' => $fuel,
-                ]);
-            }
+        if (null !== $this->fuel) {
+            $fuel = ('diesel' === $this->fuel || 'petrol' === $this->fuel) ? $translator->trans('ecoData.fuelTypes.'.$this->fuel) : $this->fuel;
+            $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
+                '%value%' => $fuel,
+            ]);
         }
 
         $text['energyEfficiencyClass'] = $this->getEcoText($translator, 'energyEfficiencyClass', false);
