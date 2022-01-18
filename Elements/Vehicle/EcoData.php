@@ -206,10 +206,26 @@ class EcoData
                 '%value%' => $this->cubicCapacity,
             ]);
         }
-        if (null !== $this->fuel && $this->hasFuelConsumption()) {
-            $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
-                '%value%' => $this->fuel,
-            ]);
+        if ($this->hasFuelConsumption() && !$this->hasPowerConsumption()) {
+            $fuelFallback = null;
+            $fuelType = $wltp['fuelType'] ?? ($nefz['fuelType'] ?? null);
+            switch ($fuelType) {
+                case 'hybrid_petrol':
+                case 'petrol':
+                    $fuelFallback = 'petrol';
+                    break;
+                case 'hybrid_diesel':
+                case 'diesel':
+                    $fuelFallback = 'diesel';
+                    break;
+            }
+            $fuelFallback = $fuelFallback ? $translator->trans('ecoData.fuelTypes.'.$fuelFallback) : null;
+            $fuel = $this->fuel ?? $fuelFallback;
+            if ($fuel) {
+                $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
+                    '%value%' => $fuel,
+                ]);
+            }
         }
 
         $text['energyEfficiencyClass'] = $this->getEcoText($translator, 'energyEfficiencyClass', false);

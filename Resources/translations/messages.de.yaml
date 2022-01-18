@@ -210,3 +210,6 @@ ecoData:
         combinedFuelConsumption: "%max% (NEFZ)"
         combinedPowerConsumptionMinMax: "%max% - %min% (NEFZ)"
         combinedPowerConsumption: "%max% (NEFZ)"
+    fuelTypes:
+        petrol: "Benzin"
+        diesel: "Diesel"
