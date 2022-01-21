@@ -84,8 +84,8 @@ class EcoData
         }
         if ($hasBattery && !$hasFossilFuel) {
             // Pure BEV.
-            $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
-            $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? 0;
+            $ecoData->co2EmissionMin = null;
+            $ecoData->co2EmissionMax = 0;
         } else {
             $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
             $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
