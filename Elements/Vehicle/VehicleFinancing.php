@@ -209,7 +209,7 @@ class VehicleFinancing extends Element
             $form->add('netAmount', NumberType::class, array(
                 'label' => 'vehicle.financing.label.netAmount',
                 'scale' => 2,
-                'constraints' => $isRequired ? new NotBlank() : null,
+                'constraints' => $isRequired ? new NotBlank() : [],
                 'required' => $isRequired,
             ));
         }
