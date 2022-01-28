@@ -1,4 +1,4 @@
-<div data-gallery="{{ element.uuid }}" {{ editorAttr(element, edit, 'bg-warning') }} class="{{ elementClasses(element) }} row">
+<div data-gallery="{{ element.uuid }}" {{ editorAttr(element, edit, 'bg-warning') }} class="{{ elementClasses(element) }} d-flex flex-column">
     {% set imagesPerRow = element.data.imagesPerRow is defined and element.data.imagesPerRow ? element.data.imagesPerRow : 'col-4' %}
     {% set width = element.data.settings.width ?? 400 %}
     {% set height = element.data.settings.height ?? 300 %}
@@ -6,16 +6,18 @@
     {% set fixOrientation = false %}
     {% set showOriginal = false %}
 
-    {% for imageEntry in element.data.images %}
-        {% if imageEntry.image is defined and imageEntry.image %}
-            {% set image = imageEntry.image %}
-            {% set title = imageEntry.title ?? '' %}
-            {% set alt = imageEntry.alt ?? title %}
-            {% set imageUrl = imageEntry.image.file ?? '' %}
+    <div class="row">
+        {% for imageEntry in element.data.images %}
+            {% if imageEntry.image is defined and imageEntry.image %}
+                {% set image = imageEntry.image %}
+                {% set title = imageEntry.title ?? '' %}
+                {% set alt = imageEntry.alt ?? title %}
+                {% set imageUrl = imageEntry.image.file ?? '' %}
 
-            <a class="{{ imagesPerRow }} mb-3" href="{{ imageUrl }}" title="{{ title}}">
-                {% include '@CmsElements/BetterDefault/responsive_image.html.twig' %}
-            </a>
-        {% endif %}
-    {% endfor %}
+                <a class="{{ imagesPerRow }} mb-4" href="{{ imageUrl }}" title="{{ title}}">
+                    {% include '@CmsElements/BetterDefault/responsive_image.html.twig' %}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
