@@ -47,10 +47,10 @@
             <p>
                 {% if hasFossilFuel == false %}
                     {{ 'vehicle.envkv.label.co2Emission'|trans }} 0 g/km<br/>
-                {% elseif element.data.co2EmissionMin is defined and element.data.co2EmissionMin %}
-                    {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2EmissionMin ?? 0 }}-{{ element.data.co2Emission ?? 0 }} g/km<br/>
-                {% else %}
-                    {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission ?? 0 }} g/km<br/>
+                {% elseif element.data.co2Emission is defined and element.data.co2Emission and element.data.co2EmissionMin is defined and element.data.co2EmissionMin %}
+                    {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2EmissionMin }}-{{ element.data.co2Emission }} g/km<br/>
+                {% elseif element.data.co2Emission is defined and element.data.co2Emission %}
+                    {{ 'vehicle.envkv.label.co2Emission'|trans }} {{ element.data.co2Emission }} g/km<br/>
                 {% endif %}
 
                 {% if hasBattery and element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
