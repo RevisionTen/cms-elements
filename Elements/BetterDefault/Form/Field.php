@@ -46,7 +46,6 @@ class Field extends AbstractType
             'required' => false,
             'label' => 'element.label.formValue',
             'translation_domain' => 'cms',
-            'constraints' => new NotBlank(),
         ]);
     }
 

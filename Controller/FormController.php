@@ -26,7 +26,7 @@ class FormController extends AbstractController
                 } elseif ('parameter' === $type && $request) {
                     $defaultData[$field] = $request->get($value);
                 } elseif ('url' === $type && $request) {
-                    $defaultData[$field] = $request->getSchemeAndHttpHost().$request->getBasePath();
+                    $defaultData[$field] = $request->getSchemeAndHttpHost().$request->getPathInfo();
                 }
             }
         }
