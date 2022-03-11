@@ -10,14 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FormController extends AbstractController
 {
-    public function renderFormAction(RequestStack $requestStack, string $formUuid, array $element): Response
+    public function renderCmsForm(RequestStack $requestStack, string $formUuid, array $element, array $defaultData = []): Response
     {
-        $request = $requestStack->getMasterRequest();
-
-        $defaultData = [];
+        $request = $requestStack->getMainRequest();
 
         $fields = $element['data']['fields'] ?? [];
-
         foreach ($fields as $fieldConfig) {
             $field = $fieldConfig['field'] ?? null;
             $type = $fieldConfig['type'] ?? null;
@@ -28,16 +25,13 @@ class FormController extends AbstractController
                     $defaultData[$field] = $value;
                 } elseif ('parameter' === $type && $request) {
                     $defaultData[$field] = $request->get($value);
+                } elseif ('url' === $type && $request) {
+                    $defaultData[$field] = $request->getSchemeAndHttpHost().$request->getBasePath();
                 }
             }
         }
 
-        $controller = 'RevisionTen\Forms\Controller\FormController::renderFormAction';
-        if (method_exists(\RevisionTen\Forms\Controller\FormController::class, 'renderCmsForm')) {
-            $controller = 'RevisionTen\Forms\Controller\FormController::renderCmsForm';
-        }
-
-        return $this->forward($controller, [
+        return $this->forward('RevisionTen\Forms\Controller\FormController::renderCmsForm', [
             'formUuid' => $formUuid,
             'defaultData' => $defaultData,
         ]);

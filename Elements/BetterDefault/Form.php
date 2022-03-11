@@ -18,21 +18,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Form extends Element
 {
-    /**
-     * @var array
-     */
-    private $choices = [];
+    private array $choices = [];
 
-    /**
-     * @var array
-     */
-    private $forms = [];
+    private array $forms = [];
 
-    /**
-     * Form constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         /**
@@ -47,12 +36,6 @@ class Form extends Element
         }
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -132,11 +115,6 @@ class Form extends Element
         return $fields;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'cms_form';
