@@ -13,12 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Field extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('field', ChoiceType::class, [
@@ -39,6 +33,7 @@ class Field extends AbstractType
             'choices' => [
                 'element.value.formTypeParameter' => 'parameter',
                 'element.value.formTypeValue' => 'value',
+                'element.value.formTypeUrl' => 'url',
             ],
             'required' => false,
             'attr' => [
@@ -55,9 +50,6 @@ class Field extends AbstractType
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

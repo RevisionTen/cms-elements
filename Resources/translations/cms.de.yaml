@@ -10,5 +10,6 @@ element:
     value:
         formTypeParameter: "Wert aus URL-Parameter"
         formTypeValue: "Fester Wert"
+        formTypeUrl: "URL"
     help:
         alt: "Bleibt dieses Feld leer, wird stattdessen der Titel als Alt-Tag verwendet."
