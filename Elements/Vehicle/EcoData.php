@@ -68,8 +68,8 @@ class EcoData
         $nefz = $nefzElement['data'] ?? [];
 
         $fuelType = $wltp['fuelType'] ?? ($nefz['fuelType'] ?? null);
-        $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
-        $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
+        $hasFossilFuel = 'electricity' !== $fuelType;
+        $hasBattery = 'electricity' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
 
         $ecoData = new self();
         $ecoData->fuelType = $fuelType;
@@ -167,7 +167,7 @@ class EcoData
         $text = [];
 
         $fuelUnit = 'l/100km';
-        if ('cng' === $this->fuelType) {
+        if ('cng' === $this->fuelType || 'hydrogen' === $this->fuelType) {
             $fuelUnit = 'kg/100km';
         }
 
