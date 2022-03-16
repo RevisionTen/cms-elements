@@ -12,6 +12,7 @@
             {{ element.data.title }} ({{ ('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans }}) <sup>{{ element.data.legalDisclaimerNum is defined ? element.data.legalDisclaimerNum : '1' }}</sup>
         {% endif %}
     </h6>
+
     {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
     {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
@@ -42,6 +43,10 @@
         {% endif %}
         <div class="col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
+            {% set fuelUnit = 'l/100km' %}
+            {% if 'cng' == fuelType %}
+                {% set fuelUnit = 'kg/100km' %}
+            {% endif %}
             {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
             {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
             <p>
@@ -62,27 +67,27 @@
                 {% endif %}
 
                 {% if hasFossilFuel %}
-                    {% if element.data.combined is defined and element.data.combined is not empty %}
+                    {% if element.data.combined is defined and element.data.combined %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
-                            {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedMin|number_format(1, ',') }}-{{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combinedMin|number_format(1, ',') }}-{{ element.data.combined|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% else %}
-                            {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.combined'|trans }} {{ element.data.combined|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% endif %}
                     {% endif %}
 
-                    {% if element.data.outer is defined and element.data.outer is not empty %}
+                    {% if element.data.outer is defined and element.data.outer %}
                         {% if element.data.outerMin is defined and element.data.outerMin %}
-                            {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outerMin|number_format(1, ',') }}-{{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outerMin|number_format(1, ',') }}-{{ element.data.outer|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% else %}
-                            {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.outer'|trans }} {{ element.data.outer|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% endif %}
                     {% endif %}
 
-                    {% if element.data.inner is defined and element.data.inner is not empty %}
+                    {% if element.data.inner is defined and element.data.inner %}
                         {% if element.data.innerMin is defined and element.data.innerMin %}
-                            {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.innerMin|number_format(1, ',') }}-{{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.innerMin|number_format(1, ',') }}-{{ element.data.inner|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% else %}
-                            {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} l/100 km<br/>
+                            {{ 'vehicle.envkv.label.inner'|trans }} {{ element.data.inner|number_format(1, ',') }} {{ fuelUnit }}<br/>
                         {% endif %}
                     {% endif %}
                 {% endif %}

@@ -10,6 +10,8 @@ class EcoData
 {
     public bool $showNefzPlaceholders = false;
 
+    public ?string $fuelType = null;
+
     // WLTP
 
     public ?string $energyEfficiencyClassMin = null;
@@ -70,6 +72,8 @@ class EcoData
         $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
 
         $ecoData = new self();
+        $ecoData->fuelType = $fuelType;
+
         // WLTP:
         if ($hasFossilFuel) {
             $ecoData->cubicCapacity = !empty($wltp['cubicCapacity']) ? (int) $wltp['cubicCapacity'] : null;
@@ -162,7 +166,12 @@ class EcoData
     {
         $text = [];
 
-        $text['combinedFuelConsumption'] = $this->getEcoText($translator, 'combinedFuelConsumption', true, 1);
+        $fuelUnit = 'l/100km';
+        if ('cng' === $this->fuelType) {
+            $fuelUnit = 'kg/100km';
+        }
+
+        $text['combinedFuelConsumption'] = $this->getEcoText($translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
         $text['combinedPowerConsumption'] = $this->getEcoText($translator, 'combinedPowerConsumption', true, 2);
 
         if ($this->isZeroEmissionVehicle() && $this->hasConsumption()) {
@@ -215,9 +224,14 @@ class EcoData
             ]);
         }
         if (null !== $this->fuel) {
-            $fuel = ('diesel' === $this->fuel || 'petrol' === $this->fuel) ? $translator->trans('ecoData.fuelTypes.'.$this->fuel) : $this->fuel;
+            $fuelTypes = ['petrol', 'diesel', 'lpg', 'cng', 'gas', 'electricity', 'hybrid', 'hybrid_petrol', 'hybrid_diesel', 'hydrogen', 'other'];
+            $fuel = in_array($this->fuel, $fuelTypes, true) ? $translator->trans('ecoData.fuelTypes.'.$this->fuel) : $this->fuel;
             $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
                 '%value%' => $fuel,
+            ]);
+        } elseif ($this->fuelType) {
+            $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
+                '%value%' => $translator->trans('ecoData.fuelTypes.'.$this->fuelType),
             ]);
         }
 
@@ -231,7 +245,7 @@ class EcoData
         return implode($separator, $text);
     }
 
-    private function getEcoText(TranslatorInterface $translator, string $fieldName, bool $formatNumber, ?int $decimals = 2): ?string
+    private function getEcoText(TranslatorInterface $translator, string $fieldName, bool $formatNumber, ?int $decimals = 2, ?string $unit = null): ?string
     {
         $wltp_min = $this->{$fieldName.'Min'} ?? null;
         $wltp_max = $this->{$fieldName.'Max'} ?? null;
@@ -240,7 +254,9 @@ class EcoData
         $nefz_max = $this->{'nefz'.ucfirst($fieldName).'Max'} ?? null;
 
         if (null !== $wltp_min || null !== $wltp_max || null !== $nefz_min || null !== $nefz_max) {
-            $text = $translator->trans('ecoData.label.'.$fieldName);
+            $text = $translator->trans('ecoData.label.'.$fieldName, [
+                '%unit%' => $unit,
+            ]);
 
             $hasWltp = null !== $wltp_min || null !== $wltp_max;
             $hasNefz = null !== $nefz_min || null !== $nefz_max;

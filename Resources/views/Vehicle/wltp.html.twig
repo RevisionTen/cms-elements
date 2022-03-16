@@ -36,6 +36,10 @@
         {% endif %}
         <div class="vehicle-wltp-body col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
+            {% set fuelUnit = 'l/100km' %}
+            {% if 'cng' == fuelType %}
+                {% set fuelUnit = 'kg/100km' %}
+            {% endif %}
             {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
             {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
             <p>
@@ -46,12 +50,14 @@
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
-                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
+                                '%unit%': fuelUnit,
                             }) }}
                             <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
-                                '%value%': element.data.combined|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ','),
+                                '%unit%': fuelUnit,
                             }) }}
                             <br/>
                         {% endif %}
@@ -155,12 +161,14 @@
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
-                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
+                                '%unit%': fuelUnit,
                             })|raw }}
                             <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
-                                '%value%': element.data.combined|number_format(1, ',')
+                                '%value%': element.data.combined|number_format(1, ','),
+                                '%unit%': fuelUnit,
                             })|raw }}
                             <br/>
                         {% endif %}
