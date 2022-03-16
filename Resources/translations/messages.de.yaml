@@ -25,8 +25,8 @@ vehicle:
         label:
             co2EmissionFuel: "CO₂-Emissionen kombiniert in g/km: %value% (WLTP)"
             co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: %value% (WLTP)"
-            combinedFuel: "Kraftstoffverbrauch kombiniert in l/100km: %value% (WLTP)"
-            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in l/100km: %value% (WLTP)"
+            combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: %value% (WLTP)"
+            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: %value% (WLTP)"
             combinedPowerBEV: "Stromverbrauch in kWh/100km: %value% (WLTP)"
             combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: %value% (WLTP)"
     wltp:
@@ -59,8 +59,8 @@ vehicle:
             weight: "Masse des Fahrzeugs: %value% kg"
             co2EmissionFuel: "CO₂-Emissionen kombiniert in g/km: - (NEFZ); %value% (WLTP)"
             co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: - (NEFZ); %value% (WLTP)"
-            combinedFuel: "Kraftstoffverbrauch kombiniert in l/100km: - (NEFZ); %value% (WLTP)"
-            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in l/100km: - (NEFZ); %value% (WLTP)"
+            combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: - (NEFZ); %value% (WLTP)"
+            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: - (NEFZ); %value% (WLTP)"
             combinedPowerBEV: "Stromverbrauch in kWh/100km: - (NEFZ); %value% (WLTP)"
             combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: - (NEFZ); %value% (WLTP)"
             legalDisclaimerHybrid: "Offizielle Angaben zu Kraftstoffverbrauch, CO₂-Emissionen, Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. <br><br>Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO₂-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoffverbrauch, die CO₂-Emissionen und den Stromverbrauch neuer Personenkraftwagenmodelle“ entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT), Hellmuth-Hirth-Str. 1, 73760 Ostfildern und unter <a target=\"_blank\" href=\"https://www.dat.de/co2/\" rel=\"nofollow\">https://www.dat.de/co2/</a> unentgeltlich erhältlich ist."
@@ -104,8 +104,8 @@ vehicle:
             fuel:
                 petrol: "Benzin"
                 diesel: "Diesel"
-                lpg: "LPG"
-                cng: "CNG"
+                lpg: "Autogas (LPG)"
+                cng: "Erdgas (CNG)"
                 gas: "Gas"
                 electricity: "Elektro"
                 hybrid: "Hybrid"
@@ -180,7 +180,7 @@ ecoData:
     label:
         energyEfficiencyClass: "Energieeffizienzklasse:"
         co2Emission: "CO₂-Emission kombiniert in g/km:"
-        combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in l/100 km:"
+        combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
         combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
         range: "Elektrische Reichweite (WLTP) in km:"
         zeroEmission: "0 g/km" # Todo: remove.
@@ -213,3 +213,12 @@ ecoData:
     fuelTypes:
         petrol: "Benzin"
         diesel: "Diesel"
+        lpg: "Autogas (LPG)"
+        cng: "Erdgas (CNG)"
+        gas: "Gas"
+        electricity: "Elektro"
+        hybrid: "Hybrid"
+        hybrid_petrol: "Hybrid (Benzin/Elektro)"
+        hybrid_diesel: "Hybrid (Diesel/Elektro)"
+        hydrogen: "Wasserstoff"
+        other: "Andere"
