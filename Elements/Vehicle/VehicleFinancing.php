@@ -84,14 +84,6 @@ class VehicleFinancing extends Element
                         'totalAmount',
                         'monthlyInstalment',
                     ], $financingType);
-
-                    /*
-                    // Net amount is optional.
-                    $form->add('netAmount', NumberType::class, array(
-                        'label' => 'vehicle.financing.label.netAmount',
-                        'scale' => 2,
-                        'required' => false,
-                    ));*/
                 } elseif ('leasingBusiness' === $financingType) {
                     self::addFields($form, [
                         'specialPayment',
@@ -215,18 +207,22 @@ class VehicleFinancing extends Element
         }
 
         if (in_array('fixedInterestRate', $fields, true)) {
+            $isRequired = $financingType === null || $financingType !== 'leasingPrivate';
             $form->add('fixedInterestRate', NumberType::class, array(
                 'label' => 'vehicle.financing.label.fixedInterestRate',
                 'scale' => 2,
-                'constraints' => new NotBlank(),
+                'constraints' => $isRequired ? new NotBlank() : [],
+                'required' => $isRequired,
             ));
         }
 
         if (in_array('effectiveInterest', $fields, true)) {
+            $isRequired = $financingType === null || $financingType !== 'leasingPrivate';
             $form->add('effectiveInterest', NumberType::class, array(
                 'label' => 'vehicle.financing.label.effectiveInterest',
                 'scale' => 2,
-                'constraints' => new NotBlank(),
+                'constraints' => $isRequired ? new NotBlank() : [],
+                'required' => $isRequired,
             ));
         }
 
