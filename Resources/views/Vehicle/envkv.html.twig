@@ -44,11 +44,11 @@
         <div class="col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
             {% set fuelUnit = 'l/100km' %}
-            {% if 'cng' == fuelType %}
+            {% if 'cng' == fuelType or 'hydrogen' == fuelType %}
                 {% set fuelUnit = 'kg/100km' %}
             {% endif %}
-            {% set hasBattery = 'electricity' == fuelType or 'hydrogen' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
-            {% set hasFossilFuel = fuelType != 'electricity' and fuelType != 'hydrogen' %}
+            {% set hasFossilFuel = 'electricity' != fuelType %}
+            {% set hasBattery = 'electricity' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
             <p>
                 {% if hasFossilFuel == false %}
                     {{ 'vehicle.envkv.label.co2Emission'|trans }} 0 g/km<br/>
