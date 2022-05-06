@@ -265,10 +265,12 @@ class VehicleFinancing extends Element
         }
 
         if (in_array('totalAmount', $fields, true)) {
+            $isRequired = $financingType === null || $financingType !== 'leasingPrivate';
             $form->add('totalAmount', NumberType::class, array(
                 'label' => 'vehicle.financing.label.totalAmount',
                 'scale' => 2,
-                'constraints' => new NotBlank(),
+                'constraints' => $isRequired ? new NotBlank() : [],
+                'required' => $isRequired,
             ));
         }
 
