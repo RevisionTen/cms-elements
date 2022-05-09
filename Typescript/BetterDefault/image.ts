@@ -6,9 +6,16 @@ let lozad = require('lozad');
 
 document.addEventListener('DOMContentLoaded', () => {
     (window as any).imageObserver.observe();
+});
 
-    // Load lazy image after refresh in editor.
-    document.addEventListener('bindElement', () => {
-        (window as any).imageObserver.observe();
+// Load lazy image after refresh in editor.
+document.addEventListener('bindElement', () => {
+    // Bugfix for Lozad.
+    // @see https://github.com/ApoorvSaxena/lozad.js/pull/249
+    const noScriptImages = document.querySelectorAll('.lozad noscript img') as NodeListOf<HTMLElement>;
+    noScriptImages.forEach((img) => {
+        img.remove();
     });
+
+    (window as any).imageObserver.observe();
 });
