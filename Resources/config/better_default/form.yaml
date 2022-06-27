@@ -11,6 +11,8 @@ services:
         autoconfigure: true
         autowire: true
         tags: [ form.type ]
+        arguments:
+            $config: '%forms%'
     RevisionTen\CmsElements\Controller\FormController:
         autoconfigure: true
         autowire: true

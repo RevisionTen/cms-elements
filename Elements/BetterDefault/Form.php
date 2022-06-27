@@ -22,8 +22,13 @@ class Form extends Element
 
     private array $forms = [];
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private ?array $config;
+
+    public function __construct(EntityManagerInterface $entityManager, ?array $config = null)
     {
+        // The config is optional, it might not be configured in the service definition (for legacy reasons).
+        $this->config = $config;
+
         /**
          * @var FormRead[] $forms
          */
@@ -105,10 +110,28 @@ class Form extends Element
         $fields = [];
 
         foreach ($items as $item) {
+            // Get the available data vars for this form item class.
+            $vars = null;
+            $itemName = $item['itemName'] ?? null;
+            if ($itemName && $this->config) {
+                $itemClass = $this->config['item_types'][$itemName]['class'] ?? null;
+                if ($itemClass && method_exists($itemClass, 'getVariables')) {
+                    $vars = $itemClass::getVariables($item['data']);
+                }
+            }
+
+            // Add the data vars to the available fields.
             $name = $item['data']['name'] ?? null;
             $label = $item['data']['label'] ?? null;
             if ($name && $label) {
-                $fields[$label] = $name;
+                if ($vars) {
+                    foreach ($vars as $var) {
+                        $fields[$label.' ('.$var.')'] = $var;
+                    }
+                } else {
+                    // Fallback to simple single value variable.
+                    $fields[$label.' ('.$name.')'] = $name;
+                }
             }
         }
 
