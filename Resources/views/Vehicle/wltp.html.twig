@@ -128,7 +128,7 @@
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.range|number_format(0, ',', '.') ~ '-' ~ element.data.rangeMin|number_format(0, ',', '.')
+                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
@@ -240,7 +240,7 @@
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.range|number_format(0, ',', '.') ~ '-' ~ element.data.rangeMin|number_format(0, ',', '.')
+                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
                             })|raw }}<br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
