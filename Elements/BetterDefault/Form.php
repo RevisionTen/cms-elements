@@ -69,6 +69,7 @@ class Form extends Element
                         'translation_domain' => 'cms',
                         'entry_type' => Field::class,
                         'entry_options' => [
+                            'label' => false,
                             'fields' => $fields,
                         ],
                         'allow_add' => true,
