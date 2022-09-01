@@ -13,12 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Image extends Element
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);

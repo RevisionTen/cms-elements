@@ -9,12 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ImageSettings extends \RevisionTen\CMS\Form\Elements\ImageSettings
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('setMaxWidth', CheckboxType::class, [
