@@ -1,5 +1,6 @@
 {% if image is defined and image %}
-    {% set alt = alt is defined and alt ? alt : title %}
+    {% set title = title ?? '' %}
+    {% set alt = alt ?? title %}
     {% set prettyName = alt|slugify %}
 
     {% set hasMetaData = image is iterable and image.file is defined %}
@@ -18,7 +19,7 @@
     {% if showOriginal or mimeType == 'image/svg+xml' or filePath|slice(-4) == '.svg' %}
         <img class="img-fluid d-block"
              title="{{ title }}"
-             alt="{{ title }}"
+             alt="{{ alt }}"
              src="{{ filePath }}"
              loading="lazy"
         >
@@ -107,7 +108,7 @@
 
         {% set heightPercentage = ((height / width) * 100)|number_format(2) %}
         <div class="position-relative w-100" style="padding-bottom: {{ heightPercentage }}%;">
-            <picture class="lozad position-absolute w-100" title="{{ title }}" data-iesrc="{{ src1x }}" data-alt="{{ title }}">
+            <picture class="lozad position-absolute w-100" title="{{ title }}" data-iesrc="{{ src1x }}" data-alt="{{ alt }}">
                 <source type="image/webp"
                         width="{{ width }}"
                         height="{{ height }}"
@@ -148,7 +149,7 @@
                             width="{{ width }}"
                             height="{{ height }}"
                             title="{{ title }}"
-                            alt="{{ title }}"
+                            alt="{{ alt }}"
                             src="{{ src1x }}"
                             srcset="
                                 {{ src05x }} {{ (width * 0.5)|round(0) }}w,
