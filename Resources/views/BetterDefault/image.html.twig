@@ -16,9 +16,9 @@
 
         {% if lightbox %}
             {% set imageUrl = web_image(image.file ?? image).cropResize(1920, 1920) %}
-            <a target="_blank" href="{{ imageUrl }}" title="{{ title }}" class="d-block {{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto' : '' }}" {% if setMaxWidth %}style="max-width: {{ width }}px;"{% endif %}>
+            <a target="_blank" href="{{ imageUrl }}" title="{{ title }}" class="d-block {{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto ms-auto' : '' }}" {% if setMaxWidth %}style="max-width: {{ width }}px;"{% endif %}>
         {% elseif setMaxWidth and width %}
-            <div class="{{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto' : '' }}" style="max-width: {{ width }}px;">
+            <div class="{{ alignCenter ? 'mx-auto' : '' }} {{ alignRight ? 'ml-auto ms-auto' : '' }}" style="max-width: {{ width }}px;">
         {% endif %}
 
         {% include '@CmsElements/BetterDefault/responsive_image.html.twig' %}

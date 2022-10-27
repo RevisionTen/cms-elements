@@ -108,7 +108,7 @@
 
         {% set heightPercentage = ((height / width) * 100)|number_format(2) %}
         <div class="position-relative w-100" style="padding-bottom: {{ heightPercentage }}%;">
-            <picture class="lozad position-absolute w-100" title="{{ title }}" data-iesrc="{{ src1x }}" data-alt="{{ alt }}">
+            <picture class="lozad position-absolute w-100 top-0 start-0 left-0" title="{{ title }}" data-iesrc="{{ src1x }}" data-alt="{{ alt }}">
                 <source type="image/webp"
                         width="{{ width }}"
                         height="{{ height }}"
