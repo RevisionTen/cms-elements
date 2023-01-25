@@ -289,11 +289,11 @@
             <p>
                 <em>
                     {% if hasFossilFuel and hasBattery %}
-                        {{ 'vehicle.wltp.label.legalDisclaimerHybrid'|trans|raw }}
+                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerHybrid')|trans|raw }}
                     {% elseif hasFossilFuel %}
-                        {{ 'vehicle.wltp.label.legalDisclaimerFuel'|trans|raw }}
+                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerFuel')|trans|raw }}
                     {% elseif hasBattery %}
-                        {{ 'vehicle.wltp.label.legalDisclaimerBEV'|trans|raw }}
+                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerBEV')|trans|raw }}
                     {% endif %}
                 </em>
             </p>
