@@ -1,14 +1,16 @@
 
 {% set translationKey = element.data.hideNEFZ is defined and element.data.hideNEFZ ? 'wltpOnly' : 'wltp' %}
+{% set unofficial = element.data.unofficial ?? false %}
 
 <div {{ editorAttr(element, edit) }} class="vehicle-wltp {{ elementClasses(element) }} mt-4 mb-4">
     <h5 class="vehicle-wltp-heading mb-3">
         {{ element.data.title }}
     </h5>
 
-    {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
-    {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
     <div class="row">
+        {#
+        {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
+        {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
         {% if energyEfficiencyClass %}
             <div class="col-12 col-sm-auto" style="max-width: 400px;">
                 <div class="row">
@@ -17,7 +19,6 @@
                             {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin is defined and element.data.energyEfficiencyClassMin  ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
                         </p>
                         <p class="small">
-                            {# Auf der Grundlage der gemessenen CO2-Emissionen unter Berücksichtigung der Masse des Fahrzeugs ermittelt. #}
                             Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
                         </p>
                     </div>
@@ -34,6 +35,7 @@
                 </div>
             </div>
         {% endif %}
+        #}
         <div class="vehicle-wltp-body col-12 col-sm-auto">
             {% set fuelType = element.data.fuelType %}
             {% set fuelUnit = 'l/100km' %}
@@ -52,13 +54,13 @@
                             {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
                                 '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
                                 '%unit%': fuelUnit,
-                            }) }}
+                            }) }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
                                 '%value%': element.data.combined|number_format(1, ','),
                                 '%unit%': fuelUnit,
-                            }) }}
+                            }) }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% endif %}
                     {% endif %}
@@ -66,12 +68,12 @@
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
                         {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
                             '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
-                        }) }}
+                        }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
                         {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
                             '%value%': (element.data.co2Emission ?? '-')
-                        }) }}
+                        }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% endif %}
 
@@ -79,11 +81,13 @@
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
                             {{ ('vehicle.'~translationKey~'.label.combinedPowerHybrid')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedPowerHybrid')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% endif %}
                     {% endif %}
 
@@ -129,11 +133,13 @@
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
                                 '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
                                 '%value%': element.data.range|number_format(0, ',', '.')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% endif %}
                     {% endif %}
                     {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
@@ -163,25 +169,25 @@
                             {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
                                 '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
                                 '%unit%': fuelUnit,
-                            })|raw }}
+                            })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
                                 '%value%': element.data.combined|number_format(1, ','),
                                 '%unit%': fuelUnit,
-                            })|raw }}
+                            })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% endif %}
                     {% endif %}
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
                         {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
                             '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
-                        }) }}
+                        }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
                         {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
                             '%value%': (element.data.co2Emission ?? '-')
-                        }) }}
+                        }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% endif %}
 
@@ -230,22 +236,26 @@
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
                             {{ ('vehicle.'~translationKey~'.label.combinedPowerBEV')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% else %}
                             {{ ('vehicle.'~translationKey~'.label.combinedPowerBEV')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% endif %}
                     {% endif %}
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
                                 '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% else %}
                             {{ 'vehicle.wltp.label.range'|trans({
                                 '%value%': element.data.range|number_format(0, ',', '.')
-                            })|raw }}<br/>
+                            })|raw }}{{ unofficial ? '*' : '' }}
+                            <br/>
                         {% endif %}
                     {% endif %}
 
@@ -288,13 +298,19 @@
         <div class="vehicle-wltp-disclaimer col-12">
             <p>
                 <em>
-                    {% if hasFossilFuel and hasBattery %}
-                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerHybrid')|trans|raw }}
-                    {% elseif hasFossilFuel %}
-                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerFuel')|trans|raw }}
-                    {% elseif hasBattery %}
-                        {{ ('vehicle.'~translationKey~'.label.legalDisclaimerBEV')|trans|raw }}
+                    {% if unofficial %}
+                        * {{ 'vehicle.wltp.label.legalDisclaimerUnofficial'|trans|raw }}
+                    {% else %}
+                        {% if hasFossilFuel and hasBattery %}
+                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerHybrid')|trans|raw }}
+                        {% elseif hasFossilFuel %}
+                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerFuel')|trans|raw }}
+                        {% elseif hasBattery %}
+                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerBEV')|trans|raw }}
+                        {% endif %}
                     {% endif %}
+                    <br><br>
+                    {{ 'vehicle.wltp.label.legalDisclaimerDat'|trans|raw }}
                 </em>
             </p>
         </div>

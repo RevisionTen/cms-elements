@@ -32,6 +32,11 @@ class VehicleWLTP extends Element
             'required' => false,
         ));
 
+        $builder->add('unofficial', CheckboxType::class, array(
+            'label' => 'vehicle.wltp.label.unofficial',
+            'required' => false,
+        ));
+
         /*
         $builder->add('energyEfficiencyClassMin', ChoiceType::class, array(
             'label' => 'vehicle.envkv.label.energyEfficiencyClass',
