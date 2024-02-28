@@ -22,6 +22,10 @@ class EcoData
 
     public ?int $co2EmissionMax = null;
 
+    public ?int $co2EmissionWeightedMin = null;
+
+    public ?int $co2EmissionWeightedMax = null;
+
     public ?int $rangeMin = null;
 
     public ?int $rangeMax = null;
@@ -93,6 +97,8 @@ class EcoData
         } else {
             $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
             $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
+            $ecoData->co2EmissionWeightedMin = $wltp['co2EmissionWeightedMin'] ?? null;
+            $ecoData->co2EmissionWeightedMax = $wltp['co2EmissionWeighted'] ?? null;
         }
         if (!$hasBattery && $hasFossilFuel) {
             // Pure ICE.
@@ -188,6 +194,7 @@ class EcoData
             $text['co2Emission'] = $co2Emission;
         } else {
             $text['co2Emission'] = $this->getEcoText($translator, 'co2Emission', true, 0);
+            $text['co2EmissionWeighted'] = $this->getEcoText($translator, 'co2EmissionWeighted', true, 0);
         }
 
         $text['range'] = $this->getEcoText($translator, 'range', true, 0);
