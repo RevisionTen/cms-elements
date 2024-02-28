@@ -208,11 +208,29 @@ class VehicleWLTP extends Element
                         'scale' => 0,
                         'required' => false,
                     ));
+                    $form->add('co2EmissionWeightedMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.co2EmissionWeighted',
+                        'required' => false,
+                        'scale' => 2,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('co2EmissionWeighted', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.co2EmissionWeighted',
+                        'required' => false,
+                        'scale' => 2,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
                 } else {
                     $form->remove('fuelPower');
                     $form->remove('fuelHorsepower');
                     $form->remove('electricPower');
                     $form->remove('electricHorsepower');
+                    $form->remove('co2EmissionWeightedMin');
+                    $form->remove('co2EmissionWeighted');
                 }
 
                 if ($hasBattery) {
