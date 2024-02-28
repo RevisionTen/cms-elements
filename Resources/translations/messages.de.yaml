@@ -192,6 +192,7 @@ ecoData:
     label:
         energyEfficiencyClass: "Energieeffizienzklasse:"
         co2Emission: "CO₂-Emission kombiniert in g/km:"
+        co2EmissionWeighted: "CO₂-Emission gewichtet kombiniert in g/km:"
         combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
         combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
         range: "Elektrische Reichweite (WLTP) in km:"
@@ -201,6 +202,8 @@ ecoData:
         energyEfficiencyClass: "%max% (WLTP)"
         co2EmissionMinMax: "%max% - %min% (WLTP)"
         co2Emission: "%max% (WLTP)"
+        co2EmissionWeightedMinMax: "%max% - %min% (WLTP)"
+        co2EmissionWeighted: "%max% (WLTP)"
         combinedFuelConsumptionMinMax: "%max% - %min% (WLTP)"
         combinedFuelConsumption: "%max% (WLTP)"
         combinedPowerConsumptionMinMax: "%max% - %min% (WLTP)"
