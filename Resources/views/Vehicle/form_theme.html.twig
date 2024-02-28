@@ -453,6 +453,26 @@
             </div>
         {% endif %}
 
+        {% if form.co2EmissionWeighted is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.co2EmissionWeighted) }}
+                        <div class="w-100">
+                            <div class="form-row row gx-2">
+                                <div class="col">
+                                    {{ form_widget(form.co2EmissionWeightedMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2EmissionWeighted) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         {{- block('form_rows') -}}
 
         {{- form_rest(form) -}}

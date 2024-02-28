@@ -1,0 +1,124 @@
+{% set co2Class = co2Class ?? '' %}
+{% set co2ClassEmptyBattery = co2ClassEmptyBattery ?? '' %}
+
+{% set width = co2ClassEmptyBattery != '' ? 800 : 600 %}
+{% set maxWidth = co2ClassEmptyBattery != '' ? 300 : 220 %}
+
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px"
+	 y="0px"
+	 width="{{ width }}"
+	 height="500"
+	 viewBox="0 0 {{ width }} 500"
+	 style="enable-background:new 0 0 {{ width }} 500; max-width: {{ maxWidth }}px; width: 100%; height: auto; display: block;"
+	 xml:space="preserve"
+>
+
+	<path fill="#02a554" d="M210,10H0v60h210l30-30L210,10z"/>
+	<text transform="matrix(1 0 0 1 10 60)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+
+	<path fill="#51b749" d="M240,80H0v60h240l30-30L240,80z"/>
+	<text transform="matrix(1 0 0 1 10 130)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+
+	<path fill="#bcd52f" d="M270,150H0v60h270l30-30L270,150z"/>
+	<text transform="matrix(1 0 0 1 10 200)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+
+	<path fill="#fdf200" d="M300,220H0v60h300l30-30L300,220z"/>
+	<text transform="matrix(1 0 0 1 10 270)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+
+	<path fill="#ffb715" d="M330,290H0v60h330l30-30L330,290z"/>
+	<text transform="matrix(1 0 0 1 10 340)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+
+	<path fill="#f37020" d="M360,360H0v60h360l30-30L360,360z"/>
+	<text transform="matrix(1 0 0 1 10 410)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+
+	<path  fill="#ed1b26" d="M420,430H0v60h390l30-30l-30-30H430z"/>
+	<text transform="matrix(1 0 0 1 10 480)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+
+	{% if co2Class == 'A' %}
+		<g id="A" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,70l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 50)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+		</g>
+	{% elseif co2Class == 'B' %}
+		<g id="B" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,140l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 120)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+		</g>
+	{% elseif co2Class == 'C' %}
+		<g id="C" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,210l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 190)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+		</g>
+	{% elseif co2Class == 'D' %}
+		<g id="D" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,280l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 260)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+		</g>
+	{% elseif co2Class == 'E' %}
+		<g id="E" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,350l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 330)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+		</g>
+	{% elseif co2Class == 'F' %}
+		<g id="F" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,420l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 400)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+		</g>
+	{% elseif co2Class == 'G' %}
+		<g id="G" class="label" transform="matrix(1 0 0 1 40 10)">
+			<path d="M440,490l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 470)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+		</g>
+	{% endif %}
+
+
+
+	{% if co2ClassEmptyBattery != '' %}
+		<line x1="620" y1="0" x2="620" y2="500" stroke="#bbb" stroke-width="1" />
+	{% endif %}
+
+
+	{% if co2ClassEmptyBattery == 'A' %}
+		<g id="emptyBatteryA" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,70l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 50)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'B' %}
+		<g id="emptyBatteryB" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,140l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 120)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'C' %}
+		<g id="emptyBatteryC" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,210l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 190)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'D' %}
+		<g id="emptyBatteryD" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,280l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 260)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'E' %}
+		<g id="emptyBatteryE" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,350l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 330)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'F' %}
+		<g id="emptyBatteryF" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,420l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 400)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+		</g>
+	{% elseif co2ClassEmptyBattery == 'G' %}
+		<g id="emptyBatteryG" class="label" transform="matrix(1 0 0 1 250 10)">
+			<path d="M440,490l-40-40l40-40h110v80H440z"/>
+			<text transform="matrix(1 0 0 1 474 470)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+		</g>
+	{% endif %}
+
+
+</svg>
+
+

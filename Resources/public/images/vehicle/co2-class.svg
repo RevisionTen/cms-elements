@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="550" height="490" viewBox="0 0 550 490" style="enable-background:new 0 0 550 490;" xml:space="preserve">
+<style type="text/css">
+	.label {
+		opacity:0
+	}
+
+	.label:target,
+	#disabled:target~#unknown{
+		opacity:1
+	}
+
+	#disabled:target~path {
+		filter:url(#disabled)
+	}
+</style>
+
+<path fill="#02a554" d="M210,0H0v60h210l30-30L210,0z"/>
+<text transform="matrix(1 0 0 1 10 50)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+
+<path fill="#51b749" d="M240,70H0v60h240l30-30L240,70z"/>
+<text transform="matrix(1 0 0 1 10 120)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+
+<path fill="#bcd52f" d="M270,140H0v60h270l30-30L270,140z"/>
+<text transform="matrix(1 0 0 1 10 190)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+
+<path fill="#fdf200" d="M300,210H0v60h300l30-30L300,210z"/>
+<text transform="matrix(1 0 0 1 10 260)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+
+<path fill="#ffb715" d="M330,280H0v60h330l30-30L330,280z"/>
+<text transform="matrix(1 0 0 1 10 330)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+
+<path fill="#f37020" d="M360,350H0v60h360l30-30L360,350z"/>
+<text transform="matrix(1 0 0 1 10 400)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+
+<path  fill="#ed1b26" d="M420,420H0v60h390l30-30l-30-30H420z"/>
+<text transform="matrix(1 0 0 1 10 470)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+
+<g id="A" class="label">
+	<path d="M440,70l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 50)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+</g>
+<g id="B" class="label">
+	<path d="M440,140l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 120)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+</g>
+<g id="C" class="label">
+	<path d="M440,210l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 190)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+</g>
+<g id="D" class="label">
+	<path d="M440,280l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 260)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+</g>
+<g id="E" class="label">
+	<path d="M440,350l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 330)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+</g>
+<g id="F" class="label">
+	<path d="M440,420l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 476.6719 400)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+</g>
+<g id="G" class="label">
+	<path d="M470,490l-40-40l40-40h110v80H440H470z"/>
+	<text transform="matrix(1 0 0 1 486.6719 470)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+</g>
+
+<g id="emptyBatteryA" class="label">
+	<path d="M440,70l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 50)" font-family="Arial" font-size="55" fill="#FFF">A</text>
+</g>
+<g id="emptyBatteryB" class="label">
+	<path d="M440,140l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 120)" font-family="Arial" font-size="55" fill="#FFF">B</text>
+</g>
+<g id="emptyBatteryC" class="label">
+	<path d="M440,210l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 190)" font-family="Arial" font-size="55" fill="#FFF">C</text>
+</g>
+<g id="emptyBatteryD" class="label">
+	<path d="M440,280l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 473.3281 260)" font-family="Arial" font-size="55" fill="#FFF">D</text>
+</g>
+<g id="emptyBatteryE" class="label">
+	<path d="M440,350l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 474.9922 330)" font-family="Arial" font-size="55" fill="#FFF">E</text>
+</g>
+<g id="emptyBatteryF" class="label">
+	<path d="M440,420l-40-40l40-40h110v80H440z"/>
+	<text transform="matrix(1 0 0 1 476.6719 400)" font-family="Arial" font-size="55" fill="#FFF">F</text>
+</g>
+<g id="emptyBatteryG" class="label">
+	<path d="M470,490l-40-40l40-40h110v80H440H470z"/>
+	<text transform="matrix(1 0 0 1 486.6719 470)" font-family="Arial" font-size="55" fill="#FFF">G</text>
+</g>
+
+
+
+</svg>
+
+

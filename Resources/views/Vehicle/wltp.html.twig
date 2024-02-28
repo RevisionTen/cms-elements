@@ -2,48 +2,129 @@
 {% set translationKey = element.data.hideNEFZ is defined and element.data.hideNEFZ ? 'wltpOnly' : 'wltp' %}
 {% set unofficial = element.data.unofficial ?? false %}
 
+{% set fuelType = element.data.fuelType %}
+{% set fuelUnit = 'l/100km' %}
+{% if 'cng' == fuelType or 'hydrogen' == fuelType %}
+    {% set fuelUnit = 'kg/100km' %}
+{% endif %}
+{% set hasFossilFuel = 'electricity' != fuelType %}
+{% set hasBattery = 'electricity' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
+
+
 <div {{ editorAttr(element, edit) }} class="vehicle-wltp {{ elementClasses(element) }} mt-4 mb-4">
     <h5 class="vehicle-wltp-heading mb-3">
         {{ element.data.title }}
     </h5>
 
     <div class="row">
-        {#
-        {% set energyEfficiencyClassMin = element.data.energyEfficiencyClassMin ?? null %}
-        {% set energyEfficiencyClass = element.data.energyEfficiencyClass ?? null %}
-        {% if energyEfficiencyClass %}
+
+        {% set co2ClassMin = element.data.co2ClassMin ?? '' %}
+        {% set co2Class = element.data.co2Class ?? '' %}
+
+        {% set co2Emission = element.data.co2Emission ?? null %}
+        {% if co2Class == '' and co2Emission is not null %}
+            {% if co2Emission == 0 %}
+                {% set co2Class = 'A' %}
+            {% elseif co2Emission > 0 and co2Emission <= 95 %}
+                {% set co2Class = 'B' %}
+            {% elseif co2Emission > 95 and co2Emission <= 115 %}
+                {% set co2Class = 'C' %}
+            {% elseif co2Emission > 115 and co2Emission <= 135 %}
+                {% set co2Class = 'D' %}
+            {% elseif co2Emission > 135 and co2Emission <= 155 %}
+                {% set co2Class = 'E' %}
+            {% elseif co2Emission > 155 and co2Emission <= 175 %}
+                {% set co2Class = 'F' %}
+            {% elseif co2Emission > 175 %}
+                {% set co2Class = 'G' %}
+            {% endif %}
+        {% endif %}
+
+        {% set co2ClassEmptyBattery = '' %}
+        {% set co2EmissionWeighted = element.data.co2EmissionWeighted ?? null %}
+        {% if hasFossilFuel and hasBattery %}
+            {# PHEV #}
+            {#
+            Für extern aufladbare Hybridelektrofahrzeuge ist die COz-Klasse jeweils auf der Grundlage des Werts
+            der gewichtet kombinierten COz-Emissionen und auf der Grundlage des Werts der kombinierten CO2-Emissionen
+            anzugeben; letztere Angabe ist zu benennen als „bei entladener Batterie".
+            #}
+            {% if co2EmissionWeighted is not null %}
+                {% if co2EmissionWeighted == 0 %}
+                    {% set co2Class = 'A' %}
+                {% elseif co2EmissionWeighted > 0 and co2EmissionWeighted <= 95 %}
+                    {% set co2Class = 'B' %}
+                {% elseif co2EmissionWeighted > 95 and co2EmissionWeighted <= 115 %}
+                    {% set co2Class = 'C' %}
+                {% elseif co2EmissionWeighted > 115 and co2EmissionWeighted <= 135 %}
+                    {% set co2Class = 'D' %}
+                {% elseif co2EmissionWeighted > 135 and co2EmissionWeighted <= 155 %}
+                    {% set co2Class = 'E' %}
+                {% elseif co2EmissionWeighted > 155 and co2EmissionWeighted <= 175 %}
+                    {% set co2Class = 'F' %}
+                {% elseif co2EmissionWeighted > 175 %}
+                    {% set co2Class = 'G' %}
+                {% endif %}
+            {% endif %}
+            {% if co2ClassEmptyBattery == '' and co2Emission is not null %}
+                {% if co2Emission == 0 %}
+                    {% set co2ClassEmptyBattery = 'A' %}
+                {% elseif co2Emission > 0 and co2Emission <= 95 %}
+                    {% set co2ClassEmptyBattery = 'B' %}
+                {% elseif co2Emission > 95 and co2Emission <= 115 %}
+                    {% set co2ClassEmptyBattery = 'C' %}
+                {% elseif co2Emission > 115 and co2Emission <= 135 %}
+                    {% set co2ClassEmptyBattery = 'D' %}
+                {% elseif co2Emission > 135 and co2Emission <= 155 %}
+                    {% set co2ClassEmptyBattery = 'E' %}
+                {% elseif co2Emission > 155 and co2Emission <= 175 %}
+                    {% set co2ClassEmptyBattery = 'F' %}
+                {% elseif co2Emission > 175 %}
+                    {% set co2ClassEmptyBattery = 'G' %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% set co2EmissionMin = element.data.co2EmissionMin ?? null %}
+        {% if co2ClassMin == '' and co2EmissionMin is not null %}
+
+        {% endif %}
+
+        {% if co2Class %}
             <div class="col-12 col-sm-auto" style="max-width: 400px;">
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            {{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}: {{ element.data.energyEfficiencyClassMin is defined and element.data.energyEfficiencyClassMin  ? element.data.energyEfficiencyClassMin~'-' : '' }}{{ element.data.energyEfficiencyClass }}
-                        </p>
-                        <p class="small">
-                            Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
-                        </p>
-                    </div>
-                    <div class="col-auto" style="max-width: 150px;">
-                        {% set energyEfficiencyClass = energyEfficiencyClass|replace({'+': 'A'}) %}
-                        <p>
-                            <img title="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
-                                 alt="{{ 'vehicle.envkv.label.energyEfficiencyClass'|trans }}"
-                                 class="w-100 h-auto"
-                                 src="{{ asset('bundles/cmselements/images/vehicle/energy-efficiency.svg') }}?#{{ energyEfficiencyClass }}"
-                            >
-                        </p>
-                    </div>
-                </div>
+                <p>
+                    {{ 'vehicle.envkv.label.co2Class'|trans }}: {{ co2ClassMin ? co2ClassMin~'-' : '' }}{{ co2Class }}
+                </p>
+                {#
+                <p class="small">
+                    Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
+                </p>
+                #}
+                <p>
+                    {% if co2ClassEmptyBattery != '' %}
+                        {% set maxWidth = co2ClassEmptyBattery != '' ? 300 : 220 %}
+                        <div style="max-width: {{ maxWidth }}px; font-size: 9px;">
+                            <div class="row gx-0 no-gutters align-items-end">
+                                <div class="col"></div>
+                                <div class="col-auto" style="width: 23%;">
+                                    <div class="pr-2 pe-2 text-end text-right">gewichtet, kombiniert</div>
+                                </div>
+                                <div class="col-auto" style="width: 23%;">
+                                    <div class="pl-2 ps-2">bei entladener Batterie</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% include '@CmsElements/Vehicle/co2_class.svg.twig' with {
+                        co2Class: co2Class,
+                        co2ClassEmptyBattery: co2ClassEmptyBattery,
+                    } %}
+                </p>
             </div>
         {% endif %}
-        #}
-        <div class="vehicle-wltp-body col-12 col-sm-auto">
-            {% set fuelType = element.data.fuelType %}
-            {% set fuelUnit = 'l/100km' %}
-            {% if 'cng' == fuelType or 'hydrogen' == fuelType %}
-                {% set fuelUnit = 'kg/100km' %}
-            {% endif %}
-            {% set hasFossilFuel = 'electricity' != fuelType %}
-            {% set hasBattery = 'electricity' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
+
+        <div class="vehicle-wltp-body col-12 col-sm small" style="min-width: 280px;">
             <p>
 
                 {% if hasFossilFuel and hasBattery %}
@@ -66,13 +147,25 @@
                     {% endif %}
 
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
                             '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
                             '%value%': (element.data.co2Emission ?? '-')
+                        }) }}{{ unofficial ? '*' : '' }}
+                        <br/>
+                    {% endif %}
+
+                    {% if element.data.co2EmissionWeightedMin is defined and element.data.co2EmissionWeightedMin is not null and element.data.co2EmissionWeightedMin is not null %}
+                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                            '%value%': (element.data.co2EmissionWeighted ?? 0) ~ '-' ~ (element.data.co2EmissionWeightedMin ?? 0)
+                        }) }}{{ unofficial ? '*' : '' }}
+                        <br/>
+                    {% else %}
+                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                            '%value%': (element.data.co2EmissionWeighted ?? '-')
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% endif %}
