@@ -1,0 +1,16 @@
+{%- if co2Emission == 0 -%}
+    {%- set co2Class = 'A' -%}
+{%- elseif co2Emission <= 95 -%}
+    {%- set co2Class = 'B' -%}
+{%- elseif co2Emission <= 115 -%}
+    {%- set co2Class = 'C' -%}
+{%- elseif co2Emission <= 135 -%}
+    {%- set co2Class = 'D' -%}
+{%- elseif co2Emission <= 155 -%}
+    {%- set co2Class = 'E' -%}
+{%- elseif co2Emission <= 175 -%}
+    {%- set co2Class = 'F' -%}
+{%- else -%}
+    {%- set co2Class = 'G' -%}
+{%- endif -%}
+{{- co2Class -}}

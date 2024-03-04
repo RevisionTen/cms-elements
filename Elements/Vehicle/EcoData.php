@@ -112,6 +112,11 @@ class EcoData
 
     public function hasWltp(): bool
     {
+        if ('hydrogen' !== $this->fuelType && $this->hasFuelConsumption() && $this->isZeroEmissionVehicle()) {
+            // This vehicle has fuel consumption but no CO2 emissions. It can't be valid.
+            return false;
+        }
+
         return $this->combinedFuelConsumptionMax || $this->combinedPowerConsumptionMax;
     }
 

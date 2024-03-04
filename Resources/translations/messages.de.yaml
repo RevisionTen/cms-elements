@@ -50,6 +50,8 @@ vehicle:
             weight: "Masse des Fahrzeugs: %value% kg"
             co2Emission: "CO₂-Emissionen kombiniert in g/km: %value%"
             co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: %value%"
+            co2Class: "CO₂-Klasse: %value%"
+            co2ClassEmptyBattery: "CO₂-Klasse bei entladener Batterie: %value%"
             combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: %value%"
             combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: %value%"
             combinedPowerBEV: "Stromverbrauch in kWh/100km: %value% "
