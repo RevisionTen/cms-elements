@@ -23,6 +23,10 @@
         {% set co2EmissionMin = element.data.co2EmissionMin ?? null %}
         {% set co2Emission = element.data.co2Emission ?? null %}
 
+        {% if hasFossilFuel == false and hasBattery and co2Emission is null %}
+            {% set co2Emission = 0 %}
+        {% endif %}
+
         {% if co2Class == '' and co2Emission is not null %}
             {% set co2Class = include('@CmsElements/Vehicle/co2_class.html.twig', {
                 co2Emission: co2Emission,
