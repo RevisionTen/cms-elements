@@ -1,5 +1,4 @@
 
-{% set translationKey = element.data.hideNEFZ is defined and element.data.hideNEFZ ? 'wltpOnly' : 'wltp' %}
 {% set unofficial = element.data.unofficial ?? false %}
 
 {% set fuelType = element.data.fuelType %}
@@ -25,17 +24,17 @@
         {% if co2Class == '' and co2Emission is not null %}
             {% if co2Emission == 0 %}
                 {% set co2Class = 'A' %}
-            {% elseif co2Emission > 0 and co2Emission <= 95 %}
+            {% elseif co2Emission <= 95 %}
                 {% set co2Class = 'B' %}
-            {% elseif co2Emission > 95 and co2Emission <= 115 %}
+            {% elseif co2Emission <= 115 %}
                 {% set co2Class = 'C' %}
-            {% elseif co2Emission > 115 and co2Emission <= 135 %}
+            {% elseif co2Emission <= 135 %}
                 {% set co2Class = 'D' %}
-            {% elseif co2Emission > 135 and co2Emission <= 155 %}
+            {% elseif co2Emission <= 155 %}
                 {% set co2Class = 'E' %}
-            {% elseif co2Emission > 155 and co2Emission <= 175 %}
+            {% elseif co2Emission <= 175 %}
                 {% set co2Class = 'F' %}
-            {% elseif co2Emission > 175 %}
+            {% else %}
                 {% set co2Class = 'G' %}
             {% endif %}
         {% endif %}
@@ -95,11 +94,6 @@
                 <p>
                     {{ 'vehicle.envkv.label.co2Class'|trans }}: {{ co2ClassMin ? co2ClassMin~'-' : '' }}{{ co2Class }}
                 </p>
-                {#
-                <p class="small">
-                    Die angegebenen Werte wurden nach dem jeweiligen vorgeschriebenen Messverfahren (§ 2 Nrm. 5, 6, 6a Pkw-EnVKV in der jeweils geltenden Fassung) ermittelt.
-                </p>
-                #}
                 <p>
                     {% if co2ClassEmptyBattery != '' %}
                         {% set maxWidth = co2ClassEmptyBattery != '' ? 300 : 220 %}
@@ -132,13 +126,13 @@
                     {# Hybrid #}
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
+                            {{ ('vehicle.wltp.label.combinedFuelHybrid')|trans({
                                 '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
                                 '%unit%': fuelUnit,
                             }) }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedFuelHybrid')|trans({
+                            {{ ('vehicle.wltp.label.combinedFuelHybrid')|trans({
                                 '%value%': element.data.combined|number_format(1, ','),
                                 '%unit%': fuelUnit,
                             }) }}{{ unofficial ? '*' : '' }}
@@ -147,24 +141,24 @@
                     {% endif %}
 
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
+                        {{ ('vehicle.wltp.label.co2Emission')|trans({
                             '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
+                        {{ ('vehicle.wltp.label.co2Emission')|trans({
                             '%value%': (element.data.co2Emission ?? '-')
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% endif %}
 
                     {% if element.data.co2EmissionWeightedMin is defined and element.data.co2EmissionWeightedMin is not null and element.data.co2EmissionWeightedMin is not null %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                        {{ ('vehicle.wltp.label.co2EmissionHybrid')|trans({
                             '%value%': (element.data.co2EmissionWeighted ?? 0) ~ '-' ~ (element.data.co2EmissionWeightedMin ?? 0)
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionHybrid')|trans({
+                        {{ ('vehicle.wltp.label.co2EmissionHybrid')|trans({
                             '%value%': (element.data.co2EmissionWeighted ?? '-')
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
@@ -172,12 +166,12 @@
 
                     {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedPowerHybrid')|trans({
+                            {{ ('vehicle.wltp.label.combinedPowerHybrid')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
                             })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedPowerHybrid')|trans({
+                            {{ ('vehicle.wltp.label.combinedPowerHybrid')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
                             })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
@@ -259,13 +253,13 @@
                     {# Fossil fuel only #}
                     {% if element.data.combined is defined and element.data.combined is not empty %}
                         {% if element.data.combinedMin is defined and element.data.combinedMin %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
+                            {{ ('vehicle.wltp.label.combinedFuel')|trans({
                                 '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
                                 '%unit%': fuelUnit,
                             })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedFuel')|trans({
+                            {{ ('vehicle.wltp.label.combinedFuel')|trans({
                                 '%value%': element.data.combined|number_format(1, ','),
                                 '%unit%': fuelUnit,
                             })|raw }}{{ unofficial ? '*' : '' }}
@@ -273,12 +267,12 @@
                         {% endif %}
                     {% endif %}
                     {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
+                        {{ ('vehicle.wltp.label.co2Emission')|trans({
                             '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% else %}
-                        {{ ('vehicle.'~translationKey~'.label.co2EmissionFuel')|trans({
+                        {{ ('vehicle.wltp.label.co2Emission')|trans({
                             '%value%': (element.data.co2Emission ?? '-')
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
@@ -327,17 +321,20 @@
                     {# Pure BEV #}
                     {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
                         {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedPowerBEV')|trans({
+                            {{ ('vehicle.wltp.label.combinedPowerBEV')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
                             })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% else %}
-                            {{ ('vehicle.'~translationKey~'.label.combinedPowerBEV')|trans({
+                            {{ ('vehicle.wltp.label.combinedPowerBEV')|trans({
                                 '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
                             })|raw }}{{ unofficial ? '*' : '' }}
                             <br/>
                         {% endif %}
                     {% endif %}
+                    {{ ('vehicle.wltp.label.co2Emission')|trans({
+                        '%value%': 0
+                    }) }}{{ unofficial ? '*' : '' }}<br/>
                     {% if element.data.range is defined and element.data.range is not empty %}
                         {% if element.data.rangeMin is defined and element.data.rangeMin %}
                             {{ 'vehicle.wltp.label.range'|trans({
@@ -394,13 +391,8 @@
                     {% if unofficial %}
                         * {{ 'vehicle.wltp.label.legalDisclaimerUnofficial'|trans|raw }}
                     {% else %}
-                        {% if hasFossilFuel and hasBattery %}
-                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerHybrid')|trans|raw }}
-                        {% elseif hasFossilFuel %}
-                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerFuel')|trans|raw }}
-                        {% elseif hasBattery %}
-                            {{ ('vehicle.'~translationKey~'.label.legalDisclaimerBEV')|trans|raw }}
-                        {% endif %}
+                        Die angegebenen Verbrauchs- und Emissionswerte wurden nach dem gesetzlich vorgeschriebenen
+                        WLTP-Verfahren (Worldwide Harmonized Light Vehicles Test Procedure) ermittelt.
                     {% endif %}
                     <br><br>
                     {{ 'vehicle.wltp.label.legalDisclaimerDat'|trans|raw }}

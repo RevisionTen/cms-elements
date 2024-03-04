@@ -26,103 +26,10 @@ class VehicleWLTP extends Element
             'constraints' => new NotBlank(),
         ]);
 
-        $builder->add('hideNEFZ', CheckboxType::class, array(
-            'label' => 'vehicle.wltp.label.hideNEFZ',
-            'help' => 'vehicle.wltp.help.hideNEFZ',
-            'required' => false,
-        ));
-
         $builder->add('unofficial', CheckboxType::class, array(
             'label' => 'vehicle.wltp.label.unofficial',
             'required' => false,
         ));
-
-        /*
-        $builder->add('energyEfficiencyClassMin', ChoiceType::class, array(
-            'label' => 'vehicle.envkv.label.energyEfficiencyClass',
-            'placeholder' => 'vehicle.envkv.label.min',
-            'choices' => [
-                'A+' => 'A+',
-                'A' => 'A',
-                'B' => 'B',
-                'C' => 'C',
-                'D' => 'D',
-                'E' => 'E',
-                'F' => 'F',
-                'G' => 'G',
-            ],
-            'required' => false,
-            'attr' => [
-                'class' => 'custom-select',
-            ],
-        ));
-
-        $builder->add('energyEfficiencyClass', ChoiceType::class, array(
-            'label' => 'vehicle.envkv.label.energyEfficiencyClass',
-            'placeholder' => 'vehicle.envkv.label.max',
-            'choices' => [
-                'A+' => 'A+',
-                'A' => 'A',
-                'B' => 'B',
-                'C' => 'C',
-                'D' => 'D',
-                'E' => 'E',
-                'F' => 'F',
-                'G' => 'G',
-            ],
-            'required' => false,
-            'attr' => [
-                'class' => 'custom-select',
-            ],
-        ));
-
-        $builder->add('emissionStickerMin', ChoiceType::class, array(
-            'label' => 'vehicle.envkv.label.emissionSticker',
-            'placeholder' => 'vehicle.envkv.label.min',
-            'required' => false,
-            'choices' => [
-                'vehicle.envkv.choices.emissionSticker.green' => 'green',
-                'vehicle.envkv.choices.emissionSticker.yellow' => 'yellow',
-                'vehicle.envkv.choices.emissionSticker.red' => 'red',
-                'vehicle.envkv.choices.emissionSticker.blue' => 'blue',
-            ],
-            'attr' => [
-                'class' => 'custom-select',
-            ],
-        ));
-
-        $builder->add('emissionSticker', ChoiceType::class, array(
-            'label' => 'vehicle.envkv.label.emissionSticker',
-            'placeholder' => 'vehicle.envkv.label.max',
-            'required' => false,
-            'choices' => [
-                'vehicle.envkv.choices.emissionSticker.green' => 'green',
-                'vehicle.envkv.choices.emissionSticker.yellow' => 'yellow',
-                'vehicle.envkv.choices.emissionSticker.red' => 'red',
-                'vehicle.envkv.choices.emissionSticker.blue' => 'blue',
-            ],
-            'attr' => [
-                'class' => 'custom-select',
-            ],
-        ));
-
-        $builder->add('emissionClassMin', TextType::class, array(
-            'label' => 'vehicle.envkv.label.emissionClass',
-            'attr' => [
-                'placeholder' => 'vehicle.envkv.label.min',
-            ],
-            'required' => false,
-        ));
-
-        $builder->add('emissionClass', TextType::class, array(
-            'label' => 'vehicle.envkv.label.emissionClass',
-            'attr' => [
-                'placeholder' => 'vehicle.envkv.label.max',
-            ],
-            'required' => false,
-        ));
-
-        */
 
         $builder->add('motor', TextType::class, array(
             'label' => 'vehicle.envkv.label.motor',
@@ -218,7 +125,7 @@ class VehicleWLTP extends Element
                     ));
                     $form->add('co2EmissionWeighted', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.co2EmissionWeighted',
-                        'required' => false,
+                        'constraints' => new NotBlank(),
                         'scale' => 2,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.max',
@@ -261,7 +168,7 @@ class VehicleWLTP extends Element
                     $form->add('range', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.range',
                         'scale' => 1,
-                        'constraints' => new NotBlank(),
+                        'required' => false,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.max',
                         ],

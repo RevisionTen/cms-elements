@@ -21,19 +21,6 @@ images:
         imagesPerRow1: "1"
 
 vehicle:
-    # Texts for vehicles that have NEFZ values! All placeholders are removed.
-    wltpOnly: # => Vehicle has WLTP and NEFZ
-        label:
-            co2EmissionFuel: "CO₂-Emissionen kombiniert in g/km: %value% (WLTP)"
-            co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: %value% (WLTP)"
-            combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: %value% (WLTP)"
-            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: %value% (WLTP)"
-            combinedPowerBEV: "Stromverbrauch in kWh/100km: %value% (WLTP)"
-            combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: %value% (WLTP)"
-            legalDisclaimerHybrid: "Offizielle Angaben zu Kraftstoffverbrauch, CO₂-Emissionen, Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung."
-            legalDisclaimerFuel: "Offizielle Angaben zu Kraftstoffverbrauch und CO₂-Emissionen wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung."
-            legalDisclaimerBEV: "Offizielle Angaben zu Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung."
-    # Text for vehicles that DON'T have NEFZ values!
     # Includes placeholders to let the customer know that NEFZ values are missing.
     wltp:
         form:
@@ -46,12 +33,9 @@ vehicle:
             electricPowerLabel: "Elektroleistung"
             electricPower: "Elektroleistung in kW"
             electricHorsepower: "Elektroleistung in PS"
-        help:
-            hideNEFZ: "aktivieren Sie diese Option wenn sie für dieses Angebot auch ein NEFZ-Element eingebunden haben"
         label:
             unofficial: "Verbrauchswerte sind offiziell nicht bestätigt"
-            hideNEFZ: "Fahrzeug hat NEFZ-Werte (NEFZ-Platzhalter werden ausgeblendet)"
-            range: "Elektrische Reichweite (WLTP) in km: %value%"
+            range: "Elektrische Reichweite in km: %value%"
             power: "Leistung: %kw% kW (%ps% PS)"
             electricPower: "Spitzenleistung: %kw% kW (%ps% PS)"
             hybridPower: "Systemleistung: %kw% kW (%ps% PS)"
@@ -64,15 +48,12 @@ vehicle:
             fuelElectricity: "Strom"
             fuelType: "Antriebsart"
             weight: "Masse des Fahrzeugs: %value% kg"
-            co2EmissionFuel: "CO₂-Emissionen kombiniert in g/km: - (NEFZ); %value% (WLTP)"
-            co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: - (NEFZ); %value% (WLTP)"
-            combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: - (NEFZ); %value% (WLTP)"
-            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: - (NEFZ); %value% (WLTP)"
-            combinedPowerBEV: "Stromverbrauch in kWh/100km: - (NEFZ); %value% (WLTP)"
-            combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: - (NEFZ); %value% (WLTP)"
-            legalDisclaimerHybrid: "Offizielle Angaben zu Kraftstoffverbrauch, CO₂-Emissionen, Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. Zudem entfallen laut EU-Verordnung 2022/195 ab 01.01.2023 in den EG-Übereinstimmungsbescheinigungen die NEFZ-Werte."
-            legalDisclaimerFuel: "Offizielle Angaben zu Kraftstoffverbrauch und CO₂-Emissionen wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. Zudem entfallen laut EU-Verordnung 2022/195 ab 01.01.2023 in den EG-Übereinstimmungsbescheinigungen die NEFZ-Werte."
-            legalDisclaimerBEV: "Offizielle Angaben zu Stromverbrauch und elektrischer Reichweite wurden nach dem vorgeschriebenen Messverfahren ermittelt und entsprechen der VO (EU) 715/2007 in der jeweils geltenden Fassung. Für seit 01.01.2021 neu typgeprüfte Fahrzeuge existieren die offiziellen Angaben nur noch nach WLTP. Zudem entfallen laut EU-Verordnung 2022/195 ab 01.01.2023 in den EG-Übereinstimmungsbescheinigungen die NEFZ-Werte."
+            co2Emission: "CO₂-Emissionen kombiniert in g/km: %value%"
+            co2EmissionHybrid: "CO₂-Emissionen gewichtet kombiniert in g/km: %value%"
+            combinedFuel: "Kraftstoffverbrauch kombiniert in %unit%: %value%"
+            combinedFuelHybrid: "Kraftstoffverbrauch gewichtet kombiniert in %unit%: %value%"
+            combinedPowerBEV: "Stromverbrauch in kWh/100km: %value% "
+            combinedPowerHybrid: "Stromverbrauch gewichtet kombiniert in kWh/100km: %value%"
             legalDisclaimerDat: "Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO₂-Emissionen neuer Personenkraftwagen können dem „Leitfaden über den Kraftstoffverbrauch, die CO₂-Emissionen und den Stromverbrauch neuer Personenkraftwagenmodelle“ entnommen werden, der an allen Verkaufsstellen, bei der Deutschen Automobil Treuhand GmbH (DAT), Hellmuth-Hirth-Str. 1, 73760 Ostfildern und unter <a target=\"_blank\" href=\"https://www.dat.de/co2/\" rel=\"nofollow\">https://www.dat.de/co2/</a> unentgeltlich erhältlich ist."
             legalDisclaimerUnofficial: "Prognosewerte auf Basis des bisherigen Entwicklungsstands des Fahrzeugs. Bei den Angaben handelt es sich um vorläufige, noch nicht offiziell bestätigte Werte."
 
@@ -95,6 +76,7 @@ vehicle:
             hasRangeValues: "Werte sind von-bis"
             energyEfficiencyClass: "Energieeffizienzklasse"
             co2Class: "CO₂-Klasse"
+            co2ClassEmptyBattery: "CO₂-Klasse bei entladener Batterie"
             emissionClass: "Emissionsklasse"
             emissionSticker: "Umweltplakette"
             co2Emission: "CO₂-Emissionen komb."
@@ -191,23 +173,27 @@ vehicle:
 ecoData:
     label:
         energyEfficiencyClass: "Energieeffizienzklasse:"
+        co2Class: "CO₂-Klasse:"
+        co2ClassEmptyBattery: "CO₂-Klasse bei entladener Batterie:"
         co2Emission: "CO₂-Emission kombiniert in g/km:"
         co2EmissionWeighted: "CO₂-Emission gewichtet kombiniert in g/km:"
         combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
         combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
-        range: "Elektrische Reichweite (WLTP) in km:"
+        range: "Elektrische Reichweite in km:"
         zeroEmission: "0 g/km" # Todo: remove.
     wltp:
-        energyEfficiencyClassMinMax: "%max% - %min% (WLTP)"
-        energyEfficiencyClass: "%max% (WLTP)"
-        co2EmissionMinMax: "%max% - %min% (WLTP)"
-        co2Emission: "%max% (WLTP)"
-        co2EmissionWeightedMinMax: "%max% - %min% (WLTP)"
-        co2EmissionWeighted: "%max% (WLTP)"
-        combinedFuelConsumptionMinMax: "%max% - %min% (WLTP)"
-        combinedFuelConsumption: "%max% (WLTP)"
-        combinedPowerConsumptionMinMax: "%max% - %min% (WLTP)"
-        combinedPowerConsumption: "%max% (WLTP)"
+        co2ClassMinMax: "%min% - %max%"
+        co2Class: "%max%"
+        co2ClassEmtpyBatteryMinMax: "%min% - %max%"
+        co2ClassEmtpyBattery: "%max%"
+        co2EmissionMinMax: "%min% - %max%"
+        co2Emission: "%max%"
+        co2EmissionWeightedMinMax: "%min% - %max%"
+        co2EmissionWeighted: "%max%"
+        combinedFuelConsumptionMinMax: "%min% - %max%"
+        combinedFuelConsumption: "%max%"
+        combinedPowerConsumptionMinMax: "%min% - %max%"
+        combinedPowerConsumption: "%max%"
         rangeMinMax: "%min% - %max%"
         range: "%max%"
         power: "Leistung: %kw% kW (%ps% PS)"
@@ -216,15 +202,6 @@ ecoData:
         cubicCapacity: "Hubraum: %value% cm³"
         fuel: "Kraftstoff: %value%"
         weight: "Masse des Fahrzeugs: %value% kg"
-    nefz:
-        energyEfficiencyClassMinMax: "%max% - %min% (NEFZ)"
-        energyEfficiencyClass: "%max% (NEFZ)"
-        co2EmissionMinMax: "%max% - %min% (NEFZ)"
-        co2Emission: "%max% (NEFZ)"
-        combinedFuelConsumptionMinMax: "%max% - %min% (NEFZ)"
-        combinedFuelConsumption: "%max% (NEFZ)"
-        combinedPowerConsumptionMinMax: "%max% - %min% (NEFZ)"
-        combinedPowerConsumption: "%max% (NEFZ)"
     fuelTypes:
         petrol: "Benzin"
         diesel: "Diesel"

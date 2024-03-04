@@ -8,7 +8,6 @@ cms:
             type: 'Section'
             children:
                 - 'Row'
-                - 'VehicleEnVKV'
                 - 'VehicleWLTP'
                 - 'VehicleFinancing'
                 - 'VehicleDatDisclaimer'
