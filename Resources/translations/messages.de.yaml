@@ -186,8 +186,8 @@ ecoData:
     wltp:
         co2ClassMinMax: "%min% - %max%"
         co2Class: "%max%"
-        co2ClassEmtpyBatteryMinMax: "%min% - %max%"
-        co2ClassEmtpyBattery: "%max%"
+        co2ClassEmptyBatteryMinMax: "%min% - %max%"
+        co2ClassEmptyBattery: "%max%"
         co2EmissionMinMax: "%min% - %max%"
         co2Emission: "%max%"
         co2EmissionWeightedMinMax: "%min% - %max%"
