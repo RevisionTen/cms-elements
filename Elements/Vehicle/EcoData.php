@@ -47,7 +47,9 @@ class EcoData
 
         $fuelType = $wltp['fuelType'] ?? null;
         $hasFossilFuel = 'electricity' !== $fuelType;
+        #$hasFossilFuel = ($wltp['combined'] ?? null) !== null;
         $hasBattery = 'electricity' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
+        #$hasBattery = ($wltp['combinedPowerConsumption'] ?? null) !== null;
 
         $ecoData = new self();
         $ecoData->fuelType = $fuelType;

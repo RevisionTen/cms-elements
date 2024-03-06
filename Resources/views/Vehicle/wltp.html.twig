@@ -176,7 +176,7 @@
                         <br/>
                     {% elseif co2ClassEmptyBattery is not empty %}
                         {{ 'vehicle.wltp.label.co2ClassEmptyBattery'|trans({
-                            '%value%': element.data.co2ClassEmptyBattery
+                            '%value%': co2ClassEmptyBattery
                         }) }}{{ unofficial ? '*' : '' }}
                         <br/>
                     {% endif %}
