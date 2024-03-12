@@ -54,11 +54,15 @@
                 {% set co2ClassMin = include('@CmsElements/Vehicle/co2_class.html.twig', {
                     co2Emission: co2EmissionWeightedMin,
                 }) %}
+            {% else %}
+                {% set co2ClassMin = null %}
             {% endif %}
             {% if co2EmissionWeighted is not null %}
                 {% set co2Class = include('@CmsElements/Vehicle/co2_class.html.twig', {
                     co2Emission: co2EmissionWeighted,
                 }) %}
+            {% else %}
+                {% set co2Class = null %}
             {% endif %}
             {% if co2ClassEmptyBatteryMin == '' and co2EmissionMin is not null %}
                 {% set co2ClassEmptyBatteryMin = include('@CmsElements/Vehicle/co2_class.html.twig', {
