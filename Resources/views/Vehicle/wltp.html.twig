@@ -1,87 +1,24 @@
 
-{% set unofficial = element.data.unofficial ?? false %}
-
-{% set fuelType = element.data.fuelType %}
-{% set fuelUnit = 'l/100km' %}
-{% if 'cng' == fuelType or 'hydrogen' == fuelType %}
-    {% set fuelUnit = 'kg/100km' %}
+{% set ecoData = ecoData ?? null %}
+{% if element is defined %}
+    {% set ecoData = ecodata_service.createFromElements(element, []) %}
 {% endif %}
-{% set hasFossilFuel = 'electricity' != fuelType %}
-{% set hasBattery = 'electricity' == fuelType or 'hybrid' == fuelType or 'hybrid_petrol' == fuelType or 'hybrid_diesel' == fuelType %}
 
-
-<div {{ editorAttr(element, edit) }} class="vehicle-wltp {{ elementClasses(element) }} mt-4 mb-4">
-    <h5 class="vehicle-wltp-heading mb-3">
-        {{ element.data.title }}
-    </h5>
+<div {% if element is defined %}{{ editorAttr(element, edit) }}{% endif %} class="vehicle-wltp {% if element is defined %}{{ elementClasses(element) }}{% endif %} mt-4 mb-4">
+    {% if ecoData.title is not empty %}
+        <h5 class="vehicle-wltp-heading mb-3">
+            {{ ecoData.title }}
+        </h5>
+    {% endif %}
 
     <div class="row">
 
-        {% set co2ClassMin = element.data.co2ClassMin ?? '' %}
-        {% set co2Class = element.data.co2Class ?? '' %}
-
-        {% set co2EmissionMin = element.data.co2EmissionMin ?? null %}
-        {% set co2Emission = element.data.co2Emission ?? null %}
-
-        {% if hasFossilFuel == false and hasBattery and co2Emission is null %}
-            {% set co2Emission = 0 %}
-        {% endif %}
-
-        {% if co2Class == '' and co2Emission is not null %}
-            {% set co2Class = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                co2Emission: co2Emission,
-            }) %}
-        {% endif %}
-        {% if co2ClassMin == '' and co2EmissionMin is not null %}
-            {% set co2ClassMin = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                co2Emission: co2EmissionMin,
-            }) %}
-        {% endif %}
-
-        {% set co2ClassEmptyBatteryMin = '' %}
-        {% set co2ClassEmptyBattery = '' %}
-        {% set co2EmissionWeightedMin = element.data.co2EmissionWeightedMin ?? null %}
-        {% set co2EmissionWeighted = element.data.co2EmissionWeighted ?? null %}
-
-        {% if hasFossilFuel and hasBattery %}
-            {# PHEV #}
-            {#
-            Für extern aufladbare Hybridelektrofahrzeuge ist die COz-Klasse jeweils auf der Grundlage des Werts
-            der gewichtet kombinierten COz-Emissionen und auf der Grundlage des Werts der kombinierten CO2-Emissionen
-            anzugeben; letztere Angabe ist zu benennen als „bei entladener Batterie".
-            #}
-            {% if co2EmissionWeightedMin is not null %}
-                {% set co2ClassMin = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                    co2Emission: co2EmissionWeightedMin,
-                }) %}
-            {% else %}
-                {% set co2ClassMin = null %}
-            {% endif %}
-            {% if co2EmissionWeighted is not null %}
-                {% set co2Class = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                    co2Emission: co2EmissionWeighted,
-                }) %}
-            {% else %}
-                {% set co2Class = null %}
-            {% endif %}
-            {% if co2ClassEmptyBatteryMin == '' and co2EmissionMin is not null %}
-                {% set co2ClassEmptyBatteryMin = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                    co2Emission: co2EmissionMin,
-                }) %}
-            {% endif %}
-            {% if co2ClassEmptyBattery == '' and co2Emission is not null %}
-                {% set co2ClassEmptyBattery = include('@CmsElements/Vehicle/co2_class.html.twig', {
-                    co2Emission: co2Emission,
-                }) %}
-            {% endif %}
-        {% endif %}
-
-        {% if co2Class and co2ClassMin is empty and co2ClassEmptyBatteryMin is empty %}
+        {% if ecoData.co2ClassMax and ecoData.co2ClassMin is empty and ecoData.co2ClassEmptyBatteryMin is empty and ecoData.co2ClassEmptyBatteryMax is empty %}
             <div class="col-12 col-sm-auto" style="max-width: 400px;">
                 <p class="mb-0">CO₂-Klasse</p>
                 <p>
-                    {% if co2ClassEmptyBattery != '' %}
-                        {% set maxWidth = co2ClassEmptyBattery != '' ? 300 : 220 %}
+                    {% if ecoData.co2ClassEmptyBatteryMax != '' %}
+                        {% set maxWidth = ecoData.co2ClassEmptyBatteryMax != '' ? 300 : 220 %}
                         <div style="max-width: {{ maxWidth }}px; font-size: 9px;">
                             <div class="row gx-0 no-gutters align-items-end">
                                 <div class="col"></div>
@@ -95,321 +32,20 @@
                         </div>
                     {% endif %}
                     {% include '@CmsElements/Vehicle/co2_class.svg.twig' with {
-                        co2Class: co2Class,
-                        co2ClassEmptyBattery: co2ClassEmptyBattery,
+                        co2Class: ecoData.co2ClassMax,
+                        co2ClassEmptyBattery: ecoData.co2ClassEmptyBatteryMax,
                     } %}
                 </p>
             </div>
         {% endif %}
 
         <div class="vehicle-wltp-body col-12 col-sm small" style="min-width: 280px;">
-            <p>
-
-                {% if hasFossilFuel and hasBattery %}
-
-                    {# Hybrid #}
-                    {% if element.data.combined is defined and element.data.combined is not empty %}
-                        {% if element.data.combinedMin is defined and element.data.combinedMin %}
-                            {{ 'vehicle.wltp.label.combinedFuelHybrid'|trans({
-                                '%value%': element.data.combinedMin|number_format(1, ',') ~ '-' ~ element.data.combined|number_format(1, ','),
-                                '%unit%': fuelUnit,
-                            }) }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ 'vehicle.wltp.label.combinedFuelHybrid'|trans({
-                                '%value%': element.data.combined|number_format(1, ','),
-                                '%unit%': fuelUnit,
-                            }) }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
-                        {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
-                            {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
-                                '%value%': element.data.combinedPowerConsumptionMin|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumption|number_format(1, ',')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ 'vehicle.wltp.label.combinedPowerHybrid'|trans({
-                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null %}
-                        {{ 'vehicle.wltp.label.co2Emission'|trans({
-                            '%value%': (element.data.co2EmissionMin ?? 0) ~ '-' ~ (element.data.co2Emission ?? 0)
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% else %}
-                        {{ 'vehicle.wltp.label.co2Emission'|trans({
-                            '%value%': (element.data.co2Emission ?? '-')
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-
-                    {% if element.data.co2EmissionWeightedMin is defined and element.data.co2EmissionWeightedMin is not null %}
-                        {{ 'vehicle.wltp.label.co2EmissionHybrid'|trans({
-                            '%value%': (element.data.co2EmissionWeightedMin ?? 0) ~ '-' ~ (element.data.co2EmissionWeighted ?? 0)
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% else %}
-                        {{ 'vehicle.wltp.label.co2EmissionHybrid'|trans({
-                            '%value%': (element.data.co2EmissionWeighted ?? '-')
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-
-                    {% if co2ClassMin is not empty %}
-                        {{ 'vehicle.wltp.label.co2Class'|trans({
-                            '%value%': co2ClassMin ~ '-' ~ co2Class
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% elseif co2Class is not empty %}
-                        {{ 'vehicle.wltp.label.co2Class'|trans({
-                            '%value%': co2Class
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-                    {% if co2ClassEmptyBatteryMin is not empty %}
-                        {{ 'vehicle.wltp.label.co2ClassEmptyBattery'|trans({
-                            '%value%': co2ClassEmptyBatteryMin ~ '-' ~ co2ClassEmptyBattery
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% elseif co2ClassEmptyBattery is not empty %}
-                        {{ 'vehicle.wltp.label.co2ClassEmptyBattery'|trans({
-                            '%value%': co2ClassEmptyBattery
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-
-                    <br/>
-
-                    {% if element.data.motor %}
-                        {{ 'vehicle.wltp.label.motor'|trans({
-                            '%value%': element.data.motor
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-
-                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
-                        {{ 'vehicle.wltp.label.hybridPower'|trans({
-                            '%kw%':element.data.power|number_format(0, ',', '.'),
-                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.fuelPower is defined and element.data.fuelPower is not empty and element.data.fuelHorsepower is defined and element.data.fuelHorsepower is not empty %}
-                        {{ 'vehicle.wltp.label.hybridFuelPower'|trans({
-                            '%kw%':element.data.fuelPower|number_format(0, ',', '.'),
-                            '%ps%': element.data.fuelHorsepower|number_format(0, ',', '.'),
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.electricPower is defined and element.data.electricPower is not empty and element.data.electricHorsepower is defined and element.data.electricHorsepower is not empty %}
-                        {{ 'vehicle.wltp.label.hybridElectricPower'|trans({
-                            '%kw%':element.data.electricPower|number_format(0, ',', '.'),
-                            '%ps%': element.data.electricHorsepower|number_format(0, ',', '.'),
-                        }) }}
-                        <br/>
-                    {% endif %}
-
-
-                    {% if element.data.gearbox %}
-                        {{ 'vehicle.wltp.label.gearbox'|trans({
-                            '%value%': element.data.gearbox
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.range is defined and element.data.range is not empty %}
-                        {% if element.data.rangeMin is defined and element.data.rangeMin %}
-                            {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.range|number_format(0, ',', '.')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-                    {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
-                        {{ 'vehicle.wltp.label.cubicCapacity'|trans({
-                            '%value%': element.data.cubicCapacity|number_format(0, ',', '.')
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.fuel is defined and element.data.fuel is not empty %}
-                        {{ 'vehicle.wltp.label.fuel'|trans({
-                            '%value%': element.data.fuel
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.weight is defined and element.data.weight is not empty %}
-                        {{ 'vehicle.wltp.label.weight'|trans({
-                            '%value%': element.data.weight|number_format(0, ',', '.')
-                        }) }}
-                        <br/>
-                    {% endif %}
-
-                {% elseif hasFossilFuel %}
-
-                    {# Fossil fuel only #}
-                    {% if element.data.combined is defined and element.data.combined is not empty %}
-                        {% if element.data.combinedMin is defined and element.data.combinedMin %}
-                            {{ 'vehicle.wltp.label.combinedFuel'|trans({
-                                '%value%': element.data.combined|number_format(1, ',') ~ '-' ~ element.data.combinedMin|number_format(1, ','),
-                                '%unit%': fuelUnit,
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ 'vehicle.wltp.label.combinedFuel'|trans({
-                                '%value%': element.data.combined|number_format(1, ','),
-                                '%unit%': fuelUnit,
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-                    {% if element.data.co2EmissionMin is defined and element.data.co2EmissionMin is not null and element.data.co2EmissionMin is not null %}
-                        {{ 'vehicle.wltp.label.co2Emission'|trans({
-                            '%value%': (element.data.co2Emission ?? 0) ~ '-' ~ (element.data.co2EmissionMin ?? 0)
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% else %}
-                        {{ 'vehicle.wltp.label.co2Emission'|trans({
-                            '%value%': (element.data.co2Emission ?? '-')
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-                    {% if co2ClassMin is not empty %}
-                        {{ 'vehicle.wltp.label.co2Class'|trans({
-                            '%value%': co2ClassMin ~ '-' ~ co2Class
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% elseif co2Class is not empty %}
-                        {{ 'vehicle.wltp.label.co2Class'|trans({
-                            '%value%': co2Class
-                        }) }}{{ unofficial ? '*' : '' }}
-                        <br/>
-                    {% endif %}
-
-                    <br/>
-
-                    {% if element.data.motor %}
-                        {{ 'vehicle.wltp.label.motor'|trans({
-                            '%value%': element.data.motor
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
-                        {{ 'vehicle.wltp.label.power'|trans({
-                            '%kw%':element.data.power|number_format(0, ',', '.'),
-                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.gearbox %}
-                        {{ 'vehicle.wltp.label.gearbox'|trans({
-                            '%value%': element.data.gearbox
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.cubicCapacity is defined and element.data.cubicCapacity is not empty %}
-                        {{ 'vehicle.wltp.label.cubicCapacity'|trans({
-                            '%value%': element.data.cubicCapacity|number_format(0, ',', '.')
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {{ 'vehicle.wltp.label.fuel'|trans({
-                        '%value%': element.data.fuel ?? (('vehicle.envkv.choices.fuel.'~element.data.fuelType)|trans)
-                    }) }}
-                    <br/>
-                    {% if element.data.weight is defined and element.data.weight is not empty %}
-                        {{ 'vehicle.wltp.label.weight'|trans({
-                            '%value%': element.data.weight|number_format(0, ',', '.')
-                        }) }}
-                        <br/>
-                    {% endif %}
-
-                {% elseif hasBattery %}
-
-                    {# Pure BEV #}
-                    {% if element.data.combinedPowerConsumption is defined and element.data.combinedPowerConsumption is not empty %}
-                        {% if element.data.combinedPowerConsumptionMin is defined and element.data.combinedPowerConsumptionMin %}
-                            {{ ('vehicle.wltp.label.combinedPowerBEV')|trans({
-                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',') ~ '-' ~ element.data.combinedPowerConsumptionMin|number_format(1, ',')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ ('vehicle.wltp.label.combinedPowerBEV')|trans({
-                                '%value%': element.data.combinedPowerConsumption|number_format(1, ',')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-                    {{ 'vehicle.wltp.label.co2Emission'|trans({
-                        '%value%': 0
-                    }) }}{{ unofficial ? '*' : '' }}<br/>
-                    {{ 'vehicle.wltp.label.co2Class'|trans({
-                        '%value%': 'A'
-                    }) }}{{ unofficial ? '*' : '' }}<br/>
-                    {% if element.data.range is defined and element.data.range is not empty %}
-                        {% if element.data.rangeMin is defined and element.data.rangeMin %}
-                            {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.rangeMin|number_format(0, ',', '.') ~ '-' ~ element.data.range|number_format(0, ',', '.')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% else %}
-                            {{ 'vehicle.wltp.label.range'|trans({
-                                '%value%': element.data.range|number_format(0, ',', '.')
-                            })|raw }}{{ unofficial ? '*' : '' }}
-                            <br/>
-                        {% endif %}
-                    {% endif %}
-
-                    <br/>
-
-                    {% if element.data.motor %}
-                        {{ 'vehicle.wltp.label.motor'|trans({
-                            '%value%': element.data.motor
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.power is defined and element.data.power is not empty and element.data.horsepower is defined and element.data.horsepower is not empty %}
-                        {{ 'vehicle.wltp.label.electricPower'|trans({
-                            '%kw%':element.data.power|number_format(0, ',', '.'),
-                            '%ps%': element.data.horsepower|number_format(0, ',', '.'),
-                        }) }}
-                        <br/>
-                    {% endif %}
-                    {% if element.data.gearbox %}
-                        {{ 'vehicle.wltp.label.gearbox'|trans({
-                            '%value%': element.data.gearbox
-                        })|raw }}
-                        <br/>
-                    {% endif %}
-                    {{ 'vehicle.wltp.label.fuel'|trans({
-                        '%value%': 'vehicle.wltp.label.fuelElectricity'|trans
-                    }) }}
-                    <br/>
-                    {% if element.data.weight is defined and element.data.weight is not empty %}
-                        {{ 'vehicle.wltp.label.weight'|trans({
-                            '%value%': element.data.weight|number_format(0, ',', '.')
-                        }) }}
-                        <br/>
-                    {% endif %}
-
-                {% endif %}
-
-            </p>
+            {{ ecoData.getText('<br>')|raw }}
         </div>
         <div class="vehicle-wltp-disclaimer col-12">
             <p>
                 <em>
-                    {% if unofficial %}
+                    {% if ecoData.unofficial %}
                         * {{ 'vehicle.wltp.label.legalDisclaimerUnofficial'|trans|raw }}
                     {% else %}
                         Die angegebenen Verbrauchs- und Emissionswerte wurden nach dem gesetzlich vorgeschriebenen

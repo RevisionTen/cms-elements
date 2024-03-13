@@ -131,6 +131,38 @@ class VehicleWLTP extends Element
                             'placeholder' => 'vehicle.envkv.label.max',
                         ],
                     ));
+                    $form->add('combinedWeightedMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedWeighted',
+                        'scale' => 1,
+                        'constraints' => new NotBlank(),
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
+                    $form->add('combinedWeighted', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedWeighted',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('combinedPowerConsumptionWeightedMin', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedPowerConsumptionWeighted',
+                        'scale' => 1,
+                        'required' => false,
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.min',
+                        ],
+                    ));
+                    $form->add('combinedPowerConsumptionWeighted', NumberType::class, array(
+                        'label' => 'vehicle.envkv.label.combinedPowerConsumptionWeighted',
+                        'scale' => 1,
+                        'constraints' => new NotBlank(),
+                        'attr' => [
+                            'placeholder' => 'vehicle.envkv.label.max',
+                        ],
+                    ));
                 } else {
                     $form->remove('fuelPower');
                     $form->remove('fuelHorsepower');
@@ -138,6 +170,10 @@ class VehicleWLTP extends Element
                     $form->remove('electricHorsepower');
                     $form->remove('co2EmissionWeightedMin');
                     $form->remove('co2EmissionWeighted');
+                    $form->remove('combinedWeightedMin');
+                    $form->remove('combinedWeighted');
+                    $form->remove('combinedPowerConsumptionWeightedMin');
+                    $form->remove('combinedPowerConsumptionWeighted');
                 }
 
                 if ($hasBattery) {

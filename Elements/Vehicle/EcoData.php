@@ -4,11 +4,30 @@ declare(strict_types=1);
 
 namespace RevisionTen\CmsElements\Elements\Vehicle;
 
+use RevisionTen\CarPortCommon\Model\CarDetails;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EcoData
 {
+    protected TranslatorInterface $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public ?string $title = null;
+    public ?bool $unofficial = false;
+
+    public ?int $power = null;
+    public ?int $horsepower = null;
+    public ?int $weight = null;
+    public ?int $cubicCapacity = null;
+    public ?string $fuel = null;
     public ?string $fuelType = null;
+
+    public ?int $rangeMin = null;
+    public ?int $rangeMax = null;
 
     public ?string $co2ClassMin = null;
     public ?string $co2ClassMax = null;
@@ -16,90 +35,120 @@ class EcoData
     public ?string $co2ClassEmptyBatteryMin = null;
     public ?string $co2ClassEmptyBatteryMax = null;
 
-    public ?int $co2EmissionMin = null;
-    public ?int $co2EmissionMax = null;
-
-    public ?int $co2EmissionWeightedMin = null;
-    public ?int $co2EmissionWeightedMax = null;
-
-    public ?int $rangeMin = null;
-    public ?int $rangeMax = null;
+    public ?float $co2EmissionMin = null;
+    public ?float $co2EmissionMax = null;
+    public ?float $co2EmissionWeightedMin = null;
+    public ?float $co2EmissionWeightedMax = null;
 
     public ?float $combinedFuelConsumptionMin = null;
     public ?float $combinedFuelConsumptionMax = null;
+    public ?float $combinedFuelConsumptionWeightedMin = null;
+    public ?float $combinedFuelConsumptionWeightedMax = null;
 
     public ?float $combinedPowerConsumptionMin = null;
     public ?float $combinedPowerConsumptionMax = null;
+    public ?float $combinedPowerConsumptionWeightedMin = null;
+    public ?float $combinedPowerConsumptionWeightedMax = null;
 
-    public ?int $power = null;
-
-    public ?int $horsepower = null;
-
-    public ?int $weight = null;
-
-    public ?int $cubicCapacity = null;
-
-    public ?string $fuel = null;
-
-    public static function createFromElements(array $wltpElement, array $nefzElement): self
+    public function createFromElements(array $wltpElement, array $nefzElement): self
     {
         $wltp = $wltpElement['data'] ?? [];
 
-        $fuelType = $wltp['fuelType'] ?? null;
-        $hasFossilFuel = 'electricity' !== $fuelType;
-        #$hasFossilFuel = ($wltp['combined'] ?? null) !== null;
-        $hasBattery = 'electricity' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
-        #$hasBattery = ($wltp['combinedPowerConsumption'] ?? null) !== null;
+        $translator = $this->translator;
+        $ecoData = new EcoData($translator);
 
-        $ecoData = new self();
-        $ecoData->fuelType = $fuelType;
-
-        if ($hasFossilFuel) {
-            $ecoData->cubicCapacity = !empty($wltp['cubicCapacity']) ? (int) $wltp['cubicCapacity'] : null;
-            $ecoData->combinedFuelConsumptionMin = $wltp['combinedMin'] ?? null;
-            $ecoData->combinedFuelConsumptionMax = $wltp['combined'] ?? null;
-        }
-        if ($hasBattery) {
-            $ecoData->rangeMin = $wltp['rangeMin'] ?? null;
-            $ecoData->rangeMax = $wltp['range'] ?? null;
-            $ecoData->combinedPowerConsumptionMin = $wltp['combinedPowerConsumptionMin'] ?? null;
-            $ecoData->combinedPowerConsumptionMax = $wltp['combinedPowerConsumption'] ?? null;
-        }
-        if ($hasBattery && !$hasFossilFuel) {
-            // Pure BEV.
-            $ecoData->co2EmissionMin = null;
-            $ecoData->co2EmissionMax = 0;
-            $ecoData->co2ClassMin = null;
-            $ecoData->co2ClassMax = 'A';
-        } else {
-            $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
-            $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
-            $ecoData->co2EmissionWeightedMin = $wltp['co2EmissionWeightedMin'] ?? null;
-            $ecoData->co2EmissionWeightedMax = $wltp['co2EmissionWeighted'] ?? null;
-        }
-        if (!$hasBattery && $hasFossilFuel) {
-            // Pure ICE.
-            $ecoData->fuel = $wltp['fuel'] ?? null;
-            if (empty($ecoData->fuel ) && ('diesel' === $fuelType || 'petrol' === $fuelType)) {
-                // Infer fuel from fuelType.
-                $ecoData->fuel  = $fuelType;
-            }
-        }
+        $ecoData->title = $wltp['title'] ?? null;
+        $ecoData->unofficial = !empty($wltp['unofficial']);
         $ecoData->power = !empty($wltp['power']) ? (int) $wltp['power'] : null;
         $ecoData->horsepower = !empty($wltp['horsepower']) ? (int) $wltp['horsepower'] : null;
         $ecoData->weight = !empty($wltp['weight']) ? (int) $wltp['weight'] : null;
+        $ecoData->cubicCapacity = !empty($wltp['cubicCapacity']) ? (int) $wltp['cubicCapacity'] : null;
+        $ecoData->fuel = $wltp['fuel'] ?? null;
+        $ecoData->fuelType = $wltp['fuelType'] ?? null;
+
+        $ecoData->rangeMin = $wltp['rangeMin'] ?? null;
+        $ecoData->rangeMax = $wltp['range'] ?? null;
+
+        $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
+        $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
+        $ecoData->co2EmissionWeightedMin = $wltp['co2EmissionWeightedMin'] ?? null;
+        $ecoData->co2EmissionWeightedMax = $wltp['co2EmissionWeighted'] ?? null;
+
+        $ecoData->combinedFuelConsumptionMin = $wltp['combinedMin'] ?? null;
+        $ecoData->combinedFuelConsumptionMax = $wltp['combined'] ?? null;
+
+        $ecoData->combinedFuelConsumptionWeightedMin = $wltp['combinedWeightedMin'] ?? null;
+        $ecoData->combinedFuelConsumptionWeightedMax = $wltp['combinedWeighted'] ?? null;
+
+        $ecoData->combinedPowerConsumptionMin = $wltp['combinedPowerConsumptionMin'] ?? null;
+        $ecoData->combinedPowerConsumptionMax = $wltp['combinedPowerConsumption'] ?? null;
+
+        $ecoData->combinedPowerConsumptionWeightedMin = $wltp['combinedPowerConsumptionWeightedMin'] ?? null;
+        $ecoData->combinedPowerConsumptionWeightedMax = $wltp['combinedPowerConsumptionWeighted'] ?? null;
+
+        if ($ecoData->isHybrid()) {
+            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMin);
+            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMax);
+            $ecoData->co2ClassEmptyBatteryMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
+            $ecoData->co2ClassEmptyBatteryMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
+        } else {
+            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
+            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
+        }
+
+        return $ecoData;
+    }
+
+    public function createFromCar(CarDetails $car): self
+    {
+        $translator = $this->translator;
+        $ecoData = new EcoData($translator);
+
+        $ecoData->title = $car->title;
+        $ecoData->power = $car->power;
+        $ecoData->horsepower = $car->horsePower;
+        $ecoData->weight = $car->emptyWeight;
+        $ecoData->cubicCapacity = $car->cubicCapacity;
+        $ecoData->fuel = $car->fuel;
+        $ecoData->fuelType = $car->petrolType;
+
+        $ecoData->rangeMin = $car->electricRangeMin;
+        $ecoData->rangeMax = $car->electricRangeMax;
+        if (!empty($ecoData->rangeMin) && empty($ecoData->rangeMax)) {
+            $ecoData->rangeMax = $ecoData->rangeMin;
+            $ecoData->rangeMin = null;
+        }
+
+        $ecoData->co2EmissionMax = $car->co2EmissionWLTP;
+        $ecoData->co2EmissionWeightedMax = $car->co2EmissionWLTPWeighted;
+
+        $ecoData->combinedFuelConsumptionMax = $car->combinedWLTP;
+        $ecoData->combinedFuelConsumptionWeightedMax = $car->combinedWLTPWeighted;
+
+        $ecoData->combinedPowerConsumptionMax = $car->combinedPowerConsumptionWLTP;
+        $ecoData->combinedPowerConsumptionWeightedMax = $car->combinedPowerConsumptionWLTPWeighted;
+
+        if ($ecoData->isHybrid()) {
+            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMin);
+            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMax);
+            $ecoData->co2ClassEmptyBatteryMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
+            $ecoData->co2ClassEmptyBatteryMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
+        } else {
+            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
+            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
+        }
 
         return $ecoData;
     }
 
     public function hasFuelConsumption(): bool
     {
-        return $this->combinedFuelConsumptionMax !== null;
+        return $this->combinedFuelConsumptionMax !== null || $this->combinedFuelConsumptionWeightedMax !== null;
     }
 
     public function hasPowerConsumption(): bool
     {
-        return $this->combinedPowerConsumptionMax !== null;
+        return $this->combinedPowerConsumptionMax !== null || $this->combinedPowerConsumptionWeightedMax !== null;
     }
 
     public function hasConsumption(): bool
@@ -109,7 +158,12 @@ class EcoData
 
     public function isZeroEmissionVehicle(): bool
     {
-        return !($this->co2EmissionMin || $this->co2EmissionMax);
+        return !($this->co2EmissionMin || $this->co2EmissionMax || $this->co2EmissionWeightedMin || $this->co2EmissionWeightedMax);
+    }
+
+    public function isHybrid(): bool
+    {
+        return $this->co2EmissionWeightedMax || $this->combinedFuelConsumptionWeightedMax || $this->combinedPowerConsumptionWeightedMax;
     }
 
     public function hasWltp(): bool
@@ -119,16 +173,16 @@ class EcoData
             return false;
         }
 
-        return $this->combinedFuelConsumptionMax || $this->combinedPowerConsumptionMax;
+        return $this->hasConsumption();
     }
 
-    public function getCo2Class(?int $emission): ?string
+    public function calculateCo2Class(?float $emission): ?string
     {
         if (null === $emission) {
             return null;
         }
 
-        if ($emission === 0) {
+        if ($emission <= 0) {
             return 'A';
         }
         if ($emission <= 95) {
@@ -149,16 +203,11 @@ class EcoData
         return 'G';
     }
 
-    public function getText(TranslatorInterface $translator, ?string $separator = '; ', ?array $excludedFields = null): string
+    public function getTextArray(): ?array
     {
         if (!$this->hasWltp()) {
-            return '';
+            return null;
         }
-
-        $this->co2ClassMin = $this->getCo2Class($this->co2EmissionMin);
-        $this->co2ClassMax = $this->getCo2Class($this->co2EmissionMax);
-        $this->co2ClassEmptyBatteryMin = $this->getCo2Class($this->co2EmissionWeightedMin);
-        $this->co2ClassEmptyBatteryMax = $this->getCo2Class($this->co2EmissionWeightedMax);
 
         $text = [];
 
@@ -167,66 +216,47 @@ class EcoData
             $fuelUnit = 'kg/100km';
         }
 
-        $text['combinedFuelConsumption'] = $this->getEcoText($translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
-        $text['combinedPowerConsumption'] = $this->getEcoText($translator, 'combinedPowerConsumption', true, 2);
-
-        if ($this->isZeroEmissionVehicle() && $this->hasConsumption()) {
-            $text['co2Emission'] = $translator->trans('ecoData.label.co2Emission').' '.$translator->trans('ecoData.wltp.co2Emission', ['%max%' => 0]);
+        if ($this->isHybrid()) {
+            $text['combinedFuelConsumption'] = $this->getEcoText($this->translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
+            $text['combinedFuelConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedFuelConsumptionWeighted', true, 1, $fuelUnit);
+            $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
+            $text['combinedPowerConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedPowerConsumptionWeighted', true, 2);
+            $text['co2Emission'] = $this->getEcoText($this->translator, 'co2Emission', true, 0);
+            $text['co2EmissionWeighted'] = $this->getEcoText($this->translator, 'co2EmissionWeighted', true, 0);
+            $text['co2Class'] = $this->getEcoText($this->translator, 'co2Class', false);
+            $text['co2ClassEmptyBattery'] = $this->getEcoText($this->translator, 'co2ClassEmptyBattery', false);
         } else {
-            $text['co2Emission'] = $this->getEcoText($translator, 'co2Emission', true, 0);
-            $text['co2EmissionWeighted'] = $this->getEcoText($translator, 'co2EmissionWeighted', true, 0);
+            $text['combinedFuelConsumption'] = $this->getEcoText($this->translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
+            $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
+            $text['co2Emission'] = $this->getEcoText($this->translator, 'co2Emission', true, 0);
+            $text['co2Class'] = $this->getEcoText($this->translator, 'co2Class', false);
         }
 
-        $text['range'] = $this->getEcoText($translator, 'range', true, 0);
-
-        #if (null !== $this->power && null !== $this->horsepower) {
-        #    if ($this->isZeroEmissionVehicle()) {
-        #        // BEV
-        #        $text['power'] = $translator->trans('ecoData.wltp.electricPower', [
-        #            '%kw%' => $this->power,
-        #            '%ps%' => $this->horsepower,
-        #        ]);
-        #    } elseif ($this->hasFuelConsumption() && $this->hasPowerConsumption()) {
-        #        // PHEV
-        #        $text['power'] = $translator->trans('ecoData.wltp.hybridPower', [
-        #            '%kw%' => $this->power,
-        #            '%ps%' => $this->horsepower,
-        #        ]);
-        #    } else {
-        #        // ICE
-        #        $text['power'] = $translator->trans('ecoData.wltp.power', [
-        #            '%kw%' => $this->power,
-        #            '%ps%' => $this->horsepower,
-        #        ]);
-        #    }
-        #}
-        #if (null !== $this->weight && $this->hasPowerConsumption()) {
-        #    $text['weight'] = $translator->trans('ecoData.wltp.weight', [
-        #        '%value%' => $this->weight,
-        #    ]);
-        #}
-        #if (null !== $this->cubicCapacity && $this->hasFuelConsumption()) {
-        #    $text['cubicCapacity'] = $translator->trans('ecoData.wltp.cubicCapacity', [
-        #        '%value%' => $this->cubicCapacity,
-        #    ]);
-        #}
+        $text['range'] = $this->getEcoText($this->translator, 'range', true, 0);
 
         if (null !== $this->fuel) {
             $fuelTypes = ['petrol', 'diesel', 'lpg', 'cng', 'gas', 'electricity', 'hybrid', 'hybrid_petrol', 'hybrid_diesel', 'hydrogen', 'other'];
-            $fuel = in_array($this->fuel, $fuelTypes, true) ? $translator->trans('ecoData.fuelTypes.'.$this->fuel) : $this->fuel;
-            $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
+            $fuel = in_array($this->fuel, $fuelTypes, true) ? $this->translator->trans('ecoData.fuelTypes.'.$this->fuel) : $this->fuel;
+            $text['fuel'] = $this->translator->trans('ecoData.wltp.fuel', [
                 '%value%' => $fuel,
             ]);
         } elseif ($this->fuelType) {
-            $text['fuel'] = $translator->trans('ecoData.wltp.fuel', [
-                '%value%' => $translator->trans('ecoData.fuelTypes.'.$this->fuelType),
+            $text['fuel'] = $this->translator->trans('ecoData.wltp.fuel', [
+                '%value%' => $this->translator->trans('ecoData.fuelTypes.'.$this->fuelType),
             ]);
         }
 
-        $text['co2Class'] = $this->getEcoText($translator, 'co2Class', false);
-        $text['co2ClassEmptyBattery'] = $this->getEcoText($translator, 'co2ClassEmptyBattery', false);
-
         $text = array_filter($text, static fn($v) => null !== $v);
+
+        return $text;
+    }
+
+    public function getText(?string $separator = '; ', ?array $excludedFields = null): string
+    {
+        $text = $this->getTextArray();
+        if ($text === null) {
+            return '';
+        }
         if (!empty($excludedFields)) {
             $text = array_filter($text, static fn($k) => !in_array($k, $excludedFields, true), ARRAY_FILTER_USE_KEY);
         }

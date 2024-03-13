@@ -31,3 +31,12 @@ cms:
             template: '@CmsElements/Vehicle/dat_disclaimer.html.twig'
             icon: 'fa fa-exclamation-triangle'
             public: true
+
+services:
+    RevisionTen\CmsElements\Elements\Vehicle\EcoData:
+        autowire: true
+        public: true
+twig:
+    globals:
+        ecodata_service: '@RevisionTen\CmsElements\Elements\Vehicle\EcoData'
+

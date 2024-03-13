@@ -184,62 +184,6 @@
             Wenn Sie keine min-Werte haben verwenden Sie bitte nur das jeweilige max-Wert-Feld.
         </div>
 
-        {% if form.energyEfficiencyClass is defined or form.emissionSticker is defined or form.emissionClass is defined %}
-            <div class="row">
-                {% if form.energyEfficiencyClass is defined %}
-                    <div class="col">
-                        <div class="form-group mb-3">
-                            {{ form_label(form.energyEfficiencyClass) }}
-                            <div class="w-100">
-                                <div class="form-row row gx-2">
-                                    <div class="col">
-                                        {{ form_widget(form.energyEfficiencyClassMin) }}
-                                    </div>
-                                    <div class="col">
-                                        {{ form_widget(form.energyEfficiencyClass) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if form.emissionSticker is defined %}
-                    <div class="col">
-                        <div class="form-group mb-3">
-                            {{ form_label(form.emissionSticker) }}
-                            <div class="w-100">
-                                <div class="form-row row gx-2">
-                                    <div class="col">
-                                        {{ form_widget(form.emissionStickerMin) }}
-                                    </div>
-                                    <div class="col">
-                                        {{ form_widget(form.emissionSticker) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if form.emissionClass is defined %}
-                    <div class="col">
-                        <div class="form-group mb-3 w-100">
-                            {{ form_label(form.emissionClass) }}
-                            <div class="w-100">
-                                <div class="form-row row gx-2">
-                                    <div class="col">
-                                        {{ form_widget(form.emissionClassMin) }}
-                                    </div>
-                                    <div class="col">
-                                        {{ form_widget(form.emissionClass) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        {% endif %}
-
         <div class="row">
             <div class="col">
                 {{ form_row(form.motor) }}
@@ -373,8 +317,8 @@
             </div>
         {% endif %}
 
-        <div class="row">
-            {% if form.combined is defined %}
+        {% if form.combined is defined %}
+            <div class="row">
                 <div class="col">
                     <div class="form-group mb-3">
                         {{ form_label(form.combined) }}
@@ -390,8 +334,27 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
+        {% if form.combinedWeighted is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.combinedWeighted) }}
+                        <div class="w-100">
+                            <div class="form-row row gx-2">
+                                <div class="col">
+                                    {{ form_widget(form.combinedWeightedMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.combinedWeighted) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
         {% if form.combinedPowerConsumption is defined %}
             <div class="row">
@@ -405,6 +368,25 @@
                                 </div>
                                 <div class="col">
                                     {{ form_widget(form.combinedPowerConsumption) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if form.combinedPowerConsumptionWeighted is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.combinedPowerConsumptionWeighted) }}
+                        <div class="w-100">
+                            <div class="form-row row gx-2">
+                                <div class="col">
+                                    {{ form_widget(form.combinedPowerConsumptionWeightedMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.combinedPowerConsumptionWeighted) }}
                                 </div>
                             </div>
                         </div>
@@ -452,7 +434,6 @@
                 </div>
             </div>
         {% endif %}
-
         {% if form.co2EmissionWeighted is defined %}
             <div class="row">
                 <div class="col">

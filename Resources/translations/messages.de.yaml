@@ -84,9 +84,11 @@ vehicle:
             co2Emission: "CO₂-Emissionen komb."
             co2EmissionWeighted: "CO₂-Emissionen gewichtet komb."
             combined: "Verbrauch komb."
+            combinedWeighted: "Verbrauch gewichtet komb."
             outer: "Verbrauch ausserorts"
             inner: "Verbrauch innerorts"
-            combinedPowerConsumption: "Stromverbrauch in kWh/100 km"
+            combinedPowerConsumption: "Stromverbrauch komb. in kWh/100 km"
+            combinedPowerConsumptionWeighted: "Stromverbrauch gewichtet komb. in kWh/100 km"
             missingEnVKV: "Verbauchsangaben fehlen! Sie dürfen diese nur weglassen wenn es sich beim Angebot um Gebrauchtwagen oder Nutzfahrzeuge (die keine M1 Zulassung haben) handelt."
             missingDatDisclaimer: "Dat-Hinweis fehlt! Bitte achten Sie darauf das der DAT-Hinweis mindest einmal auf der Seite enthalten ist."
         placeholder:
@@ -175,29 +177,46 @@ vehicle:
 ecoData:
     label:
         energyEfficiencyClass: "Energieeffizienzklasse:"
+
         co2Class: "CO₂-Klasse:"
         co2ClassEmptyBattery: "CO₂-Klasse bei entladener Batterie:"
+
         co2Emission: "CO₂-Emission kombiniert in g/km:"
         co2EmissionWeighted: "CO₂-Emission gewichtet kombiniert in g/km:"
+
         combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
+        combinedFuelConsumptionWeighted: "Kraftstoffverbrauch gewichtet kombiniert in %unit%:"
+
         combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
+        combinedPowerConsumptionWeighted: "Stromverbrauch gewichtet kombiniert in kWh/100 km:"
+
         range: "Elektrische Reichweite in km:"
         zeroEmission: "0 g/km" # Todo: remove.
     wltp:
         co2ClassMinMax: "%min% - %max%"
         co2Class: "%max%"
+
         co2ClassEmptyBatteryMinMax: "%min% - %max%"
         co2ClassEmptyBattery: "%max%"
+
         co2EmissionMinMax: "%min% - %max%"
         co2Emission: "%max%"
         co2EmissionWeightedMinMax: "%min% - %max%"
         co2EmissionWeighted: "%max%"
+
         combinedFuelConsumptionMinMax: "%min% - %max%"
         combinedFuelConsumption: "%max%"
+        combinedFuelConsumptionWeightedMinMax: "%min% - %max%"
+        combinedFuelConsumptionWeighted: "%max%"
+
         combinedPowerConsumptionMinMax: "%min% - %max%"
         combinedPowerConsumption: "%max%"
+        combinedPowerConsumptionWeightedMinMax: "%min% - %max%"
+        combinedPowerConsumptionWeighted: "%max%"
+
         rangeMinMax: "%min% - %max%"
         range: "%max%"
+
         power: "Leistung: %kw% kW (%ps% PS)"
         electricPower: "Spitzenleistung: %kw% kW (%ps% PS)"
         hybridPower: "Systemleistung: %kw% kW (%ps% PS)"
