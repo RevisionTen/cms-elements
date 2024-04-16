@@ -191,6 +191,7 @@ ecoData:
         combinedPowerConsumptionWeighted: "Stromverbrauch gewichtet kombiniert in kWh/100 km:"
 
         range: "Elektrische Reichweite in km:"
+        cubicCapacity: "Hubraum in cm³:"
         zeroEmission: "0 g/km" # Todo: remove.
     wltp:
         co2ClassMinMax: "%min% - %max%"

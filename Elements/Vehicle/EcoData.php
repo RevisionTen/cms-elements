@@ -86,15 +86,7 @@ class EcoData
         $ecoData->combinedPowerConsumptionWeightedMin = $wltp['combinedPowerConsumptionWeightedMin'] ?? null;
         $ecoData->combinedPowerConsumptionWeightedMax = $wltp['combinedPowerConsumptionWeighted'] ?? null;
 
-        if ($ecoData->isHybrid()) {
-            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMin);
-            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMax);
-            $ecoData->co2ClassEmptyBatteryMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
-            $ecoData->co2ClassEmptyBatteryMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
-        } else {
-            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
-            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
-        }
+        $ecoData->calculateAllCo2Classes();
 
         return $ecoData;
     }
@@ -128,15 +120,7 @@ class EcoData
         $ecoData->combinedPowerConsumptionMax = $car->combinedPowerConsumptionWLTP;
         $ecoData->combinedPowerConsumptionWeightedMax = $car->combinedPowerConsumptionWLTPWeighted;
 
-        if ($ecoData->isHybrid()) {
-            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMin);
-            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionWeightedMax);
-            $ecoData->co2ClassEmptyBatteryMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
-            $ecoData->co2ClassEmptyBatteryMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
-        } else {
-            $ecoData->co2ClassMin = $ecoData->calculateCo2Class($ecoData->co2EmissionMin);
-            $ecoData->co2ClassMax = $ecoData->calculateCo2Class($ecoData->co2EmissionMax);
-        }
+        $ecoData->calculateAllCo2Classes();
 
         return $ecoData;
     }
@@ -174,6 +158,25 @@ class EcoData
         }
 
         return $this->hasConsumption();
+    }
+
+    public function calculateAllCo2Classes(): self
+    {
+        if ($this->isZeroEmissionVehicle()) {
+            $this->co2EmissionMax = 0;
+        }
+
+        if ($this->isHybrid()) {
+            $this->co2ClassMin = $this->calculateCo2Class($this->co2EmissionWeightedMin);
+            $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionWeightedMax);
+            $this->co2ClassEmptyBatteryMin = $this->calculateCo2Class($this->co2EmissionMin);
+            $this->co2ClassEmptyBatteryMax = $this->calculateCo2Class($this->co2EmissionMax);
+        } else {
+            $this->co2ClassMin = $this->calculateCo2Class($this->co2EmissionMin);
+            $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionMax);
+        }
+
+        return $this;
     }
 
     public function calculateCo2Class(?float $emission): ?string
@@ -233,6 +236,35 @@ class EcoData
         }
 
         $text['range'] = $this->getEcoText($this->translator, 'range', true, 0);
+        if ($this->isHybrid() && !empty($text['range'])) {
+            // BMW recommends to label the range with "EAER" for hybrids
+            $text['range'] = str_replace('Elektrische Reichweite', 'Elektrische Reichweite (EAER)', $text['range']);
+        }
+
+        if ($this->cubicCapacity !== null) {
+            $text['cubicCapacity'] = $this->translator->trans('ecoData.wltp.cubicCapacity', [
+                '%value%' => $this->cubicCapacity,
+            ]);
+        }
+
+        if ($this->power !== null && $this->horsepower !== null) {
+            if ($this->isZeroEmissionVehicle()) {
+                $text['power'] = $this->translator->trans('ecoData.wltp.electricPower', [
+                    '%kw%' => $this->power,
+                    '%ps%' => $this->horsepower,
+                ]);
+            } elseif ($this->isHybrid()) {
+                $text['power'] = $this->translator->trans('ecoData.wltp.hybridPower', [
+                    '%kw%' => $this->power,
+                    '%ps%' => $this->horsepower,
+                ]);
+            } else {
+                $text['power'] = $this->translator->trans('ecoData.wltp.power', [
+                    '%kw%' => $this->power,
+                    '%ps%' => $this->horsepower,
+                ]);
+            }
+        }
 
         if (null !== $this->fuel) {
             $fuelTypes = ['petrol', 'diesel', 'lpg', 'cng', 'gas', 'electricity', 'hybrid', 'hybrid_petrol', 'hybrid_diesel', 'hydrogen', 'other'];
@@ -251,7 +283,7 @@ class EcoData
         return $text;
     }
 
-    public function getText(?string $separator = '; ', ?array $excludedFields = null): string
+    public function getText(?string $separator = '; ', ?array $excludedFields = null, ?bool $addWltpPrefix = false): string
     {
         $text = $this->getTextArray();
         if ($text === null) {
@@ -261,7 +293,23 @@ class EcoData
             $text = array_filter($text, static fn($k) => !in_array($k, $excludedFields, true), ARRAY_FILTER_USE_KEY);
         }
 
-        return implode($separator, $text);
+        $text = implode($separator, $text);
+
+        if ($addWltpPrefix) {
+            $text = str_replace([
+                'CO₂-Emission',
+                'Kraftstoffverbrauch',
+                'Stromverbrauch',
+                'Elektrische Reichweite',
+            ], [
+                'WLTP CO₂-Emission',
+                'WLTP Kraftstoffverbrauch',
+                'WLTP Stromverbrauch',
+                'WLTP Elektrische Reichweite',
+            ], $text);
+        }
+
+        return $text;
     }
 
     private function getEcoText(TranslatorInterface $translator, string $fieldName, bool $formatNumber, ?int $decimals = 2, ?string $unit = null): ?string
