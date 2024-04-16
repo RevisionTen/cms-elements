@@ -66,8 +66,8 @@ class EcoData
         $ecoData->fuel = $wltp['fuel'] ?? null;
         $ecoData->fuelType = $wltp['fuelType'] ?? null;
 
-        $ecoData->rangeMin = $wltp['rangeMin'] ?? null;
-        $ecoData->rangeMax = $wltp['range'] ?? null;
+        $ecoData->rangeMin = !empty($wltp['rangeMin']) ? (int) $wltp['rangeMin'] : null;
+        $ecoData->rangeMax = !empty($wltp['range']) ? (int) $wltp['range'] : null;
 
         $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
         $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
