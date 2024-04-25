@@ -171,9 +171,15 @@ class EcoData
             $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionWeightedMax);
             $this->co2ClassEmptyBatteryMin = $this->calculateCo2Class($this->co2EmissionMin);
             $this->co2ClassEmptyBatteryMax = $this->calculateCo2Class($this->co2EmissionMax);
+            if ($this->co2ClassEmptyBatteryMin === $this->co2ClassEmptyBatteryMax) {
+                $this->co2ClassEmptyBatteryMin = null;
+            }
         } else {
             $this->co2ClassMin = $this->calculateCo2Class($this->co2EmissionMin);
             $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionMax);
+            if ($this->co2ClassMin === $this->co2ClassMax) {
+                $this->co2ClassMin = null;
+            }
         }
 
         return $this;
