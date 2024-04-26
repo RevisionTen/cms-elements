@@ -86,6 +86,31 @@ class EcoData
         $ecoData->combinedPowerConsumptionWeightedMin = $wltp['combinedPowerConsumptionWeightedMin'] ?? null;
         $ecoData->combinedPowerConsumptionWeightedMax = $wltp['combinedPowerConsumptionWeighted'] ?? null;
 
+        // Remove invalid values for fuel types
+        switch ($ecoData->fuelType) {
+            case 'electricity':
+                $ecoData->co2EmissionMin = null;
+                $ecoData->co2EmissionMax = null;
+                $ecoData->co2EmissionWeightedMin = null;
+                $ecoData->co2EmissionWeightedMax = null;
+                $ecoData->combinedFuelConsumptionMin = null;
+                $ecoData->combinedFuelConsumptionMax = null;
+                $ecoData->combinedFuelConsumptionWeightedMin = null;
+                $ecoData->combinedFuelConsumptionWeightedMax = null;
+                $ecoData->cubicCapacity = null;
+                $ecoData->fuel = null;
+                break;
+            case 'petrol':
+            case 'diesel':
+                $ecoData->combinedPowerConsumptionMin = null;
+                $ecoData->combinedPowerConsumptionMax = null;
+                $ecoData->combinedPowerConsumptionWeightedMin = null;
+                $ecoData->combinedPowerConsumptionWeightedMax = null;
+                $ecoData->rangeMin = null;
+                $ecoData->rangeMax = null;
+                break;
+        }
+
         $ecoData->calculateAllCo2Classes();
 
         return $ecoData;
