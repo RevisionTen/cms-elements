@@ -134,17 +134,17 @@ class VehicleWLTP extends Element
                     $form->add('combinedWeightedMin', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.combinedWeighted',
                         'scale' => 1,
-                        'constraints' => new NotBlank(),
+                        'required' => false,
                         'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.max',
+                            'placeholder' => 'vehicle.envkv.label.min',
                         ],
                     ));
                     $form->add('combinedWeighted', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.combinedWeighted',
                         'scale' => 1,
-                        'required' => false,
+                        'constraints' => new NotBlank(),
                         'attr' => [
-                            'placeholder' => 'vehicle.envkv.label.min',
+                            'placeholder' => 'vehicle.envkv.label.max',
                         ],
                     ));
                     $form->add('combinedPowerConsumptionWeightedMin', NumberType::class, array(
