@@ -86,27 +86,7 @@ class EcoData
         $ecoData->combinedPowerConsumptionWeightedMin = $wltp['combinedPowerConsumptionWeightedMin'] ?? null;
         $ecoData->combinedPowerConsumptionWeightedMax = $wltp['combinedPowerConsumptionWeighted'] ?? null;
 
-        // Remove invalid values for fuel types
-        if ($ecoData->fuel === 'Elektro' || $ecoData->fuelType === 'electricity') {
-            $ecoData->co2EmissionMin = null;
-            $ecoData->co2EmissionMax = null;
-            $ecoData->co2EmissionWeightedMin = null;
-            $ecoData->co2EmissionWeightedMax = null;
-            $ecoData->combinedFuelConsumptionMin = null;
-            $ecoData->combinedFuelConsumptionMax = null;
-            $ecoData->combinedFuelConsumptionWeightedMin = null;
-            $ecoData->combinedFuelConsumptionWeightedMax = null;
-            $ecoData->cubicCapacity = null;
-            $ecoData->fuel = null;
-        } elseif ($ecoData->fuel === 'Benzin' || $ecoData->fuel === 'Diesel' || $ecoData->fuelType === 'petrol' || $ecoData->fuelType === 'diesel') {
-            $ecoData->combinedPowerConsumptionMin = null;
-            $ecoData->combinedPowerConsumptionMax = null;
-            $ecoData->combinedPowerConsumptionWeightedMin = null;
-            $ecoData->combinedPowerConsumptionWeightedMax = null;
-            $ecoData->rangeMin = null;
-            $ecoData->rangeMax = null;
-        }
-
+        $ecoData->removeInvalidValues();
         $ecoData->calculateAllCo2Classes();
 
         return $ecoData;
@@ -141,6 +121,7 @@ class EcoData
         $ecoData->combinedPowerConsumptionMax = $car->combinedPowerConsumptionWLTP;
         $ecoData->combinedPowerConsumptionWeightedMax = $car->combinedPowerConsumptionWLTPWeighted;
 
+        $ecoData->removeInvalidValues();
         $ecoData->calculateAllCo2Classes();
 
         return $ecoData;
@@ -179,6 +160,32 @@ class EcoData
         }
 
         return $this->hasConsumption();
+    }
+
+    public function removeInvalidValues(): self
+    {
+        // Remove invalid values for fuel types
+        if ($this->fuel === 'Elektro' || $this->fuelType === 'electricity') {
+            $this->co2EmissionMin = null;
+            $this->co2EmissionMax = null;
+            $this->co2EmissionWeightedMin = null;
+            $this->co2EmissionWeightedMax = null;
+            $this->combinedFuelConsumptionMin = null;
+            $this->combinedFuelConsumptionMax = null;
+            $this->combinedFuelConsumptionWeightedMin = null;
+            $this->combinedFuelConsumptionWeightedMax = null;
+            $this->cubicCapacity = null;
+            $this->fuel = null;
+        } elseif ($this->fuel === 'Benzin' || $this->fuel === 'Diesel' || $this->fuelType === 'petrol' || $this->fuelType === 'diesel') {
+            $this->combinedPowerConsumptionMin = null;
+            $this->combinedPowerConsumptionMax = null;
+            $this->combinedPowerConsumptionWeightedMin = null;
+            $this->combinedPowerConsumptionWeightedMax = null;
+            $this->rangeMin = null;
+            $this->rangeMax = null;
+        }
+
+        return $this;
     }
 
     public function calculateAllCo2Classes(): self
