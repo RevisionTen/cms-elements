@@ -258,7 +258,7 @@ class EcoData
             $text['combinedFuelConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedFuelConsumptionWeighted', true, 1, $fuelUnit);
             $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
             $text['combinedPowerConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedPowerConsumptionWeighted', true, 2);
-            $text['co2Emission'] = $this->getEcoText($this->translator, 'co2Emission', true, 0);
+            $text['co2Emission'] = $this->getEcoText($this->translator, 'co2EmissionEmptyBattery', true, 0);
             $text['co2EmissionWeighted'] = $this->getEcoText($this->translator, 'co2EmissionWeighted', true, 0);
             $text['co2Class'] = $this->getEcoText($this->translator, 'co2Class', false);
             $text['co2ClassEmptyBattery'] = $this->getEcoText($this->translator, 'co2ClassEmptyBattery', false);
@@ -348,22 +348,27 @@ class EcoData
 
     private function getEcoText(TranslatorInterface $translator, string $fieldName, bool $formatNumber, ?int $decimals = 2, ?string $unit = null): ?string
     {
+        $label = $fieldName;
+        if ($fieldName === 'co2EmissionEmptyBattery') {
+            $fieldName = 'co2Emission';
+        }
+
         $wltp_min = $this->{$fieldName.'Min'} ?? null;
         $wltp_max = $this->{$fieldName.'Max'} ?? null;
 
         $hasWltp = null !== $wltp_min || null !== $wltp_max;
         if ($hasWltp) {
-            $text = $translator->trans('ecoData.label.'.$fieldName, [
+            $text = $translator->trans('ecoData.label.'.$label, [
                 '%unit%' => $unit,
             ]);
 
             if (null !== $wltp_min && null !== $wltp_max) {
-                $text .= ' '.$translator->trans('ecoData.wltp.'.$fieldName.'MinMax', [
+                $text .= ' '.$translator->trans('ecoData.wltp.'.$label.'MinMax', [
                     '%min%' => $formatNumber ? number_format($wltp_min, $decimals, ',', '.') : $wltp_min,
                     '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
                 ]);
             } elseif (null !== $wltp_max) {
-                $text .= ' '.$translator->trans('ecoData.wltp.'.$fieldName, [
+                $text .= ' '.$translator->trans('ecoData.wltp.'.$label, [
                     '%max%' => $formatNumber ? number_format($wltp_max, $decimals, ',', '.') : $wltp_max,
                 ]);
             }
