@@ -182,6 +182,7 @@ ecoData:
         co2ClassEmptyBattery: "CO₂-Klasse bei entladener Batterie:"
 
         co2Emission: "CO₂-Emission kombiniert in g/km:"
+        co2EmissionEmptyBattery: "CO₂-Emissionen kombiniert bei entladener Batterie in g/km:"
         co2EmissionWeighted: "CO₂-Emission gewichtet kombiniert in g/km:"
 
         combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
@@ -201,7 +202,9 @@ ecoData:
         co2ClassEmptyBattery: "%max%"
 
         co2EmissionMinMax: "%min% - %max%"
+        co2EmissionEmptyBatteryMinMax: "%min% - %max%"
         co2Emission: "%max%"
+        co2EmissionEmptyBattery: "%max%"
         co2EmissionWeightedMinMax: "%min% - %max%"
         co2EmissionWeighted: "%max%"
 
