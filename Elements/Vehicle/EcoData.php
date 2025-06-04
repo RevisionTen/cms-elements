@@ -254,7 +254,7 @@ class EcoData
         }
 
         if ($this->isHybrid()) {
-            $text['combinedFuelConsumption'] = $this->getEcoText($this->translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
+            $text['combinedFuelConsumptionEmptyBattery'] = $this->getEcoText($this->translator, 'combinedFuelConsumptionEmptyBattery', true, 1, $fuelUnit);
             $text['combinedFuelConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedFuelConsumptionWeighted', true, 1, $fuelUnit);
             $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
             $text['combinedPowerConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedPowerConsumptionWeighted', true, 2);
@@ -351,6 +351,9 @@ class EcoData
         $label = $fieldName;
         if ($fieldName === 'co2EmissionEmptyBattery') {
             $fieldName = 'co2Emission';
+        }
+        if ($fieldName === 'combinedFuelConsumptionEmptyBattery') {
+            $fieldName = 'combinedFuelConsumption';
         }
 
         $wltp_min = $this->{$fieldName.'Min'} ?? null;

@@ -186,6 +186,7 @@ ecoData:
         co2EmissionWeighted: "CO₂-Emission gewichtet kombiniert in g/km:"
 
         combinedFuelConsumption: "Kraftstoffverbrauch kombiniert in %unit%:"
+        combinedFuelConsumptionEmptyBattery: "Kraftstoffverbrauch kombiniert bei entladener Batterie in %unit%:"
         combinedFuelConsumptionWeighted: "Kraftstoffverbrauch gewichtet kombiniert in %unit%:"
 
         combinedPowerConsumption: "Stromverbrauch kombiniert in kWh/100 km:"
@@ -210,6 +211,8 @@ ecoData:
 
         combinedFuelConsumptionMinMax: "%min% - %max%"
         combinedFuelConsumption: "%max%"
+        combinedFuelConsumptionEmptyBatteryMinMax: "%min% - %max%"
+        combinedFuelConsumptionEmptyBattery: "%max%"
         combinedFuelConsumptionWeightedMinMax: "%min% - %max%"
         combinedFuelConsumptionWeighted: "%max%"
 
