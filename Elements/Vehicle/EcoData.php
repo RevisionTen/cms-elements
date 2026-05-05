@@ -121,8 +121,27 @@ class EcoData
         $ecoData->combinedPowerConsumptionMax = $car->combinedPowerConsumptionWLTP;
         $ecoData->combinedPowerConsumptionWeightedMax = $car->combinedPowerConsumptionWLTPWeighted;
 
-        $ecoData->removeInvalidValues();
-        $ecoData->calculateAllCo2Classes();
+        if ($car->co2ClassWLTP || $car->co2ClassWLTPWeighted) {
+            if ($car->plugInHybrid || $this->isHybrid()) {
+                if ($car->co2ClassWLTPWeighted) {
+                    $this->co2ClassMin = null;
+                    $this->co2ClassMax = $car->co2ClassWLTPWeighted;
+                }
+                if ($car->co2ClassWLTP) {
+                    $this->co2ClassEmptyBatteryMin = null;
+                    $this->co2ClassEmptyBatteryMax = $car->co2ClassWLTP;
+                }
+            } else {
+                if ($car->co2ClassWLTP) {
+                    $this->co2ClassMin = null;
+                    $this->co2ClassMax = $car->co2ClassWLTP;
+                }
+            }
+            $ecoData->removeInvalidValues();
+        } else {
+            $ecoData->removeInvalidValues();
+            $ecoData->calculateAllCo2Classes();
+        }
 
         return $ecoData;
     }
