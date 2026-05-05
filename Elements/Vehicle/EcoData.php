@@ -278,10 +278,13 @@ class EcoData
             $text['combinedFuelConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedFuelConsumptionWeighted', true, 1, $fuelUnit);
             $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
             $text['combinedPowerConsumptionWeighted'] = $this->getEcoText($this->translator, 'combinedPowerConsumptionWeighted', true, 2);
-            $text['co2Emission'] = $this->getEcoText($this->translator, 'co2EmissionEmptyBattery', true, 0);
+            if ($this->co2EmissionMax > 0) {
+                $text['co2Emission'] = $this->getEcoText($this->translator, 'co2EmissionEmptyBattery', true, 0);
+            }
             $text['co2EmissionWeighted'] = $this->getEcoText($this->translator, 'co2EmissionWeighted', true, 0);
             $text['co2Class'] = $this->getEcoText($this->translator, 'co2Class', false);
             $text['co2ClassEmptyBattery'] = $this->getEcoText($this->translator, 'co2ClassEmptyBattery', false);
+
         } else {
             $text['combinedFuelConsumption'] = $this->getEcoText($this->translator, 'combinedFuelConsumption', true, 1, $fuelUnit);
             $text['combinedPowerConsumption'] = $this->getEcoText($this->translator, 'combinedPowerConsumption', true, 2);
