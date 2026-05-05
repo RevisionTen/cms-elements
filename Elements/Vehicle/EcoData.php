@@ -124,17 +124,17 @@ class EcoData
         if ($car->co2ClassWLTP || $car->co2ClassWLTPWeighted) {
             if ($car->plugInHybrid || $this->isHybrid()) {
                 if ($car->co2ClassWLTPWeighted) {
-                    $this->co2ClassMin = null;
-                    $this->co2ClassMax = $car->co2ClassWLTPWeighted;
+                    $ecoData->co2ClassMin = null;
+                    $ecoData->co2ClassMax = $car->co2ClassWLTPWeighted;
                 }
                 if ($car->co2ClassWLTP) {
-                    $this->co2ClassEmptyBatteryMin = null;
-                    $this->co2ClassEmptyBatteryMax = $car->co2ClassWLTP;
+                    $ecoData->co2ClassEmptyBatteryMin = null;
+                    $ecoData->co2ClassEmptyBatteryMax = $car->co2ClassWLTP;
                 }
             } else {
                 if ($car->co2ClassWLTP) {
-                    $this->co2ClassMin = null;
-                    $this->co2ClassMax = $car->co2ClassWLTP;
+                    $ecoData->co2ClassMin = null;
+                    $ecoData->co2ClassMax = $car->co2ClassWLTP;
                 }
             }
             $ecoData->removeInvalidValues();
@@ -142,6 +142,7 @@ class EcoData
             $ecoData->removeInvalidValues();
             $ecoData->calculateAllCo2Classes();
         }
+
 
         return $ecoData;
     }
