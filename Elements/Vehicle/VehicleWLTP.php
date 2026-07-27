@@ -93,8 +93,12 @@ class VehicleWLTP extends Element
                 $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
                 $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
 
+                $combinedLabel = 'vehicle.envkv.label.combined';
+
                 // Add additional power specs for hybrid vehicles.
                 if ($hasFossilFuel && $hasBattery) {
+                    $combinedLabel = 'vehicle.envkv.label.combinedEmptyBattery';
+
                     $form->add('fuelPower', NumberType::class, array(
                         'label' => 'vehicle.wltp.form.fuelPower',
                         'scale' => 0,
@@ -230,7 +234,7 @@ class VehicleWLTP extends Element
                         'required' => false,
                     ));
                     $form->add('combined', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.combined',
+                        'label' => $combinedLabel,
                         'scale' => 1,
                         'constraints' => new NotBlank(),
                         'attr' => [
@@ -238,7 +242,7 @@ class VehicleWLTP extends Element
                         ],
                     ));
                     $form->add('combinedMin', NumberType::class, array(
-                        'label' => 'vehicle.envkv.label.combined',
+                        'label' => $combinedLabel,
                         'scale' => 1,
                         'required' => false,
                         'attr' => [
