@@ -84,6 +84,7 @@ vehicle:
             co2Emission: "CO₂-Emissionen komb."
             co2EmissionWeighted: "CO₂-Emissionen gewichtet komb."
             combined: "Verbrauch komb."
+            combinedEmptyBattery: "Verbrauch komb. bei entladener Batterie"
             combinedWeighted: "Verbrauch gewichtet komb."
             outer: "Verbrauch ausserorts"
             inner: "Verbrauch innerorts"
