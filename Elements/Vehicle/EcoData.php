@@ -69,6 +69,11 @@ class EcoData
         $ecoData->rangeMin = !empty($wltp['rangeMin']) ? (int) $wltp['rangeMin'] : null;
         $ecoData->rangeMax = !empty($wltp['range']) ? (int) $wltp['range'] : null;
 
+        $ecoData->co2ClassMin = !empty($wltp['co2ClassMin']) ? $wltp['co2ClassMin'] : null;
+        $ecoData->co2ClassMax = !empty($wltp['co2Class']) ? $wltp['co2Class'] : null;
+        $ecoData->co2ClassEmptyBatteryMin = !empty($wltp['co2ClassEmptyBatteryMin']) ? $wltp['co2ClassEmptyBatteryMin'] : null;
+        $ecoData->co2ClassEmptyBatteryMax = !empty($wltp['co2ClassEmptyBattery']) ? $wltp['co2ClassEmptyBattery'] : null;
+
         $ecoData->co2EmissionMin = $wltp['co2EmissionMin'] ?? null;
         $ecoData->co2EmissionMax = $wltp['co2Emission'] ?? null;
         $ecoData->co2EmissionWeightedMin = $wltp['co2EmissionWeightedMin'] ?? null;
@@ -87,7 +92,7 @@ class EcoData
         $ecoData->combinedPowerConsumptionWeightedMax = $wltp['combinedPowerConsumptionWeighted'] ?? null;
 
         $ecoData->removeInvalidValues();
-        $ecoData->calculateAllCo2Classes();
+        $ecoData->calculateAllCo2Classes(true);
 
         return $ecoData;
     }
@@ -162,6 +167,14 @@ class EcoData
         return $this->hasFuelConsumption() || $this->hasPowerConsumption();
     }
 
+    public function hasCo2Class(): bool
+    {
+        return null !== $this->co2ClassMin
+            || null !== $this->co2ClassMax
+            || null !== $this->co2ClassEmptyBatteryMin
+            || null !== $this->co2ClassEmptyBatteryMax;
+    }
+
     public function isZeroEmissionVehicle(): bool
     {
         return !($this->co2EmissionMin || $this->co2EmissionMax || $this->co2EmissionWeightedMin || $this->co2EmissionWeightedMax);
@@ -174,8 +187,8 @@ class EcoData
 
     public function hasWltp(): bool
     {
-        if ('hydrogen' !== $this->fuelType && $this->hasFuelConsumption() && $this->isZeroEmissionVehicle()) {
-            // This vehicle has fuel consumption but no CO2 emissions. It can't be valid.
+        if ('hydrogen' !== $this->fuelType && $this->hasFuelConsumption() && $this->isZeroEmissionVehicle() && !$this->hasCo2Class()) {
+            // This vehicle has fuel consumption but neither CO2 emissions nor a CO2 class. It can't be valid.
             return false;
         }
 
@@ -208,23 +221,42 @@ class EcoData
         return $this;
     }
 
-    public function calculateAllCo2Classes(): self
+    public function calculateAllCo2Classes(bool $preserveExplicitClasses = false): self
     {
-        if ($this->isZeroEmissionVehicle()) {
+        $hasCo2EmissionMax = null !== $this->co2EmissionMax;
+
+        if ($this->isZeroEmissionVehicle() && (!$this->hasFuelConsumption() || 'hydrogen' === $this->fuelType)) {
             $this->co2EmissionMax = 0;
         }
 
         if ($this->isHybrid()) {
-            $this->co2ClassMin = $this->calculateCo2Class($this->co2EmissionWeightedMin);
-            $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionWeightedMax);
-            $this->co2ClassEmptyBatteryMin = $this->calculateCo2Class($this->co2EmissionMin);
-            $this->co2ClassEmptyBatteryMax = $this->calculateCo2Class($this->co2EmissionMax);
+            $this->co2ClassMin = $this->resolveCo2Class($this->co2EmissionWeightedMin, $this->co2ClassMin, $preserveExplicitClasses);
+            $this->co2ClassMax = $this->resolveCo2Class($this->co2EmissionWeightedMax, $this->co2ClassMax, $preserveExplicitClasses);
+            $this->co2ClassEmptyBatteryMin = $this->resolveCo2Class($this->co2EmissionMin, $this->co2ClassEmptyBatteryMin, $preserveExplicitClasses);
+            $this->co2ClassEmptyBatteryMax = $this->resolveCo2Class(
+                $hasCo2EmissionMax ? $this->co2EmissionMax : null,
+                $this->co2ClassEmptyBatteryMax,
+                $preserveExplicitClasses
+            );
+            if (null === $this->co2ClassEmptyBatteryMax) {
+                $this->co2ClassEmptyBatteryMax = self::calculateCo2Class($this->co2EmissionMax);
+            }
+            if ($this->co2ClassMin === $this->co2ClassMax) {
+                $this->co2ClassMin = null;
+            }
             if ($this->co2ClassEmptyBatteryMin === $this->co2ClassEmptyBatteryMax) {
                 $this->co2ClassEmptyBatteryMin = null;
             }
         } else {
-            $this->co2ClassMin = $this->calculateCo2Class($this->co2EmissionMin);
-            $this->co2ClassMax = $this->calculateCo2Class($this->co2EmissionMax);
+            $this->co2ClassMin = $this->resolveCo2Class($this->co2EmissionMin, $this->co2ClassMin, $preserveExplicitClasses);
+            $this->co2ClassMax = $this->resolveCo2Class(
+                $hasCo2EmissionMax ? $this->co2EmissionMax : null,
+                $this->co2ClassMax,
+                $preserveExplicitClasses
+            );
+            if (null === $this->co2ClassMax) {
+                $this->co2ClassMax = self::calculateCo2Class($this->co2EmissionMax);
+            }
             if ($this->co2ClassMin === $this->co2ClassMax) {
                 $this->co2ClassMin = null;
             }
@@ -233,7 +265,7 @@ class EcoData
         return $this;
     }
 
-    public function calculateCo2Class(?float $emission): ?string
+    public static function calculateCo2Class(?float $emission): ?string
     {
         if (null === $emission) {
             return null;
@@ -258,6 +290,15 @@ class EcoData
             return 'F';
         }
         return 'G';
+    }
+
+    private function resolveCo2Class(?float $emission, ?string $explicitClass, bool $preserveExplicitClasses): ?string
+    {
+        if (null !== $emission || !$preserveExplicitClasses) {
+            return self::calculateCo2Class($emission);
+        }
+
+        return $explicitClass;
     }
 
     public function getTextArray(): ?array

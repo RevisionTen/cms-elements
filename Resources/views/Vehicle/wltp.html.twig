@@ -13,10 +13,10 @@
 
     <div class="row">
 
-        {% if ecoData.co2ClassMax and ecoData.co2ClassMin is empty and ecoData.co2ClassEmptyBatteryMin is empty and ecoData.co2ClassEmptyBatteryMax is empty %}
+        {% if ecoData.co2ClassMax and ecoData.co2ClassMin is empty and ecoData.co2ClassEmptyBatteryMin is empty %}
             <div class="col-12 col-sm-auto" style="max-width: 400px;">
                 <p class="mb-0">CO₂-Klasse</p>
-                <p>
+                <div class="mb-3">
                     {% if ecoData.co2ClassEmptyBatteryMax != '' %}
                         {% set maxWidth = ecoData.co2ClassEmptyBatteryMax != '' ? 300 : 220 %}
                         <div style="max-width: {{ maxWidth }}px; font-size: 9px;">
@@ -35,7 +35,7 @@
                         co2Class: ecoData.co2ClassMax,
                         co2ClassEmptyBattery: ecoData.co2ClassEmptyBatteryMax,
                     } %}
-                </p>
+                </div>
             </div>
         {% endif %}
 
