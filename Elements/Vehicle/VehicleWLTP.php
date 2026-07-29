@@ -88,10 +88,11 @@ class VehicleWLTP extends Element
             ],
         ));
 
-        $formModifier = static function (FormInterface $form = null, ?string $fuelType = null) {
+        $formModifier = static function (FormInterface $form = null, ?string $fuelType = null, array $data = []) {
             if ($form) {
                 $hasFossilFuel = 'electricity' !== $fuelType && 'hydrogen' !== $fuelType;
                 $hasBattery = 'electricity' === $fuelType || 'hydrogen' === $fuelType || 'hybrid' === $fuelType || 'hybrid_petrol' === $fuelType || 'hybrid_diesel' === $fuelType;
+                $isHybrid = $hasFossilFuel && $hasBattery;
 
                 $combinedLabel = 'vehicle.envkv.label.combined';
 
@@ -125,6 +126,7 @@ class VehicleWLTP extends Element
                         'scale' => 2,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.min',
+                            'data-condition' => true,
                         ],
                     ));
                     $form->add('co2EmissionWeighted', NumberType::class, array(
@@ -133,6 +135,7 @@ class VehicleWLTP extends Element
                         'scale' => 2,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.max',
+                            'data-condition' => true,
                         ],
                     ));
                     $form->add('combinedWeightedMin', NumberType::class, array(
@@ -192,7 +195,8 @@ class VehicleWLTP extends Element
                     $form->add('combinedPowerConsumption', NumberType::class, array(
                         'label' => 'vehicle.envkv.label.combinedPowerConsumption',
                         'scale' => 1,
-                        'constraints' => new NotBlank(),
+                        'required' => !$isHybrid,
+                        'constraints' => $isHybrid ? [] : new NotBlank(),
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.max',
                         ],
@@ -255,6 +259,7 @@ class VehicleWLTP extends Element
                         'scale' => 2,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.min',
+                            'data-condition' => true,
                         ],
                     ));
                     $form->add('co2Emission', NumberType::class, array(
@@ -263,6 +268,7 @@ class VehicleWLTP extends Element
                         'scale' => 2,
                         'attr' => [
                             'placeholder' => 'vehicle.envkv.label.max',
+                            'data-condition' => true,
                         ],
                     ));
                 } else {
@@ -273,19 +279,123 @@ class VehicleWLTP extends Element
                     $form->remove('fuel');
                     $form->remove('cubicCapacity');
                 }
+
+                if ($isHybrid) {
+                    self::addCo2ClassFields(
+                        $form,
+                        'co2Class',
+                        'vehicle.envkv.label.co2Class',
+                        $data['co2EmissionWeightedMin'] ?? null,
+                        $data['co2EmissionWeighted'] ?? null
+                    );
+                    self::addCo2ClassFields(
+                        $form,
+                        'co2ClassEmptyBattery',
+                        'vehicle.envkv.label.co2ClassEmptyBattery',
+                        $data['co2EmissionMin'] ?? null,
+                        $data['co2Emission'] ?? null
+                    );
+                } else {
+                    self::addCo2ClassFields(
+                        $form,
+                        'co2Class',
+                        'vehicle.envkv.label.co2Class',
+                        $data['co2EmissionMin'] ?? null,
+                        $data['co2Emission'] ?? null
+                    );
+                    $form->remove('co2ClassEmptyBatteryMin');
+                    $form->remove('co2ClassEmptyBattery');
+                }
             }
         };
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) use ($formModifier) {
-            $data = $event->getData();
+            $data = $event->getData() ?? [];
             $fuelType = $data['fuelType'] ?? null;
-            $formModifier($event->getForm(), $fuelType);
+            $formModifier($event->getForm(), $fuelType, $data);
         });
 
-        $builder->get('fuelType')->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) use ($formModifier) {
-            $fuelType = $event->getForm()->getData();
-            $formModifier($event->getForm()->getParent(), $fuelType);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $event) use ($formModifier) {
+            $data = $event->getData() ?? [];
+            $fuelType = $data['fuelType'] ?? null;
+            $formModifier($event->getForm(), $fuelType, $data);
         });
+    }
+
+    private static function addCo2ClassFields(FormInterface $form, string $fieldName, string $label, $minEmission, $maxEmission): void
+    {
+        $form->add($fieldName.'Min', ChoiceType::class, self::getCo2ClassOptions(
+            $label,
+            'vehicle.envkv.label.min',
+            $minEmission
+        ));
+        $form->add($fieldName, ChoiceType::class, self::getCo2ClassOptions(
+            $label,
+            'vehicle.envkv.label.max',
+            $maxEmission
+        ));
+    }
+
+    private static function getCo2ClassOptions(string $label, string $placeholder, $emission): array
+    {
+        $emission = self::normalizeNumber($emission);
+        $readonly = null !== $emission;
+
+        $options = [
+            'label' => $label,
+            'placeholder' => $placeholder,
+            'choices' => [
+                'A' => 'A',
+                'B' => 'B',
+                'C' => 'C',
+                'D' => 'D',
+                'E' => 'E',
+                'F' => 'F',
+                'G' => 'G',
+            ],
+            'required' => false,
+            'disabled' => $readonly,
+            'attr' => [
+                'class' => 'custom-select',
+            ],
+        ];
+
+        if ($readonly) {
+            $options['data'] = EcoData::calculateCo2Class($emission);
+        }
+
+        return $options;
+    }
+
+    private static function normalizeNumber($value): ?float
+    {
+        if (null === $value || '' === $value) {
+            return null;
+        }
+
+        if (is_int($value) || is_float($value)) {
+            return (float) $value;
+        }
+
+        $value = trim((string) $value);
+        if ('' === $value) {
+            return null;
+        }
+
+        $lastComma = strrpos($value, ',');
+        $lastDot = strrpos($value, '.');
+        if (false !== $lastComma && false !== $lastDot) {
+            if ($lastComma > $lastDot) {
+                $value = str_replace('.', '', $value);
+                $value = str_replace(',', '.', $value);
+            } else {
+                $value = str_replace(',', '', $value);
+            }
+        } elseif (false !== $lastComma) {
+            $value = str_replace(',', '.', $value);
+        }
+
+        return is_numeric($value) ? (float) $value : null;
     }
 
     public function getBlockPrefix(): string

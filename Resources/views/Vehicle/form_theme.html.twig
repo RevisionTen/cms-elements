@@ -454,6 +454,45 @@
             </div>
         {% endif %}
 
+        {% if form.co2Class is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.co2Class) }}
+                        <div class="w-100">
+                            <div class="form-row row gx-2">
+                                <div class="col">
+                                    {{ form_widget(form.co2ClassMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2Class) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if form.co2ClassEmptyBattery is defined %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.co2ClassEmptyBattery) }}
+                        <div class="w-100">
+                            <div class="form-row row gx-2">
+                                <div class="col">
+                                    {{ form_widget(form.co2ClassEmptyBatteryMin) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_widget(form.co2ClassEmptyBattery) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         {{- block('form_rows') -}}
 
         {{- form_rest(form) -}}
