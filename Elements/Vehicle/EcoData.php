@@ -197,6 +197,11 @@ class EcoData
 
     public function removeInvalidValues(): self
     {
+        // Hybrids can consume both fuel and electricity, regardless of the fuel label.
+        if (in_array($this->fuelType, ['hybrid', 'hybrid_petrol', 'hybrid_diesel'], true)) {
+            return $this;
+        }
+
         // Remove invalid values for fuel types
         if ($this->fuel === 'Elektro' || $this->fuelType === 'electricity') {
             $this->co2EmissionMin = null;
